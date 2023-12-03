@@ -1,0 +1,30 @@
+name: Run Detekt on Pull Request
+on:
+  pull_request:
+    paths:
+      - 'app/**' 
+
+jobs:
+  detekt:
+    name: Run Detekt
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17' 
+          
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run Detekt for app module
+        run: ./gradlew :app:detekt
