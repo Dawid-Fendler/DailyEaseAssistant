@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.detektcode)
+    alias(libs.plugins.ktlintcode)
+    id("jacoco")
 }
 
 android {

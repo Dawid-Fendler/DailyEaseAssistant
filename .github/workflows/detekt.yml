@@ -24,3 +24,29 @@ jobs:
 
       - name: Run Detekt for app module
         run: ./gradlew :app:detekt
+
+      - name: Run unit tests
+        run: ./gradlew test
+
+      - name: Run ktlint check
+        run: ./gradlew ktlintCheck
+
+      - name: Run Android Lint
+        run: ./gradlew lintDebug
+
+      - name: Run Dependency Check
+        run: ./gradlew dependencyCheckAnalyze
+
+      - name: Generate Jacoco test coverage report
+        run: ./gradlew jacocoTestReport
+
+      - name: Upload Jacoco test coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-report
+          paths: |
+            ${{ github.workspace }}/**/build/reports/jacoco/prodNormalDebugCoverage/prodNormalDebugCoverage.xml,
+            ${{ github.workspace }}/**/build/reports/jacoco/**/debugCoverage.xml
+            token: ${{ secrets.GITHUB_TOKEN }}
+            min-coverage-overall: 40
+            min-coverage-changed-files: 60
