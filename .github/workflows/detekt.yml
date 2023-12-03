@@ -26,19 +26,19 @@ jobs:
         run: ./gradlew :app:detekt
 
       - name: Run unit tests
-        run: ./gradlew test
+        run: ./gradlew :app:test
 
       - name: Run ktlint check
-        run: ./gradlew ktlintCheck
+        run: ./gradlew :app:ktlintCheck
 
       - name: Run Android Lint
-        run: ./gradlew lintDebug
+        run: ./gradlew :app:lintDebug
 
       - name: Run Dependency Check
-        run: ./gradlew dependencyCheckAnalyze
+        run: ./gradlew :app:dependencyCheckAnalyze
 
       - name: Generate Jacoco test coverage report
-        run: ./gradlew jacocoTestReport
+        run: ./gradlew :app:jacocoTestReport
 
       - name: Upload Jacoco test coverage report
         uses: actions/upload-artifact@v3
