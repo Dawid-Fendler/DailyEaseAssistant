@@ -1,0 +1,32 @@
+name: Run Jobs on Pull Request
+on:
+  pull_request:
+    paths:
+      - 'app/**' 
+
+jobs:
+  detekt:
+    name: Run Detekt
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: oracle
+          java-version: '17' 
+          
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run Detekt for app module
+        run: ./gradlew :app:detekt
+
+      - name: Run ktlint check
+        run: ./gradlew :app:ktlintCheck
+
+      - name: Run Android Lint
+        run: ./gradlew :app:lintDebug
