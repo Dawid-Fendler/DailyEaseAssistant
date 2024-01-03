@@ -1,0 +1,17 @@
+configurations {
+    detekt
+}
+dependencies {
+    detekt libs.detekt
+}
+
+tasks.register('detekt', JavaExec) {
+    description = "Code smell analysis for Kotlin."
+    classpath = configurations.detekt
+    main = "io.gitlab.arturbosch.detekt.cli.Main"
+
+    args "--input", "src/main/kotlin",
+            "--excludes", "**/build/**,**/resources/**",
+            "--config", "$rootDir/gradle/detekt.yml",
+            "--report", "xml:build/reports/detekt-report.xml,html:build/reports/detekt-report.html"
+}

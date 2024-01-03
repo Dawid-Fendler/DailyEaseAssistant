@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.detektcode)
-    alias(libs.plugins.ktlintcode)
     alias(libs.plugins.hilt)
     kotlin("kapt")
 }
@@ -54,23 +52,14 @@ android {
 }
 
 dependencies {
+    implementation(project(":features:onboarding"))
+    implementation(project(":common:ui"))
 
     implementation(libs.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
-    implementation(libs.ui)
-    implementation(libs.ui.graphics)
-    implementation(libs.ui.tooling.preview)
-    implementation(libs.material3)
     implementation(libs.splash.screen)
     implementation(libs.hilt.android)
+    implementation(libs.navigation.compose)
     kapt(libs.hilt.compiler)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.ui.test.junit4)
-    debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
 }

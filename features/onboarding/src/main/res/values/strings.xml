@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_first_page_title">Welcome to Daily Ease Assistant</string>
+    <string name="onboarding_first_page_description">Here\'s your personal assistant to help you manage daily tasks, plan your schedule, and organize your life.</string>
+    <string name="onboarding_second_page_title">Manage tasks stress-free</string>
+    <string name="onboarding_second_page_description"> Daily Ease Assistant offers tools for tracking progress, setting priorities, and efficient planning, enabling you to achieve more in less time.</string>
+    <string name="onboarding_third_page_title">Cultivate habits for a better life</string>
+    <string name="onboarding_third_page_description">Explore Daily Ease Assistant\'s features that assist in building positive habits and tracking daily progress towards achieving goals.</string>
+</resources>

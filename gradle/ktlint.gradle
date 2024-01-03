@@ -1,0 +1,16 @@
+configurations {
+    ktlint
+}
+dependencies {
+    ktlint libs.ktlint
+}
+tasks.register('ktlint', JavaExec) {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+
+    args "src/**/*.kt", "!src/test/**/*.kt", "!src/androidTest/**/*.kt",
+            "--editorconfig=${rootDir}/gradle/.editorconfig",
+            "--reporter=checkstyle,output=build/reports/ktlint-report.xml",
+            "--reporter=plain"
+}

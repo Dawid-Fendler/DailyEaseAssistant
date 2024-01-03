@@ -2,9 +2,22 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.kotlinAndroid) apply false
-    alias(libs.plugins.detektcode) apply false
-    alias(libs.plugins.ktlintcode) apply false
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.hilt) apply false
+}
+
+subprojects {
+    if (file("build.gradle.kts").exists()) {
+        val detektScript = rootProject.file("gradle/detekt.gradle")
+        val ktlintScript = rootProject.file("gradle/ktlint.gradle")
+
+        if (detektScript.exists()) {
+            apply(from = detektScript)
+        }
+
+        if (ktlintScript.exists()) {
+            apply(from = ktlintScript)
+        }
+    }
 }
 true // Needed to make the Suppress annotation work for the plugins block

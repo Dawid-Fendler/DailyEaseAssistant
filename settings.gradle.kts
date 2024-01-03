@@ -15,7 +15,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "DailyEase Assistant"
 include(":app")
+include(":common")
+include(":common:ui")
+include(":common:util")
 include(":core")
+include(":core:coroutines")
 include(":core:datastore")
 include(":features")
 include(":features:onboarding")

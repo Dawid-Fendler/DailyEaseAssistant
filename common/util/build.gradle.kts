@@ -1,12 +1,10 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
 }
 
 android {
-    namespace = "pl.dawidfendler.datastore"
+    namespace = "pl.dawidfendler.util"
     compileSdk = 34
 
     defaultConfig {
@@ -35,7 +33,11 @@ android {
 }
 
 dependencies {
-    implementation(libs.data.store)
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }
