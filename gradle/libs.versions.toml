@@ -1,26 +1,30 @@
 [versions]
-agp = "8.2.0"
+agp = "8.4.2"
 kotlin = "1.9.0"
-core-ktx = "1.12.0"
+core-ktx = "1.13.1"
 junit = "4.13.2"
-androidx-test-ext-junit = "1.1.5"
-view-model = "2.6.2"
-compose-foundation = "1.5.4"
-espresso-core = "3.5.1"
-compose-navigation = "2.7.6"
-hilt-navigation-compose = "1.1.0"
-lifecycle-runtime-ktx = "2.6.2"
-activity-compose = "1.8.2"
-compose-bom = "2023.10.01"
+androidx-test-ext-junit = "1.2.1"
+view-model = "2.8.3"
+compose-foundation = "1.6.8"
+espresso-core = "3.6.1"
+compose-navigation = "2.8.0-alpha08"
+hilt-navigation-compose = "1.2.0"
+lifecycle-runtime-ktx = "2.8.3"
+activity-compose = "1.9.0"
+compose-bom = "2024.06.00"
 splash = "1.0.1"
-detekt = "1.22.0"
-ktlint = "0.36.0"
+detekt = "1.23.1"
+ktlint = "0.43.2"
 appcompat = "1.6.1"
-material = "1.11.0"
-data-store = "1.0.0"
+material = "1.12.0"
+data-store = "1.1.1"
 hilt = "2.49"
 timber = "5.0.1"
-androidx-appcompat-appcompat = "1.6.1"
+androidx-appcompat-appcompat = "1.7.0"
+firebase = "4.4.2"
+firebase-bom = "32.7.0"
+serialization = "1.6.3"
+serialization-plugin = "2.0.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -50,9 +54,13 @@ timber-logger = { module = "com.jakewharton.timber:timber", version.ref = "timbe
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat-appcompat" }
 ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
 detekt = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
+firebase-bom = { module = "comg.google.firebase:firebase-bom", version.ref = "firebase-bom"}
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+firebase = { id = "com.google.gms.google-services", version.ref = "firebase"}
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization-plugin"}

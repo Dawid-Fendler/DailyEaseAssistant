@@ -5,12 +5,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import pl.dawidfendler.onboarding.OnboardingScreen
 import pl.dawidfendler.onboarding.OnboardingViewModel
-import pl.dawidfendler.onboarding.navigation.OnboardingNavigationRoute.ONBOARDING_SCREEN_ROUTE
+import pl.dawidfendler.util.navigation.Navigation
 
 fun NavGraphBuilder.onboardingRoute(
     navigateToAuth: () -> Unit
 ) {
-    composable(route = ONBOARDING_SCREEN_ROUTE) {
+    composable<Navigation.OnboardingNavigation> {
         val viewModel: OnboardingViewModel = hiltViewModel()
 
         OnboardingScreen(
@@ -20,8 +20,4 @@ fun NavGraphBuilder.onboardingRoute(
             navigateToAuth = navigateToAuth
         )
     }
-}
-
-internal object OnboardingNavigationRoute {
-    const val ONBOARDING_SCREEN_ROUTE = "onboarding_screen"
 }

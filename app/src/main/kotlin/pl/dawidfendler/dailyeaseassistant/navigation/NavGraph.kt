@@ -4,10 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import pl.dawidfendler.onboarding.navigation.onboardingRoute
+import pl.dawidfendler.util.navigation.Navigation
 
 @Composable
-fun SetupNavGraph(
-    startDestination: String,
+internal fun SetupNavGraph(
+    startDestination: Navigation,
     navController: NavHostController
 ) {
     NavHost(
