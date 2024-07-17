@@ -1,6 +1,5 @@
 package pl.dawidfendler.onboarding
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +26,6 @@ import pl.dawidfendler.ui.theme.dp_12
 import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.util.ext.emptyString
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun OnboardingScreen(
     onFinishButtonClick: () -> Unit,

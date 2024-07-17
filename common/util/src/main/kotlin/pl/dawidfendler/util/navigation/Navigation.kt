@@ -8,4 +8,7 @@ sealed class Navigation {
 
     @Serializable
     data object LoginNavigation: Navigation()
+
+    @Serializable
+    data object RegistrationNavigation: Navigation()
 }

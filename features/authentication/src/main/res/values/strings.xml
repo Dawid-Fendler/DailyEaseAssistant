@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_screen_title">Welcome!\n to DailyEase Assistant</string>
+    <string name="login_screen_email_hint">Login</string>
+    <string name="login_screen_password_hint">Password</string>
+    <string name="login_screen_login_button_title">Login</string>
+    <string name="login_screen_sign_up_button_title">Sign Up</string>
+    <string name="login_screen_create_account_title">Create Account</string>
+    <string name="login_screen_already_have_account">Already have an account? Log in</string>
+</resources>

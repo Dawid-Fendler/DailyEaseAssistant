@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "554050685927",
+    "project_id": "dailyeaseassistant",
+    "storage_bucket": "dailyeaseassistant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554050685927:android:bc2d4d36b28a8dbb43cb42",
+        "android_client_info": {
+          "package_name": "pl.dawidfendler.dailyeaseassistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554050685927-sapt8jnj369v2vl4skcm71poscg5qjfe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pl.dawidfendler.dailyeaseassistant",
+            "certificate_hash": "7794bcca7afe8f3818426771605312bf79404962"
+          }
+        },
+        {
+          "client_id": "554050685927-k4jfekqngnjkukkssfpedvnd7qpsnmoa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuis-nuvnjf2-OVTYOIyWn7BV_wpt6UgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554050685927-7lr1c46slhf455e7fk1e6o3733dh8f0p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
