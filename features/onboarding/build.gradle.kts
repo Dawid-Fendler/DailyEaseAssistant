@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.composeP)
     kotlin("kapt")
 }
 
@@ -31,12 +32,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
 }
 

@@ -4,11 +4,11 @@ import kotlinx.serialization.Serializable
 
 sealed class Navigation {
     @Serializable
-    data object OnboardingNavigation: Navigation()
+    data object OnboardingNavigation : Navigation()
 
     @Serializable
-    data object LoginNavigation: Navigation()
+    data object LoginNavigation : Navigation()
 
     @Serializable
-    data object RegistrationNavigation: Navigation()
+    data object RegistrationNavigation : Navigation()
 }

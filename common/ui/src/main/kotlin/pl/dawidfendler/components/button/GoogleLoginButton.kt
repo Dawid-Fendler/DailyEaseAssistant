@@ -1,4 +1,4 @@
-package pl.dawidfendler.ui
+package pl.dawidfendler.components.button
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -26,10 +25,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.ui.res.stringResource
+import pl.dawidfendler.ui.R
 import pl.dawidfendler.ui.theme.dp_1
 import pl.dawidfendler.ui.theme.dp_12
 import pl.dawidfendler.ui.theme.dp_16

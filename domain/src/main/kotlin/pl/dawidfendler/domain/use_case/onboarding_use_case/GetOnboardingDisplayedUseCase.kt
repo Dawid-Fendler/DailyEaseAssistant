@@ -1,4 +1,4 @@
-package pl.dawidfendler.dailyeaseassistant.use_case
+package pl.dawidfendler.domain.use_case.onboarding_use_case
 
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.onEach
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.datastore.DataStoreConstants.ONBOARDING_DISPLAYED
+import timber.log.Timber
 import javax.inject.Inject
 
 class GetOnboardingDisplayedUseCase @Inject constructor(
@@ -19,7 +20,8 @@ class GetOnboardingDisplayedUseCase @Inject constructor(
         dataStore.getPreferences(ONBOARDING_DISPLAYED, false).onEach { result ->
             emit(result)
         }.catch { err ->
-            throw err
+            Timber.e(err)
+            emit(false)
         }.collect()
     }.flowOn(dispatcherProvider.io)
 }

@@ -1,16 +1,16 @@
 [versions]
 agp = "8.4.2"
-kotlin = "1.9.0"
+kotlin = "2.0.0"
 core-ktx = "1.13.1"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.2.1"
-view-model = "2.8.3"
+view-model = "2.8.4"
 compose-foundation = "1.6.8"
 espresso-core = "3.6.1"
-compose-navigation = "2.8.0-alpha08"
+compose-navigation = "2.8.0-beta06"
 hilt-navigation-compose = "1.2.0"
-lifecycle-runtime-ktx = "2.8.3"
-activity-compose = "1.9.0"
+lifecycle-runtime-ktx = "2.8.4"
+activity-compose = "1.9.1"
 compose-bom = "2024.06.00"
 splash = "1.0.1"
 detekt = "1.23.1"
@@ -28,10 +28,11 @@ firebase = "4.4.2"
 firebase-bom = "32.7.0"
 serialization = "1.6.3"
 serialization-plugin = "2.0.0"
-gms-service = "20.5.0"
-kotlin-ktx   = "1.7.2"
+gms-service = "21.2.0"
+kotlin-ktx   = "1.8.1"
 playServicesGcm = "17.0.0"
 preview = "1.6.8"
+google-service = "18.2.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -66,6 +67,7 @@ firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.
 firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFireStore"}
 gms-play-service = { module = "com.google.android.gms:play-services-auth", version.ref = "gms-service"}
+google-service-task = { module = "com.google.android.gms:play-services-tasks", version.ref = "google-service"}
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-ktx"}
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-ktx"}
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
@@ -74,6 +76,7 @@ ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = 
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
+composeP = {id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin"}
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

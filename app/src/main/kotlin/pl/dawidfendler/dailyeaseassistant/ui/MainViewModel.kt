@@ -1,39 +1,32 @@
 package pl.dawidfendler.dailyeaseassistant.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.stateIn
-import pl.dawidfendler.dailyeaseassistant.use_case.GetOnboardingDisplayedUseCase
-import pl.dawidfendler.util.flow.DataResult
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import pl.dawidfendler.domain.use_case.onboarding_use_case.GetOnboardingDisplayedUseCase
 import pl.dawidfendler.util.navigation.Navigation
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getOnboardingDisplayedUseCase: GetOnboardingDisplayedUseCase
+    getOnboardingDisplayedUseCase: GetOnboardingDisplayedUseCase
 ) : ViewModel() {
 
-    val getStartDestination: StateFlow<DataResult<Navigation>>
-        get() = getOnboardingDisplayedUseCase().flatMapLatest { result ->
-            if (result) {
-                flowOf(DataResult.Success(Navigation.LoginNavigation))
+    var state by mutableStateOf(MainState())
+        private set
 
+    init {
+        getOnboardingDisplayedUseCase().onEach { result ->
+            state = if (result) {
+                state.copy(navigation = Navigation.LoginNavigation, isStarting = true)
             } else {
-                flowOf(DataResult.Success(Navigation.OnboardingNavigation))
+                state.copy(navigation = Navigation.OnboardingNavigation, isStarting = true)
             }
-        }.catch { err ->
-            flowOf(DataResult.Error(err))
-        }.stateIn(
-            scope = viewModelScope,
-            initialValue = DataResult.Initial,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000)
-        )
+        }.launchIn(viewModelScope)
+    }
 }

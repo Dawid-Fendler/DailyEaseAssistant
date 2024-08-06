@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     kotlin("kapt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.composeP)
 }
 
 android {
@@ -35,6 +36,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.ui)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.viewmodel.lifecycle)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 }

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.composeP)
     kotlin("kapt")
 }
 
@@ -32,18 +33,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
 }
 
 dependencies {
     implementation(project(":common:ui"))
     implementation(project(":common:util"))
     implementation(project(":core:coroutines"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
 
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -55,5 +52,8 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.timber.logger)
     implementation(libs.ui.preview)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.firestore.ktx)
     kapt(libs.hilt.compiler)
 }

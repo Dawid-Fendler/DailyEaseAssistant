@@ -17,7 +17,6 @@ val dp_6 = 6.dp
 val dp_2 = 2.dp
 val dp_1 = 1.dp
 
-
 // Text Size
 val sp_36 = 36.sp
 val sp_24 = 24.sp

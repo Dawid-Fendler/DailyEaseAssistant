@@ -38,5 +38,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.play.services.gcm)
+    implementation(libs.google.service.task)
 }

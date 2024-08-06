@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
     alias(libs.plugins.firebase)
+    alias(libs.plugins.composeP)
     kotlin("kapt")
 }
 
@@ -32,23 +33,17 @@ android {
             )
         }
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
 }
 
@@ -57,6 +52,8 @@ dependencies {
     implementation(project(":common:util"))
     implementation(project(":core:coroutines"))
     implementation(project(":core:datastore"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
     implementation(project(":features:authentication"))
     implementation(project(":features:onboarding"))
 
