@@ -8,5 +8,7 @@
     <string name="login_screen_create_account_title">Create Account</string>
     <string name="login_screen_already_have_account">Already have an account? Log in</string>
     <string name="registration_error_message">Failed to create an account, please try again.</string>
+    <string name="login_error_message">Failed to login, please try again.</string>
+    <string name="login_field_error_message">The login credentials entered are incorrect.</string>
     <string name="registration_successful">The account has been created</string>
 </resources>

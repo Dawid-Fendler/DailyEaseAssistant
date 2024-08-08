@@ -1,12 +1,85 @@
 package pl.dawidfendler.authentication.login
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+import pl.dawidfendler.authentication.R
+import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
+import pl.dawidfendler.util.UiText
+import pl.dawidfendler.util.flow.DataResult
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase
+) : ViewModel() {
 
-): ViewModel() {
-    
+    var state by mutableStateOf(LoginState())
+        private set
+
+    private val _eventChannel = Channel<LoginEvent>()
+    val eventChannel get() = _eventChannel.receiveAsFlow()
+
+    fun onAction(action: LoginAction) {
+        when (action) {
+            is LoginAction.OnLoginClick -> login()
+            is LoginAction.OnTogglePasswordVisibilityClick ->
+                state = state.copy(
+                    isPasswordVisible = !state.isPasswordVisible
+                )
+
+            is LoginAction.OnLoginUpdate -> {
+                state = state.copy(
+                    email = action.login
+                )
+            }
+
+            is LoginAction.OnPasswordUpdate -> {
+                state = state.copy(
+                    password = action.password
+                )
+            }
+        }
+    }
+
+    private fun login() {
+        viewModelScope.launch {
+            state = state.copy(isLogin = true)
+            loginUseCase.invoke(
+                email = state.email,
+                password = state.password
+            ).onEach { result ->
+                state = state.copy(isLogin = false)
+                when (result) {
+                    is DataResult.Error -> {
+                        state = state.copy(
+                            isError = true,
+                            errorMessage = R.string.login_field_error_message
+                        )
+                        _eventChannel.send(
+                            LoginEvent.Error(
+                                error = UiText.StringResource(R.string.registration_error_message)
+                            )
+                        )
+                    }
+
+                    is DataResult.Success -> {
+                        state = state.copy(
+                            isError = false,
+                            errorMessage = 0
+                        )
+                        _eventChannel.send(LoginEvent.LoginSuccess)
+                    }
+                }
+            }.launchIn(viewModelScope)
+        }
+    }
 }
