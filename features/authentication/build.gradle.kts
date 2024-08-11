@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
     alias(libs.plugins.composeP)
+    alias(libs.plugins.firebase)
     kotlin("kapt")
 }
 
@@ -53,7 +54,6 @@ dependencies {
     implementation(libs.timber.logger)
     implementation(libs.ui.preview)
     implementation(libs.firebase.auth.ktx)
-    implementation(libs.firebase.storage.ktx)
-    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.gms.play.service)
     kapt(libs.hilt.compiler)
 }

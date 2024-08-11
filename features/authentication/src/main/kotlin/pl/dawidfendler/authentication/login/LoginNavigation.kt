@@ -6,7 +6,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import pl.dawidfendler.authentication.R
 import pl.dawidfendler.coroutines.ObserveAsEvents
 import pl.dawidfendler.util.navigation.Navigation
 
@@ -31,11 +30,6 @@ fun NavGraphBuilder.loginRoute(
 
                 LoginEvent.LoginSuccess -> {
                     keyboardController?.hide()
-                    Toast.makeText(
-                        context,
-                        R.string.registration_successful,
-                        Toast.LENGTH_LONG
-                    ).show()
                     navigateToMainScreen()
                 }
             }

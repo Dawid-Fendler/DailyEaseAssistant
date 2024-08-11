@@ -1,5 +1,8 @@
 package pl.dawidfendler.authentication.login
 
+import android.app.Activity.RESULT_OK
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -12,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -22,6 +26,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import pl.dawidfendler.components.button.DailyEaseAssistantButton
 import pl.dawidfendler.components.button.GoogleLoginButton
 import pl.dawidfendler.components.text_field.LoginTextField
@@ -35,6 +44,7 @@ import pl.dawidfendler.ui.theme.dp_36
 import pl.dawidfendler.ui.theme.dp_80
 import pl.dawidfendler.ui.theme.sp_14
 import pl.dawidfendler.ui.theme.sp_24
+import timber.log.Timber
 
 @Composable
 fun LoginScreen(
@@ -42,6 +52,38 @@ fun LoginScreen(
     onAction: (LoginAction) -> Unit,
     onRegisterClick: () -> Unit
 ) {
+    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(stringResource(pl.dawidfendler.authentication.R.string.default_web_client_id))
+        .requestEmail()
+        .build()
+    val mGoogleSignInClient = GoogleSignIn.getClient(LocalContext.current, gso)
+    val googleResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val accountTask = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val signInAccount = accountTask.getResult(ApiException::class.java)
+                val authCredentials = GoogleAuthProvider.getCredential(signInAccount.idToken, null)
+                FirebaseAuth.getInstance().signInWithCredential(authCredentials)
+                    .addOnCompleteListener {
+                        if (accountTask.isSuccessful) {
+                            onAction.invoke(
+                                LoginAction.OnGoogleLoginClick(
+                                    signInAccount.idToken ?: ""
+                                )
+                            )
+                        } else {
+                            onAction.invoke(LoginAction.OnGoogleLoginError)
+                        }
+                    }
+            } catch (e: Exception) {
+                Timber.e(e)
+                onAction.invoke(LoginAction.OnGoogleLoginError)
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -91,7 +133,11 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(dp_24))
 
-        GoogleLoginButton {  }
+        GoogleLoginButton(
+            onClicked = {
+                googleResultLauncher.launch(mGoogleSignInClient.signInIntent)
+            }
+        )
     }
 }
 

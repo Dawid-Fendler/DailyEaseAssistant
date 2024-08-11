@@ -38,7 +38,8 @@ internal fun SetupNavGraph(
             navigateToLogin = {
                 navController.popBackStack()
                 navController.navigate(Navigation.LoginNavigation)
-            }
+            },
+            navigateToMain = {}
         )
     }
 }

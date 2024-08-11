@@ -1,6 +1,9 @@
 package pl.dawidfendler.authentication.registration
 
+import android.app.Activity.RESULT_OK
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -18,6 +22,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import pl.dawidfendler.authentication.R
 import pl.dawidfendler.components.button.DailyEaseAssistantButton
 import pl.dawidfendler.components.button.GoogleLoginButton
@@ -31,6 +40,7 @@ import pl.dawidfendler.ui.theme.dp_24
 import pl.dawidfendler.ui.theme.dp_48
 import pl.dawidfendler.ui.theme.dp_56
 import pl.dawidfendler.ui.theme.sp_14
+import timber.log.Timber
 
 @Composable
 fun RegistrationScreen(
@@ -38,6 +48,38 @@ fun RegistrationScreen(
     onAction: (RegistrationAction) -> Unit,
     onBackClick: () -> Unit
 ) {
+    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(stringResource(pl.dawidfendler.authentication.R.string.default_web_client_id))
+        .requestEmail()
+        .build()
+    val mGoogleSignInClient = GoogleSignIn.getClient(LocalContext.current, gso)
+    val googleResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val accountTask = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val signInAccount = accountTask.getResult(ApiException::class.java)
+                val authCredentials = GoogleAuthProvider.getCredential(signInAccount.idToken, null)
+                FirebaseAuth.getInstance().signInWithCredential(authCredentials)
+                    .addOnCompleteListener {
+                        if (accountTask.isSuccessful) {
+                            onAction.invoke(
+                                RegistrationAction.OnGoogleLoginClick(
+                                    signInAccount.idToken ?: ""
+                                )
+                            )
+                        } else {
+                            onAction.invoke(RegistrationAction.OnGoogleLoginError)
+                        }
+                    }
+            } catch (e: Exception) {
+                Timber.e(e)
+                onAction.invoke(RegistrationAction.OnGoogleLoginError)
+            }
+        }
+    }
+
     BackHandler {
         onBackClick.invoke()
     }
@@ -88,12 +130,18 @@ fun RegistrationScreen(
         Spacer(modifier = Modifier.height(dp_24))
 
         RegisterButton(
-            onLoginNavigation = { }
+            onLoginNavigation = {
+                onBackClick.invoke()
+            }
         )
 
         Spacer(modifier = Modifier.height(dp_48))
 
-        GoogleLoginButton(onClicked = { })
+        GoogleLoginButton(
+            onClicked = {
+                googleResultLauncher.launch(mGoogleSignInClient.signInIntent)
+            }
+        )
     }
 }
 

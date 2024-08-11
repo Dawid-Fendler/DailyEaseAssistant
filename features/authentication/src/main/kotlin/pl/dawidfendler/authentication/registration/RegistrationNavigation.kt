@@ -12,7 +12,8 @@ import pl.dawidfendler.util.navigation.Navigation
 
 fun NavGraphBuilder.registrationRoute(
     navigateToLogin: () -> Unit,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    navigateToMain: () -> Unit
 ) {
     composable<Navigation.RegistrationNavigation> {
         val viewModel: RegistrationViewModel = hiltViewModel()
@@ -37,6 +38,9 @@ fun NavGraphBuilder.registrationRoute(
                         Toast.LENGTH_LONG
                     ).show()
                     navigateToLogin()
+                }
+                RegistrationEvent.LoginSuccess -> {
+                    navigateToMain()
                 }
             }
         }

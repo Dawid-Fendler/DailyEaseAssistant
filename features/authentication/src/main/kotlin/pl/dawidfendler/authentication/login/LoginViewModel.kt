@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import pl.dawidfendler.authentication.R
+import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
 import pl.dawidfendler.util.UiText
 import pl.dawidfendler.util.flow.DataResult
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val googleLoginUseCase: GoogleLoginUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(LoginState())
@@ -47,6 +49,10 @@ class LoginViewModel @Inject constructor(
                     password = action.password
                 )
             }
+
+            is LoginAction.OnGoogleLoginClick -> googleLogin(action.idToken)
+
+            is LoginAction.OnGoogleLoginError -> googleLoginError()
         }
     }
 
@@ -66,7 +72,7 @@ class LoginViewModel @Inject constructor(
                         )
                         _eventChannel.send(
                             LoginEvent.Error(
-                                error = UiText.StringResource(R.string.registration_error_message)
+                                error = UiText.StringResource(R.string.login_error_message)
                             )
                         )
                     }
@@ -80,6 +86,33 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             }.launchIn(viewModelScope)
+        }
+    }
+
+    private fun googleLogin(idToken: String) {
+        googleLoginUseCase.invoke(idToken = idToken)
+            .onEach { result ->
+                when (result) {
+                    is DataResult.Error ->
+                        _eventChannel.send(
+                            LoginEvent.Error(
+                                error = UiText.StringResource(R.string.google_login_error_message)
+                            )
+                        )
+
+                    is DataResult.Success ->
+                        _eventChannel.send(LoginEvent.LoginSuccess)
+                }
+            }.launchIn(viewModelScope)
+    }
+
+    private fun googleLoginError() {
+        viewModelScope.launch {
+            _eventChannel.send(
+                LoginEvent.Error(
+                    error = UiText.StringResource(R.string.google_login_error_message)
+                )
+            )
         }
     }
 }

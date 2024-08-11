@@ -17,7 +17,7 @@ class GoogleLoginUseCase @Inject constructor(
             .onEach { result ->
                 emit(DataResult.Success(result))
             }.catch { err ->
-                throw err
+                emit(DataResult.Error(err))
             }.collect()
     }
 }
