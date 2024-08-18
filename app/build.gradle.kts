@@ -67,4 +67,9 @@ dependencies {
     implementation(libs.timber.logger)
     implementation(libs.firebase.auth.ktx)
     kapt(libs.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth.test)
+    testImplementation(libs.mockk.test)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

@@ -4,6 +4,7 @@ kotlin = "2.0.0"
 core-ktx = "1.13.1"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.2.1"
+kotlinxCoroutinesTest = "1.9.0-RC.2"
 view-model = "2.8.4"
 compose-foundation = "1.6.8"
 espresso-core = "3.6.1"
@@ -18,7 +19,6 @@ ktlint = "0.43.2"
 firebaseAuthKtx = "23.0.0"
 firebaseStorageKtx = "21.0.0"
 firebaseFireStore = "25.0.0"
-appcompat = "1.6.1"
 material = "1.12.0"
 data-store = "1.1.1"
 hilt = "2.49"
@@ -29,16 +29,20 @@ firebase-bom = "32.7.0"
 serialization = "1.6.3"
 serialization-plugin = "2.0.0"
 gms-service = "21.2.0"
-kotlin-ktx   = "1.8.1"
+kotlin-ktx = "1.8.1"
 playServicesGcm = "17.0.0"
 preview = "1.6.8"
 google-service = "18.2.0"
+turbine = "1.1.0"
+truth = "1.4.4"
+mockk = "1.13.12"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -62,23 +66,26 @@ timber-logger = { module = "com.jakewharton.timber:timber", version.ref = "timbe
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat-appcompat" }
 ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
 detekt = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
-firebase-bom = { module = "comg.google.firebase:firebase-bom", version.ref = "firebase-bom"}
+firebase-bom = { module = "comg.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
-firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFireStore"}
-gms-play-service = { module = "com.google.android.gms:play-services-auth", version.ref = "gms-service"}
-google-service-task = { module = "com.google.android.gms:play-services-tasks", version.ref = "google-service"}
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-ktx"}
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-ktx"}
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFireStore" }
+gms-play-service = { module = "com.google.android.gms:play-services-auth", version.ref = "gms-service" }
+google-service-task = { module = "com.google.android.gms:play-services-tasks", version.ref = "google-service" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-ktx" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-ktx" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 play-services-gcm = { group = "com.google.android.gms", name = "play-services-gcm", version.ref = "playServicesGcm" }
-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "preview"}
+ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "preview" }
+turbine-test = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+truth-test = { module = "com.google.truth:truth", version.ref = "truth" }
+mockk-test = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
-composeP = {id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin"}
+composeP = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-firebase = { id = "com.google.gms.google-services", version.ref = "firebase"}
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization-plugin"}
+firebase = { id = "com.google.gms.google-services", version.ref = "firebase" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization-plugin" }

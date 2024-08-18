@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                 viewModel.state.isStarting
             }
         }
-
+        viewModel.onStart()
         setContent {
             DailyEaseAssistant {
                 if (viewModel.state.isStarting) {

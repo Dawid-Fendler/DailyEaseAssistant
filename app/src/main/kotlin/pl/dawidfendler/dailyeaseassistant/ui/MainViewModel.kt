@@ -14,13 +14,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    getOnboardingDisplayedUseCase: GetOnboardingDisplayedUseCase
+    private val getOnboardingDisplayedUseCase: GetOnboardingDisplayedUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(MainState())
         private set
 
-    init {
+    fun onStart() {
         getOnboardingDisplayedUseCase().onEach { result ->
             state = if (result) {
                 state.copy(navigation = Navigation.LoginNavigation, isStarting = true)
