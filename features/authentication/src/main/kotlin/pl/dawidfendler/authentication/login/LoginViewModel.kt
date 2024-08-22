@@ -19,7 +19,7 @@ import pl.dawidfendler.util.flow.DataResult
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+internal class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val googleLoginUseCase: GoogleLoginUseCase
 ) : ViewModel() {
@@ -57,7 +57,6 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun login() {
-        viewModelScope.launch {
             state = state.copy(isLogin = true)
             loginUseCase.invoke(
                 email = state.email,
@@ -86,7 +85,6 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             }.launchIn(viewModelScope)
-        }
     }
 
     private fun googleLogin(idToken: String) {

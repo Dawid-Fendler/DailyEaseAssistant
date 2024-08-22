@@ -2,7 +2,7 @@ package pl.dawidfendler.authentication.login
 
 import androidx.annotation.StringRes
 
-data class LoginState(
+internal data class LoginState(
     val email: String = "",
     val password: String = "",
     val isError: Boolean = false,

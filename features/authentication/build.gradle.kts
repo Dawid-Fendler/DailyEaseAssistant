@@ -56,4 +56,10 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.gms.play.service)
     kapt(libs.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth.test)
+    testImplementation(libs.mockk.test)
+    testImplementation(libs.turbine.test)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

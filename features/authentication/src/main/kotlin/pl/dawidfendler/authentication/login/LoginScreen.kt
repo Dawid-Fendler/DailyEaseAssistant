@@ -47,7 +47,7 @@ import pl.dawidfendler.ui.theme.sp_24
 import timber.log.Timber
 
 @Composable
-fun LoginScreen(
+internal fun LoginScreen(
     state: LoginState,
     onAction: (LoginAction) -> Unit,
     onRegisterClick: () -> Unit

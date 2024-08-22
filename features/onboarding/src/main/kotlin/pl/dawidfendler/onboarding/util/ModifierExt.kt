@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.unit.dp
 import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 
-@OptIn(ExperimentalFoundationApi::class)
 internal fun Modifier.wormTransition(
     pagerState: PagerState
 ) =

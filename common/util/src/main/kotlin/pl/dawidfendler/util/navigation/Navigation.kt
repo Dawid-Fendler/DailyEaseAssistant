@@ -11,4 +11,7 @@ sealed class Navigation {
 
     @Serializable
     data object RegistrationNavigation : Navigation()
+
+    @Serializable
+    data object HomeNavigation: Navigation()
 }

@@ -20,7 +20,6 @@ import pl.dawidfendler.ui.theme.WORM_INDICATOR_SPACING_SIZE
 import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 
 // Using https://blog.canopas.com/jetpack-compose-how-to-implement-custom-pager-indicators-8b6a01d63964
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun WormIndicator(
     count: Int,

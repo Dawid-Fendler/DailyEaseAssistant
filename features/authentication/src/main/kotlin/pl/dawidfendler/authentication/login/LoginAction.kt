@@ -1,6 +1,6 @@
 package pl.dawidfendler.authentication.login
 
-sealed interface LoginAction {
+internal sealed interface LoginAction {
     data object OnTogglePasswordVisibilityClick : LoginAction
     data object OnLoginClick : LoginAction
     data object OnGoogleLoginError : LoginAction
