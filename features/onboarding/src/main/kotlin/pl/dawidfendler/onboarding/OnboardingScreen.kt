@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -69,7 +70,9 @@ internal fun OnboardingScreen(
             )
             Spacer(modifier = Modifier.weight(1f))
 
-            Button(onClick = {
+            Button(
+                shape = RoundedCornerShape(dp_16),
+                onClick = {
                 if (pagerState.currentPage == ONBOARDING_THIRD_PAGE) {
                     onFinishButtonClick.invoke()
                     navigateToAuth.invoke()

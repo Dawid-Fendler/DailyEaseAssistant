@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import pl.dawidfendler.authentication.R
+import pl.dawidfendler.coroutines.DispatcherProvider
+import pl.dawidfendler.datastore.DataStore
+import pl.dawidfendler.datastore.DataStoreConstants.DISPLAY_HOME
 import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication_use_case.RegistrationUseCase
 import pl.dawidfendler.domain.validator.EmailValidator
@@ -25,7 +28,9 @@ class RegistrationViewModel @Inject constructor(
     private val registrationUseCase: RegistrationUseCase,
     private val emailValidator: EmailValidator,
     private val passwordValidator: PasswordValidator,
-    private val googleLoginUseCase: GoogleLoginUseCase
+    private val googleLoginUseCase: GoogleLoginUseCase,
+    private val dataStore: DataStore,
+    private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     var state by mutableStateOf(RegistrationState())
@@ -59,7 +64,6 @@ class RegistrationViewModel @Inject constructor(
     }
 
     private fun register() {
-        viewModelScope.launch {
             state = state.copy(isRegistering = true)
             val emailValidationResult = emailValidator.validateEmail(state.email)
             val passwordValidationResult = passwordValidator.validatePassword(state.password)
@@ -70,7 +74,7 @@ class RegistrationViewModel @Inject constructor(
                     emailErrorMessage = emailValidationResult.errorMessage,
                     passwordErrorMessage = passwordValidationResult.errorMessage
                 )
-                return@launch
+                return
             }
             registrationUseCase.invoke(
                 email = state.email,
@@ -91,7 +95,6 @@ class RegistrationViewModel @Inject constructor(
                     }
                 }
             }.launchIn(viewModelScope)
-        }
     }
 
     private fun googleLogin(idToken: String) {
@@ -105,8 +108,10 @@ class RegistrationViewModel @Inject constructor(
                             )
                         )
 
-                    is DataResult.Success ->
+                    is DataResult.Success -> {
+                        saveOnboardingDisplayed()
                         _eventChannel.send(RegistrationEvent.LoginSuccess)
+                    }
                 }
             }.launchIn(viewModelScope)
     }
@@ -118,6 +123,12 @@ class RegistrationViewModel @Inject constructor(
                     error = UiText.StringResource(R.string.google_login_error_message)
                 )
             )
+        }
+    }
+
+    private fun saveOnboardingDisplayed() {
+        viewModelScope.launch(dispatcherProvider.io) {
+            dataStore.putPreference(DISPLAY_HOME, true)
         }
     }
 }

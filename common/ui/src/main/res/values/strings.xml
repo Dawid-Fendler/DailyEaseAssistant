@@ -2,4 +2,7 @@
 <resources>
     <string name="google_login_title">Sign Up with Google</string>
     <string name="google_login_loading_title">Creating Account…</string>
+
+    <string name="account_balance_money_format">$ %s</string>
+
 </resources>

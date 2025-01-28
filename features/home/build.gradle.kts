@@ -1,13 +1,13 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
-    kotlin("kapt")
     alias(libs.plugins.hilt)
     alias(libs.plugins.composeP)
+    kotlin("kapt")
 }
 
 android {
-    namespace = "pl.dawidfendler.coroutines"
+    namespace = "pl.dawidfendler"
     compileSdk = 34
 
     defaultConfig {
@@ -33,12 +33,28 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
-    implementation(libs.ui)
+    implementation(project(":common:ui"))
+    implementation(project(":common:util"))
+    implementation(project(":core:coroutines"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
+
     implementation(platform(libs.compose.bom))
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.material3)
+    implementation(libs.navigation.compose)
     implementation(libs.viewmodel.lifecycle)
+    implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
+    implementation(libs.timber.logger)
+    implementation(libs.ui.preview)
+    implementation(libs.androidx.material.icons.extended)
     kapt(libs.hilt.compiler)
 }

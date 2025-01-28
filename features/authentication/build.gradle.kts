@@ -12,7 +12,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 29
+        minSdk = 30
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":core:coroutines"))
     implementation(project(":data"))
     implementation(project(":domain"))
+    implementation(project(":core:datastore"))
 
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -56,6 +57,7 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.gms.play.service)
     kapt(libs.hilt.compiler)
+    implementation(libs.data.store)
 
     testImplementation(libs.junit)
     testImplementation(libs.truth.test)

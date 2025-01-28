@@ -155,7 +155,6 @@ class LoginViewModelTest {
             verify(exactly = 2) { googleLoginUseCase(idToken = "token") }
         }
 
-
     @Test
     fun `When onAction is called with OnLoginClick and loginUseCase return DataResult Success, then send LoginEvent equal Success`() =
         runTest {

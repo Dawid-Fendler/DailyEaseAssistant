@@ -12,5 +12,5 @@
     <string name="google_login_error_message">Failed to google login, please try again.</string>
     <string name="login_field_error_message">The login credentials entered are incorrect.</string>
     <string name="registration_successful">The account has been created</string>
-    <string name="default_web_client_id">test</string>
+    <string name="default_web_client_id">554050685927-1bp2gq1uuu10gbslp79j67p9gvoqvtvu.apps.googleusercontent.com</string>
 </resources>

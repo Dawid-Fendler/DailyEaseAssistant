@@ -9,7 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 29
+        minSdk = 30
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -30,6 +30,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    buildFeatures {
+        compose = true
     }
 }
 

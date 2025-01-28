@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_welcome_text">Welcome Back</string>
+    <string name="account_balance_income_title">Income</string>
+    <string name="account_balance_spending_title">Spending</string>
+    <string name="account_balance_title">Your Balance</string>
+    <string name="account_balance_income_format">+ %s</string>
+    <string name="account_balance_spending_format">- %s</string>
+</resources>

@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "pl.dawidfendler.dailyeaseassistant"
-        minSdk = 29
+        minSdk = 30
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -56,7 +56,12 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":features:authentication"))
     implementation(project(":features:onboarding"))
+    implementation(project(":features:home"))
+    implementation(project(":features:finance_manager"))
 
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.material3)
     implementation(libs.data.store)
     implementation(libs.core.ktx)
     implementation(libs.activity.compose)
@@ -66,6 +71,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.timber.logger)
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.material.icons.extended)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)

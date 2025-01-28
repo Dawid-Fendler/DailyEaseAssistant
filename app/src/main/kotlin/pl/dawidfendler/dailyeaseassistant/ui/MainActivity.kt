@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import pl.dawidfendler.dailyeaseassistant.navigation.SetupNavGraph
+import pl.dawidfendler.dailyeaseassistant.navigation.AuthNavHost
 import pl.dawidfendler.ui.theme.DailyEaseAssistant
 
 @AndroidEntryPoint
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
             DailyEaseAssistant {
                 if (viewModel.state.isStarting) {
                     val navController = rememberNavController()
-                    SetupNavGraph(
+                    AuthNavHost(
                         startDestination = viewModel.state.navigation,
                         navController = navController
                     )

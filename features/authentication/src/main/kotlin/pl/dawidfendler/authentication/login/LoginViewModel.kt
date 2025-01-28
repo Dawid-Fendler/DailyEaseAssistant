@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import pl.dawidfendler.authentication.R
+import pl.dawidfendler.coroutines.DispatcherProvider
+import pl.dawidfendler.datastore.DataStore
+import pl.dawidfendler.datastore.DataStoreConstants.DISPLAY_HOME
 import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
 import pl.dawidfendler.util.UiText
@@ -21,7 +24,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-    private val googleLoginUseCase: GoogleLoginUseCase
+    private val googleLoginUseCase: GoogleLoginUseCase,
+    private val dataStore: DataStore,
+    private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     var state by mutableStateOf(LoginState())
@@ -81,6 +86,7 @@ internal class LoginViewModel @Inject constructor(
                             isError = false,
                             errorMessage = 0
                         )
+                        saveOnboardingDisplayed()
                         _eventChannel.send(LoginEvent.LoginSuccess)
                     }
                 }
@@ -98,8 +104,10 @@ internal class LoginViewModel @Inject constructor(
                             )
                         )
 
-                    is DataResult.Success ->
+                    is DataResult.Success -> {
+                        saveOnboardingDisplayed()
                         _eventChannel.send(LoginEvent.LoginSuccess)
+                    }
                 }
             }.launchIn(viewModelScope)
     }
@@ -111,6 +119,12 @@ internal class LoginViewModel @Inject constructor(
                     error = UiText.StringResource(R.string.google_login_error_message)
                 )
             )
+        }
+    }
+
+    private fun saveOnboardingDisplayed() {
+        viewModelScope.launch(dispatcherProvider.io) {
+            dataStore.putPreference(DISPLAY_HOME, true)
         }
     }
 }
