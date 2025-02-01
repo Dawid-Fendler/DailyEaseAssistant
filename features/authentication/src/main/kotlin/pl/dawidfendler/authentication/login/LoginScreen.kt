@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -184,7 +185,7 @@ private fun RegisterButton(onRegisterClick: () -> Unit) {
         modifier = Modifier
             .clickable { onRegisterClick.invoke() },
         text = stringResource(id = pl.dawidfendler.authentication.R.string.login_screen_create_account_title),
-        color = MD_THEME_LIGHT_PRIMARY,
+        color = MaterialTheme.colorScheme.primary,
         style = TextStyle(
             fontWeight = FontWeight.Bold,
             fontSize = sp_14

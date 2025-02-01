@@ -29,6 +29,7 @@ val sp_14 = 14.sp
 val sp_12 = 12.sp
 val sp_10 = 10.sp
 val sp_2 = 2.sp
+val sp_0 = 0.sp
 
 // Widget Size
 val WORM_INDICATOR_SIZE = 15.dp

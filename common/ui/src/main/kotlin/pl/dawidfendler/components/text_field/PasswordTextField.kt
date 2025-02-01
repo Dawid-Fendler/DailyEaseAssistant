@@ -20,8 +20,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import pl.dawidfendler.ui.R
 import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_OUTLINE
-import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_OUTLINE_VARIANT
-import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.ui.theme.dp_24
 import pl.dawidfendler.ui.theme.dp_8
@@ -45,7 +43,7 @@ fun PasswordTextField(
             Text(
                 text = hintText,
                 fontWeight = FontWeight.Bold,
-                color = MD_THEME_LIGHT_OUTLINE
+                color = MaterialTheme.colorScheme.outline
             )
         },
         onValueChange = { onValueChange.invoke(it) },
@@ -70,12 +68,12 @@ fun PasswordTextField(
         },
         shape = RoundedCornerShape(dp_16),
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = MD_THEME_LIGHT_OUTLINE_VARIANT,
-            unfocusedContainerColor = MD_THEME_LIGHT_OUTLINE_VARIANT,
-            unfocusedTrailingIconColor = MD_THEME_LIGHT_OUTLINE,
-            unfocusedLeadingIconColor = MD_THEME_LIGHT_OUTLINE,
-            focusedLeadingIconColor = MD_THEME_LIGHT_PRIMARY,
-            focusedTrailingIconColor = MD_THEME_LIGHT_PRIMARY
+            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+            unfocusedContainerColor = MaterialTheme.colorScheme.outlineVariant,
+            unfocusedTrailingIconColor = MaterialTheme.colorScheme.outline,
+            unfocusedLeadingIconColor = MaterialTheme.colorScheme.outline,
+            focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+            focusedTrailingIconColor = MaterialTheme.colorScheme.primary
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password

@@ -2,7 +2,7 @@ package pl.dawidfendler.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val MD_THEME_LIGHT_PRIMARY = Color(0xFF006491)
+val MD_THEME_LIGHT_PRIMARY = Color(0xFF2A61EE)
 val MD_THEME_LIGHT_ON_PRIMARY = Color(0xFFFFFFFF)
 val MD_THEME_LIGHT_PRIMARY_CONTAINER = Color(0xFFC9E6FF)
 val MD_THEME_LIGHT_ON_PRIMARY_CONTAINER = Color(0xFF001E2F)

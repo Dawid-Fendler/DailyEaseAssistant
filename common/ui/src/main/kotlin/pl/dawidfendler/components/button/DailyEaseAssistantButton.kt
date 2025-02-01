@@ -8,13 +8,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.ui.theme.dp_24
 import pl.dawidfendler.ui.theme.dp_56
@@ -51,7 +51,7 @@ fun DailyEaseAssistantButton(
             }
         },
         colors = ButtonDefaults.elevatedButtonColors(
-            containerColor = MD_THEME_LIGHT_PRIMARY
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         elevation = ButtonDefaults.elevatedButtonElevation(
             defaultElevation = dp_6
