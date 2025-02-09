@@ -12,9 +12,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.dawidfendler.authentication.MainDispatcherRule
+import pl.dawidfendler.coroutines.DispatcherProvider
+import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
-import pl.dawidfendler.util.flow.DataResult
+import pl.dawidfendler.util.flow.DomainResult
 
 class LoginViewModelTest {
 
@@ -24,14 +26,20 @@ class LoginViewModelTest {
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var loginUseCase: LoginUseCase
     private lateinit var googleLoginUseCase: GoogleLoginUseCase
+    private lateinit var dataStore: DataStore
+    private lateinit var dispatcherProvider: DispatcherProvider
 
     @Before
     fun setUp() {
         loginUseCase = mockk()
         googleLoginUseCase = mockk()
+        dataStore = mockk()
+        dispatcherProvider = mockk()
         loginViewModel = LoginViewModel(
             loginUseCase = loginUseCase,
-            googleLoginUseCase = googleLoginUseCase
+            googleLoginUseCase = googleLoginUseCase,
+            dataStore = dataStore,
+            dispatcherProvider = dispatcherProvider
         )
     }
 
@@ -97,7 +105,7 @@ class LoginViewModelTest {
             // GIVEN
             val mockFirebaseUser = mockk<FirebaseUser>()
             coEvery { googleLoginUseCase(idToken = "token") } returns flowOf(
-                DataResult.Success(
+                DomainResult.Success(
                     mockFirebaseUser
                 )
             )
@@ -107,7 +115,7 @@ class LoginViewModelTest {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DataResult.Success(mockFirebaseUser))
+                assertThat(result).isEqualTo(DomainResult.Success(mockFirebaseUser))
                 awaitComplete()
             }
 
@@ -129,7 +137,7 @@ class LoginViewModelTest {
             // GIVEN
             val mockThrowable = Throwable("Something wrong")
             coEvery { googleLoginUseCase(idToken = "token") } returns flowOf(
-                DataResult.Error(
+                DomainResult.Error(
                     mockThrowable
                 )
             )
@@ -139,7 +147,7 @@ class LoginViewModelTest {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DataResult.Error(mockThrowable))
+                assertThat(result).isEqualTo(DomainResult.Error(mockThrowable))
                 awaitComplete()
             }
 
@@ -165,14 +173,14 @@ class LoginViewModelTest {
                     email = "test",
                     password = "test"
                 )
-            } returns flowOf(DataResult.Success(mockFirebaseUser))
+            } returns flowOf(DomainResult.Success(mockFirebaseUser))
 
             // WHEN
             loginUseCase(email = "test", password = "test").test {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DataResult.Success(mockFirebaseUser))
+                assertThat(result).isEqualTo(DomainResult.Success(mockFirebaseUser))
                 awaitComplete()
             }
 
@@ -202,7 +210,7 @@ class LoginViewModelTest {
             // GIVEN
             val mockThrowable = Throwable("Something wrong")
             coEvery { loginUseCase(email = "test", password = "test") } returns flowOf(
-                DataResult.Error(
+                DomainResult.Error(
                     mockThrowable
                 )
             )
@@ -212,7 +220,7 @@ class LoginViewModelTest {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DataResult.Error(mockThrowable))
+                assertThat(result).isEqualTo(DomainResult.Error(mockThrowable))
                 awaitComplete()
             }
 

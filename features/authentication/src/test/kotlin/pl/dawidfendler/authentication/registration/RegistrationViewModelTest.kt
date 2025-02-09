@@ -13,16 +13,15 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.dawidfendler.authentication.MainDispatcherRule
-import pl.dawidfendler.authentication.login.LoginAction
-import pl.dawidfendler.authentication.login.LoginEvent
+import pl.dawidfendler.coroutines.DispatcherProvider
+import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication_use_case.RegistrationUseCase
 import pl.dawidfendler.domain.validator.EmailValidResult
 import pl.dawidfendler.domain.validator.EmailValidator
 import pl.dawidfendler.domain.validator.PasswordValidResult
 import pl.dawidfendler.domain.validator.PasswordValidator
-import pl.dawidfendler.util.flow.DataResult
-import kotlin.time.Duration
+import pl.dawidfendler.util.flow.DomainResult
 
 class RegistrationViewModelTest {
 
@@ -34,6 +33,8 @@ class RegistrationViewModelTest {
     private lateinit var googleLoginUseCase: GoogleLoginUseCase
     private lateinit var emailValidator: EmailValidator
     private lateinit var passwordValidator: PasswordValidator
+    private lateinit var dataStore: DataStore
+    private lateinit var dispatcherProvider: DispatcherProvider
 
     @Before
     fun setUp() {
@@ -41,11 +42,15 @@ class RegistrationViewModelTest {
         googleLoginUseCase = mockk()
         emailValidator = mockk()
         passwordValidator = mockk()
+        dataStore = mockk()
+        dispatcherProvider = mockk()
         registrationViewModel = RegistrationViewModel(
             googleLoginUseCase = googleLoginUseCase,
             registrationUseCase = registrationUseCase,
             emailValidator = emailValidator,
-            passwordValidator = passwordValidator
+            passwordValidator = passwordValidator,
+            dataStore = dataStore,
+            dispatcherProvider = dispatcherProvider
         )
     }
 
@@ -113,7 +118,7 @@ class RegistrationViewModelTest {
             // GIVEN
             val mockFirebaseUser = mockk<FirebaseUser>()
             coEvery { googleLoginUseCase(idToken = "token") } returns flowOf(
-                DataResult.Success(
+                DomainResult.Success(
                     mockFirebaseUser
                 )
             )
@@ -123,7 +128,7 @@ class RegistrationViewModelTest {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DataResult.Success(mockFirebaseUser))
+                assertThat(result).isEqualTo(DomainResult.Success(mockFirebaseUser))
                 awaitComplete()
             }
 
@@ -145,7 +150,7 @@ class RegistrationViewModelTest {
             // GIVEN
             val mockThrowable = Throwable("Something wrong")
             coEvery { googleLoginUseCase(idToken = "token") } returns flowOf(
-                DataResult.Error(
+                DomainResult.Error(
                     mockThrowable
                 )
             )
@@ -155,7 +160,7 @@ class RegistrationViewModelTest {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DataResult.Error(mockThrowable))
+                assertThat(result).isEqualTo(DomainResult.Error(mockThrowable))
                 awaitComplete()
             }
 
@@ -246,14 +251,14 @@ class RegistrationViewModelTest {
                     email = "test",
                     password = "test"
                 )
-            } returns flowOf(DataResult.Error(mockThrowable))
+            } returns flowOf(DomainResult.Error(mockThrowable))
 
             // WHEN
             registrationUseCase(email = "test", password = "test").test {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DataResult.Error(mockThrowable))
+                assertThat(result).isEqualTo(DomainResult.Error(mockThrowable))
                 awaitComplete()
             }
 
@@ -303,14 +308,14 @@ class RegistrationViewModelTest {
                     email = "test",
                     password = "test"
                 )
-            } returns flowOf(DataResult.Success(Unit))
+            } returns flowOf(DomainResult.Success(Unit))
 
             // WHEN
             registrationUseCase(email = "test", password = "test").test {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DataResult.Success(Unit))
+                assertThat(result).isEqualTo(DomainResult.Success(Unit))
                 awaitComplete()
             }
 
