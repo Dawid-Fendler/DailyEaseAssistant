@@ -50,6 +50,5 @@ dependencies {
     implementation(libs.viewmodel.lifecycle)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
-    implementation(libs.timber.logger)
     kapt(libs.hilt.compiler)
 }

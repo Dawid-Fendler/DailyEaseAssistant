@@ -69,7 +69,6 @@ dependencies {
     implementation(libs.splash.screen)
     implementation(libs.hilt.android)
     implementation(libs.navigation.compose)
-    implementation(libs.timber.logger)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.material.icons.extended)
     kapt(libs.hilt.compiler)

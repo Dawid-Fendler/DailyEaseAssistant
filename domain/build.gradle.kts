@@ -39,8 +39,8 @@ dependencies {
     implementation(project(":core:datastore"))
     implementation(libs.data.store)
     implementation(libs.hilt.android)
-    implementation(libs.timber.logger)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.retrofit)
     kapt(libs.hilt.compiler)
 }

@@ -1,0 +1,14 @@
+package pl.dawidfendler.data.model.currency.local
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import pl.dawidfendler.data.util.Constants.CURRENCIES_DATABASE_TABLE_NAME
+
+@Entity(tableName = CURRENCIES_DATABASE_TABLE_NAME)
+data class ExchangeRateTableEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    val code: String,
+    val name: String,
+    val exchangeRate: Double,
+    val lastUpdate: String
+)

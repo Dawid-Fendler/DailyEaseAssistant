@@ -20,7 +20,7 @@ import pl.dawidfendler.domain.use_case.authentication_use_case.RegistrationUseCa
 import pl.dawidfendler.domain.validator.EmailValidator
 import pl.dawidfendler.domain.validator.PasswordValidator
 import pl.dawidfendler.util.UiText
-import pl.dawidfendler.util.flow.DataResult
+import pl.dawidfendler.util.flow.DomainResult
 import javax.inject.Inject
 
 @HiltViewModel
@@ -82,7 +82,7 @@ class RegistrationViewModel @Inject constructor(
             ).onEach { result ->
                 state = state.copy(isRegistering = false)
                 when (result) {
-                    is DataResult.Error -> {
+                    is DomainResult.Error -> {
                         _eventChannel.send(
                             RegistrationEvent.Error(
                                 error = UiText.StringResource(R.string.registration_error_message)
@@ -90,7 +90,7 @@ class RegistrationViewModel @Inject constructor(
                         )
                     }
 
-                    is DataResult.Success -> {
+                    is DomainResult.Success -> {
                         _eventChannel.send(RegistrationEvent.RegistrationSuccess)
                     }
                 }
@@ -101,14 +101,14 @@ class RegistrationViewModel @Inject constructor(
         googleLoginUseCase.invoke(idToken = idToken)
             .onEach { result ->
                 when (result) {
-                    is DataResult.Error ->
+                    is DomainResult.Error ->
                         _eventChannel.send(
                             RegistrationEvent.Error(
                                 error = UiText.StringResource(R.string.google_login_error_message)
                             )
                         )
 
-                    is DataResult.Success -> {
+                    is DomainResult.Success -> {
                         saveOnboardingDisplayed()
                         _eventChannel.send(RegistrationEvent.LoginSuccess)
                     }

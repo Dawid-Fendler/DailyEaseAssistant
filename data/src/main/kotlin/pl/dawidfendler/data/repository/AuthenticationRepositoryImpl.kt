@@ -1,5 +1,6 @@
 package pl.dawidfendler.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -15,7 +16,6 @@ import pl.dawidfendler.util.exception.LoginFirebaseException
 import pl.dawidfendler.util.exception.LogoutFirebaseException
 import pl.dawidfendler.util.exception.RegistrationFirebaseException
 import pl.dawidfendler.util.ext.awaitCustom
-import timber.log.Timber
 import javax.inject.Inject
 
 class AuthenticationRepositoryImpl @Inject constructor(
@@ -29,7 +29,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).awaitCustom()
             emit(authResult.user)
         } catch (e: Exception) {
-            Timber.e(e)
+            Log.e("login Exception", "$e")
             throw LoginFirebaseException()
         }
     }.flowOn(dispatcherProvider.io)
@@ -40,7 +40,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             val authResult = firebaseAuth.signInWithCredential(credential).awaitCustom()
             emit(authResult.user)
         } catch (e: Exception) {
-            Timber.e(e)
+            Log.e("googleLogin Exception", "$e")
             throw GoogleLoginFirebaseException()
         }
     }.flowOn(dispatcherProvider.io)
@@ -50,7 +50,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).awaitCustom()
             emit(authResult.user)
         } catch (e: Exception) {
-            Timber.e(e)
+            Log.e("registerUser Exception", "$e")
             throw RegistrationFirebaseException()
         }
     }.flowOn(dispatcherProvider.io)
@@ -60,7 +60,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             firebaseAuth.signOut()
             emit(Unit)
         } catch (e: Exception) {
-            Timber.e(e)
+            Log.e("logout Exception", "$e")
             throw LogoutFirebaseException()
         }
     }.flowOn(dispatcherProvider.io)
@@ -70,7 +70,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             val currentUser = firebaseAuth.currentUser
             emit(currentUser)
         } catch (e: Exception) {
-            Timber.e(e)
+            Log.e("getUser Exception", "$e")
             throw GetUserFirebaseException()
         }
     }.flowOn(dispatcherProvider.io)

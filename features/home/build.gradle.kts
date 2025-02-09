@@ -53,7 +53,6 @@ dependencies {
     implementation(libs.viewmodel.lifecycle)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
-    implementation(libs.timber.logger)
     implementation(libs.ui.preview)
     implementation(libs.androidx.material.icons.extended)
     kapt(libs.hilt.compiler)

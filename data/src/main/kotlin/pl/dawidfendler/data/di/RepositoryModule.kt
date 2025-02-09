@@ -5,14 +5,18 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pl.dawidfendler.data.repository.AuthenticationRepositoryImpl
+import pl.dawidfendler.data.repository.CurrenciesRepositoryImpl
 import pl.dawidfendler.domain.repository.AuthenticationRepository
-import javax.inject.Singleton
+import pl.dawidfendler.domain.repository.CurrenciesRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
 interface RepositoryModule {
 
     @Binds
-    @Singleton
-    fun binAuthenticationRepository(impl: AuthenticationRepositoryImpl): AuthenticationRepository
+    fun bindAuthenticationRepository(impl: AuthenticationRepositoryImpl): AuthenticationRepository
+
+    @Binds
+    fun bindCurrenciesRepository(impl: CurrenciesRepositoryImpl): CurrenciesRepository
+
 }

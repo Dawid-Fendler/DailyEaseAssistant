@@ -52,7 +52,6 @@ dependencies {
     implementation(libs.viewmodel.lifecycle)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
-    implementation(libs.timber.logger)
     implementation(libs.ui.preview)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.gms.play.service)

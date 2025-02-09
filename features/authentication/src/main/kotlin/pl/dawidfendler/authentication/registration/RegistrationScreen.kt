@@ -1,6 +1,7 @@
 package pl.dawidfendler.authentication.registration
 
 import android.app.Activity.RESULT_OK
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -40,7 +41,6 @@ import pl.dawidfendler.ui.theme.dp_24
 import pl.dawidfendler.ui.theme.dp_48
 import pl.dawidfendler.ui.theme.dp_56
 import pl.dawidfendler.ui.theme.sp_14
-import timber.log.Timber
 
 @Composable
 fun RegistrationScreen(
@@ -74,7 +74,7 @@ fun RegistrationScreen(
                         }
                     }
             } catch (e: Exception) {
-                Timber.e(e)
+                Log.e("RegistrationScreen Exception", "$e")
                 onAction.invoke(RegistrationAction.OnGoogleLoginError)
             }
         }

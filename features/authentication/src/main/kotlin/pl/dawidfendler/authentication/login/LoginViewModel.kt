@@ -18,7 +18,7 @@ import pl.dawidfendler.datastore.DataStoreConstants.DISPLAY_HOME
 import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
 import pl.dawidfendler.util.UiText
-import pl.dawidfendler.util.flow.DataResult
+import pl.dawidfendler.util.flow.DomainResult
 import javax.inject.Inject
 
 @HiltViewModel
@@ -69,7 +69,7 @@ internal class LoginViewModel @Inject constructor(
             ).onEach { result ->
                 state = state.copy(isLogin = false)
                 when (result) {
-                    is DataResult.Error -> {
+                    is DomainResult.Error -> {
                         state = state.copy(
                             isError = true,
                             errorMessage = R.string.login_field_error_message
@@ -81,7 +81,7 @@ internal class LoginViewModel @Inject constructor(
                         )
                     }
 
-                    is DataResult.Success -> {
+                    is DomainResult.Success -> {
                         state = state.copy(
                             isError = false,
                             errorMessage = 0
@@ -97,14 +97,14 @@ internal class LoginViewModel @Inject constructor(
         googleLoginUseCase.invoke(idToken = idToken)
             .onEach { result ->
                 when (result) {
-                    is DataResult.Error ->
+                    is DomainResult.Error ->
                         _eventChannel.send(
                             LoginEvent.Error(
                                 error = UiText.StringResource(R.string.google_login_error_message)
                             )
                         )
 
-                    is DataResult.Success -> {
+                    is DomainResult.Success -> {
                         saveOnboardingDisplayed()
                         _eventChannel.send(LoginEvent.LoginSuccess)
                     }

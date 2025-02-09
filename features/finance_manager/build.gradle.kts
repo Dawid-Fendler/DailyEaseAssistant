@@ -55,8 +55,8 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.androidx.material.icons.extended)
-    implementation(libs.timber.logger)
     implementation(libs.ui.preview)
+
     kapt(libs.hilt.compiler)
     implementation(libs.data.store)
 }

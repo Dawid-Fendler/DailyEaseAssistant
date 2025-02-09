@@ -1,6 +1,7 @@
 package pl.dawidfendler.authentication.login
 
 import android.app.Activity.RESULT_OK
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -45,7 +46,6 @@ import pl.dawidfendler.ui.theme.dp_36
 import pl.dawidfendler.ui.theme.dp_80
 import pl.dawidfendler.ui.theme.sp_14
 import pl.dawidfendler.ui.theme.sp_24
-import timber.log.Timber
 
 @Composable
 internal fun LoginScreen(
@@ -79,7 +79,7 @@ internal fun LoginScreen(
                         }
                     }
             } catch (e: Exception) {
-                Timber.e(e)
+                Log.e("LoginScreen Exception", "$e")
                 onAction.invoke(LoginAction.OnGoogleLoginError)
             }
         }

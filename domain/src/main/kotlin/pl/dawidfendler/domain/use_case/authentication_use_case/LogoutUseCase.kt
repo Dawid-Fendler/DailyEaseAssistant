@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import pl.dawidfendler.domain.repository.AuthenticationRepository
-import pl.dawidfendler.util.flow.DataResult
+import pl.dawidfendler.util.flow.DomainResult
 import javax.inject.Inject
 
 class LogoutUseCase @Inject constructor(
@@ -15,7 +15,7 @@ class LogoutUseCase @Inject constructor(
     operator fun invoke() = flow {
         authenticationRepository.logout()
             .onEach { result ->
-                emit(DataResult.Success(result))
+                emit(DomainResult.Success(result))
             }.catch { err ->
                 throw err
             }.collect()
