@@ -32,7 +32,13 @@ import pl.dawidfendler.ui.theme.dp_48
 import pl.dawidfendler.ui.theme.sp_36
 
 @Composable
-fun AccountBalance(modifier: Modifier = Modifier) {
+fun AccountBalance(
+    modifier: Modifier = Modifier,
+    onAddClick: () -> Unit,
+    onMinusClick: () -> Unit,
+    onCurrenciesClick: () -> Unit,
+    onHistoryClick: () -> Unit
+) {
     Card(
         modifier = modifier
             .padding(horizontal = dp_16)
@@ -90,7 +96,7 @@ fun AccountBalance(modifier: Modifier = Modifier) {
                     modifier = Modifier,
                     icon = Icons.Default.Add,
                     onClick = {
-
+                        onAddClick.invoke()
                     },
                     text = "Add",
                     showText = true,
@@ -100,7 +106,7 @@ fun AccountBalance(modifier: Modifier = Modifier) {
                     modifier = Modifier,
                     icon = Icons.Default.Remove,
                     onClick = {
-
+                        onMinusClick.invoke()
                     },
                     text = "Remove",
                     showText = true
@@ -110,7 +116,7 @@ fun AccountBalance(modifier: Modifier = Modifier) {
                     modifier = Modifier,
                     icon = Icons.Default.CurrencyExchange,
                     onClick = {
-
+                        onCurrenciesClick.invoke()
                     },
                     text = "Currency",
                     showText = true
@@ -120,7 +126,7 @@ fun AccountBalance(modifier: Modifier = Modifier) {
                     modifier = Modifier,
                     icon = Icons.Default.History,
                     onClick = {
-
+                        onHistoryClick.invoke()
                     },
                     text = "History",
                     showText = true

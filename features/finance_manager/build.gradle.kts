@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":common:ui"))
     implementation(project(":common:util"))
     implementation(project(":core:coroutines"))
+    implementation(project(":core:datastore"))
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":core:datastore"))
@@ -56,6 +57,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.ui.preview)
+    implementation(libs.data.store)
 
     kapt(libs.hilt.compiler)
     implementation(libs.data.store)

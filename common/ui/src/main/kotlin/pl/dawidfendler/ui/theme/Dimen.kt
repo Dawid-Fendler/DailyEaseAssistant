@@ -10,6 +10,7 @@ val dp_80 = 80.dp
 val dp_56 = 56.dp
 val dp_48 = 48.dp
 val dp_36 = 36.dp
+val dp_30 = 30.dp
 val dp_24 = 24.dp
 val dp_20 = 20.dp
 val dp_16 = 16.dp

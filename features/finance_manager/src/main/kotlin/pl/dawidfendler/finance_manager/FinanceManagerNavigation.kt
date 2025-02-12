@@ -14,7 +14,9 @@ fun NavGraphBuilder.financeManagerRout(
         val viewModel: FinanceManagerViewModel = hiltViewModel()
 
         FinanceManagerScreen(
-            modifier = modifier
+            modifier = modifier,
+            state = viewModel.state,
+            onAction = viewModel::onAction
         )
     }
 }

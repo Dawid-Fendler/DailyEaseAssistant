@@ -49,7 +49,7 @@ fun RegistrationScreen(
     onBackClick: () -> Unit
 ) {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken(stringResource(pl.dawidfendler.authentication.R.string.default_web_client_id))
+        .requestIdToken(stringResource(R.string.default_web_client_id))
         .requestEmail()
         .build()
     val mGoogleSignInClient = GoogleSignIn.getClient(LocalContext.current, gso)
