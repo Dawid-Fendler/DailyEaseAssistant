@@ -23,12 +23,14 @@ import pl.dawidfendler.ui.theme.sp_14
 
 @Composable
 fun DailyEaseAssistantButton(
+    modifier: Modifier = Modifier,
     name: String = "",
     onClick: () -> Unit = {},
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    isEnabled: Boolean = true
 ) {
     ElevatedButton(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(dp_56)
             .padding(horizontal = dp_56),
@@ -56,6 +58,7 @@ fun DailyEaseAssistantButton(
         elevation = ButtonDefaults.elevatedButtonElevation(
             defaultElevation = dp_6
         ),
-        shape = RoundedCornerShape(dp_16)
+        shape = RoundedCornerShape(dp_16),
+        enabled = isEnabled
     )
 }

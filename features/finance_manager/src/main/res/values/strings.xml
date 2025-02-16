@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="account_balance_title">Your Balance</string>
+    <string name="add_money">Add money</string>
+    <string name="spent_money">Spent money</string>
+    <string name="currencies_bottom_dialog_title">Select your main currency</string>
 </resources>

@@ -69,6 +69,8 @@ class FinanceManagerViewModel @Inject constructor(
         when (action) {
             is SavedSelectedCurrencies -> savedSelectedCurrencies(action.selectedCurrencies)
             is GetSelectedCurrencies -> getSelectedCurrencies()
+            is FinanceManagerAction.AddMoney -> Unit
+            is FinanceManagerAction.SpentMoney -> Unit
         }
     }
 

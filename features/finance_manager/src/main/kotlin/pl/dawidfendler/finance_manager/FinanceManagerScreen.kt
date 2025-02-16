@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -68,7 +69,11 @@ fun FinanceManagerScreen(
                 content = {
                     when (isSheetOpen) {
                         AddMoneyBottomSheet -> TransactionOperationBottomSheet(
-                            transactionOperations = TransactionOperations.ADD
+                            transactionOperations = TransactionOperations.ADD,
+                            moneyOperationOnClick = { money ->
+                                isSheetOpen = null
+                                onAction.invoke(FinanceManagerAction.AddMoney(money))
+                            }
                         )
                         CurrenciesBottomSheet -> {
                             onAction.invoke(FinanceManagerAction.GetSelectedCurrencies)
@@ -83,7 +88,11 @@ fun FinanceManagerScreen(
                         }
 
                         SpentMoneyBottomSheet -> TransactionOperationBottomSheet(
-                            transactionOperations = TransactionOperations.MINUS
+                            transactionOperations = TransactionOperations.MINUS,
+                            moneyOperationOnClick = { money ->
+                                isSheetOpen = null
+                                onAction.invoke(FinanceManagerAction.SpentMoney(money))
+                            }
                         )
                         TransactionHistoryBottomSheet -> TransactionsHistoryBottomSheet(
                             transactionsHistory = emptyList()
@@ -97,7 +106,8 @@ fun FinanceManagerScreen(
                 containerColor = Color.White,
                 onDismissRequest = {
                     isSheetOpen = null
-                }
+                },
+                dragHandle = null
             )
         }
     }
