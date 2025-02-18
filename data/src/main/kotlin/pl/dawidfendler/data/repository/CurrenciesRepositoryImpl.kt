@@ -1,10 +1,11 @@
 package pl.dawidfendler.data.repository
 
-import android.util.Log
-import pl.dawidfendler.data.datasource.local.CurrenciesLocalDataSource
+import pl.dawidfendler.data.datasource.local.currencies.CurrenciesLocalDataSource
 import pl.dawidfendler.data.datasource.remote.currencies.CurrenciesRemoteDataSource
 import pl.dawidfendler.data.mapper.toDomain
 import pl.dawidfendler.data.mapper.toEntity
+import pl.dawidfendler.data.util.Constants.TABLE_A_NAME
+import pl.dawidfendler.data.util.Constants.TABLE_B_NAME
 import pl.dawidfendler.data.util.safeCall
 import pl.dawidfendler.date.DateTimeUtils
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
@@ -21,8 +22,15 @@ class CurrenciesRepositoryImpl @Inject constructor(
 ) : CurrenciesRepository {
 
     override suspend fun getCurrenciesTableA(): DataResult<List<ExchangeRateTable>?, NetworkError> {
-       val currenciesFromDb = currenciesLocalDataSource.getAllCurrencies()
-        return if (currenciesFromDb.isNotEmpty()) {
+        val currenciesFromDb = currenciesLocalDataSource.getAllCurrencies()
+        val lastUpdatedDate = currenciesFromDb.firstOrNull {
+            it.tableName == TABLE_A_NAME
+        }?.lastUpdate?.let {
+            dateTimeUtils.isToday(
+                dateTime = dateTimeUtils.convertStringToOffsetDateTimeIsoFormat(it)
+            )
+        }
+        return if (currenciesFromDb.isNotEmpty() || lastUpdatedDate == true) {
             DataResult.Success(currenciesFromDb.map { it.toDomain() })
         } else {
             val getTableA = safeCall(
@@ -39,7 +47,8 @@ class CurrenciesRepositoryImpl @Inject constructor(
 
             when (getTableA) {
                 is DataResult.Success -> {
-                    getTableA.data?.map { it.toEntity(dateTimeUtils) }
+                    deleteCurrencies()
+                    getTableA.data?.map { it.toEntity(dateTimeUtils, TABLE_A_NAME) }
                         ?.let { currenciesLocalDataSource.insertAll(it) }
                 }
 
@@ -50,27 +59,39 @@ class CurrenciesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCurrenciesTableB(): DataResult<List<ExchangeRateTable>?, NetworkError> {
-            val getTableB = safeCall(
-                responseName = "CurrenciesApi GetTableB"
-            ) {
-                currenciesRemoteDataSource.getTableB()
-            }.map { response ->
-                response?.flatMap {
-                    it.rates.map { rates ->
-                        rates.toDomain()
-                    }
+        val currenciesFromDb = currenciesLocalDataSource.getAllCurrencies()
+        val lastUpdatedDate = currenciesFromDb.firstOrNull {
+            it.tableName == TABLE_B_NAME
+        }?.lastUpdate?.let {
+            dateTimeUtils.isToday(
+                dateTime = dateTimeUtils.convertStringToOffsetDateTimeIsoFormat(it)
+            )
+        }
+        if (lastUpdatedDate == true) {
+            return DataResult.Success(emptyList())
+        }
+
+        val getTableB = safeCall(
+            responseName = "CurrenciesApi GetTableB"
+        ) {
+            currenciesRemoteDataSource.getTableB()
+        }.map { response ->
+            response?.flatMap {
+                it.rates.map { rates ->
+                    rates.toDomain()
                 }
             }
+        }
 
-            when (getTableB) {
-                is DataResult.Success -> {
-                    getTableB.data?.map { it.toEntity(dateTimeUtils) }
-                        ?.let { currenciesLocalDataSource.insertAll(it) }
-                }
-
-                else -> Unit
+        when (getTableB) {
+            is DataResult.Success -> {
+                getTableB.data?.map { it.toEntity(dateTimeUtils, TABLE_B_NAME) }
+                    ?.let { currenciesLocalDataSource.insertAll(it) }
             }
-            return getTableB
+
+            else -> Unit
+        }
+        return getTableB
     }
 
     override suspend fun deleteCurrencies() {

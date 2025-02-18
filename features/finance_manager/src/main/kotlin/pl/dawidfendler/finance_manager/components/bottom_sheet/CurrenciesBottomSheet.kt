@@ -5,7 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import pl.dawidfendler.components.text_field.CustomText
+import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.finance_manager.R
 import pl.dawidfendler.ui.theme.dp_1
 import pl.dawidfendler.ui.theme.dp_16
@@ -35,7 +35,7 @@ import pl.dawidfendler.ui.theme.sp_14
 @Composable
 internal fun CurrenciesBottomSheet(
     modifier: Modifier = Modifier,
-    currencies: List<String>,
+    currencies: List<ExchangeRateTable>,
     selectedCurrency: String,
     onSelectCurrency: (String) -> Unit
 ) {
@@ -66,7 +66,7 @@ internal fun CurrenciesBottomSheet(
 @Composable
 fun CurrencyItem(
     modifier: Modifier = Modifier,
-    currency: String,
+    currency: ExchangeRateTable,
     selectedCurrency: String,
     onSelectCurrency: (String) -> Unit
 ) {
@@ -83,7 +83,7 @@ fun CurrencyItem(
             )
             .border(
                 width = dp_1,
-                color = if (currency == selectedCurrency) {
+                color = if (currency.currencyCode == selectedCurrency) {
                     MaterialTheme.colorScheme.primary
                 } else {
                     Color.Black
@@ -91,13 +91,13 @@ fun CurrencyItem(
                 shape = RoundedCornerShape(dp_16)
             )
             .clickable {
-                onSelectCurrency(currency)
+                onSelectCurrency(currency.currencyCode)
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = currency,
-            color = if (currency == selectedCurrency) {
+            text = currency.currencyName,
+            color = if (currency.currencyCode == selectedCurrency) {
                 MaterialTheme.colorScheme.primary
             } else {
                 Color.Black
@@ -112,9 +112,9 @@ fun CurrencyItem(
         )
 
         RadioButton(
-            selected = currency == selectedCurrency,
+            selected = currency.currencyCode == selectedCurrency,
             onClick = {
-                onSelectCurrency(currency)
+                onSelectCurrency(currency.currencyCode)
             },
             colors = RadioButtonDefaults.colors().copy(
                 selectedColor = MaterialTheme.colorScheme.primary

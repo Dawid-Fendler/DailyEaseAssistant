@@ -2,7 +2,7 @@ package pl.dawidfendler.data.datasource.database.currencies
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import pl.dawidfendler.data.model.currency.local.ExchangeRateTableEntity
+import pl.dawidfendler.data.model.currency.local.currencies.ExchangeRateTableEntity
 
 @Database(
     entities = [ExchangeRateTableEntity::class],

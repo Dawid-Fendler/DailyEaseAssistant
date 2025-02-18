@@ -4,4 +4,8 @@
     <string name="add_money">Add money</string>
     <string name="spent_money">Spent money</string>
     <string name="currencies_bottom_dialog_title">Select your main currency</string>
+    <string name="add">Add</string>
+    <string name="remove">Remove</string>
+    <string name="history">History</string>
+    <string name="currency">Currency</string>
 </resources>

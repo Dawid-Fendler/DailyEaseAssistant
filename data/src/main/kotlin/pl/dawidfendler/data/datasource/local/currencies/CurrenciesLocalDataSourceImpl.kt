@@ -1,7 +1,7 @@
-package pl.dawidfendler.data.datasource.local
+package pl.dawidfendler.data.datasource.local.currencies
 
 import pl.dawidfendler.data.datasource.database.currencies.CurrenciesDao
-import pl.dawidfendler.data.model.currency.local.ExchangeRateTableEntity
+import pl.dawidfendler.data.model.currency.local.currencies.ExchangeRateTableEntity
 import javax.inject.Inject
 
 class CurrenciesLocalDataSourceImpl @Inject constructor(

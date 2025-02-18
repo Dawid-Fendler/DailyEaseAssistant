@@ -43,7 +43,6 @@ dependencies {
     implementation(project(":common:util"))
     implementation(project(":core:coroutines"))
     implementation(project(":core:datastore"))
-    implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":core:datastore"))
 

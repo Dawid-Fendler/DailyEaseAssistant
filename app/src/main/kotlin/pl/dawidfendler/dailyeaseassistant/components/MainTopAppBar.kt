@@ -64,7 +64,6 @@ fun MainTopAppBar(
                     CustomText(
                         text = name,
                         letterSpacing = sp_0,
-                        lineHeight = sp_0,
                         color = MaterialTheme.colorScheme.surfaceVariant
                     )
 
@@ -72,7 +71,6 @@ fun MainTopAppBar(
                         text = stringResource(R.string.home_welcome_text),
                         fontSize = sp_14,
                         letterSpacing = sp_0,
-                        lineHeight = sp_0,
                         fontWeight = FontWeight.Normal,
                         color = Color.White
                     )

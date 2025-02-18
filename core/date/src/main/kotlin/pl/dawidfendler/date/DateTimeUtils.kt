@@ -1,6 +1,9 @@
 package pl.dawidfendler.date
 
+import pl.dawidfendler.util.Constants.EUROPE_OFFSET
+import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
@@ -15,6 +18,12 @@ class DateTimeUtils @Inject constructor(): DateTime {
         val today = convertDateToIsoLocalDateFormat(getCurrentDate())
         val dateToCheck = convertDateToIsoLocalDateFormat(dateTime)
         return today == dateToCheck
+    }
+
+    override fun convertStringToOffsetDateTimeIsoFormat(date: String): OffsetDateTime {
+        val localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE)
+        val zoneId = ZoneId.of(EUROPE_OFFSET)
+        return localDate.atStartOfDay(zoneId).toOffsetDateTime()
     }
 
 }

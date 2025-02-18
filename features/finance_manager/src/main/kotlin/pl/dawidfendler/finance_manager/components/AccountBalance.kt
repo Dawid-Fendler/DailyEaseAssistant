@@ -29,6 +29,7 @@ import pl.dawidfendler.ui.theme.dp_2
 import pl.dawidfendler.ui.theme.dp_24
 import pl.dawidfendler.ui.theme.dp_4
 import pl.dawidfendler.ui.theme.dp_48
+import pl.dawidfendler.ui.theme.sp_20
 import pl.dawidfendler.ui.theme.sp_36
 
 @Composable
@@ -37,7 +38,10 @@ fun AccountBalance(
     onAddClick: () -> Unit,
     onMinusClick: () -> Unit,
     onCurrenciesClick: () -> Unit,
-    onHistoryClick: () -> Unit
+    onHistoryClick: () -> Unit,
+    accountBalance: String,
+    selectedCurrencyCode: String,
+    accountBalanceColor: Color
 ) {
     Card(
         modifier = modifier
@@ -71,15 +75,21 @@ fun AccountBalance(
 
             CustomText(
                 text = stringResource(
-                    pl.dawidfendler.ui.R.string.account_balance_money_format,
-                    "5402.20"
+                    pl.dawidfendler.ui.R.string.account_balance_money_format_code,
+                    accountBalance,
+                    selectedCurrencyCode
                 ),
-                fontSize = sp_36,
-                color = Color.Black,
+                fontSize = if (accountBalance.length > 9) {
+                    sp_20
+                } else {
+                    sp_36
+                },
+                color = accountBalanceColor,
                 modifier = Modifier
                     .padding(
                         top = dp_16,
-                        start = dp_16
+                        start = dp_16,
+                        end = dp_16
                     )
             )
             Row(
@@ -98,7 +108,7 @@ fun AccountBalance(
                     onClick = {
                         onAddClick.invoke()
                     },
-                    text = "Add",
+                    text = stringResource(R.string.add),
                     showText = true,
                 )
 
@@ -108,7 +118,7 @@ fun AccountBalance(
                     onClick = {
                         onMinusClick.invoke()
                     },
-                    text = "Remove",
+                    text = stringResource(R.string.remove),
                     showText = true
                 )
 
@@ -118,7 +128,7 @@ fun AccountBalance(
                     onClick = {
                         onCurrenciesClick.invoke()
                     },
-                    text = "Currency",
+                    text = stringResource(R.string.currency),
                     showText = true
                 )
 
@@ -128,7 +138,7 @@ fun AccountBalance(
                     onClick = {
                         onHistoryClick.invoke()
                     },
-                    text = "History",
+                    text = stringResource(R.string.history),
                     showText = true
                 )
             }

@@ -4,5 +4,6 @@
     <string name="google_login_loading_title">Creating Account…</string>
 
     <string name="account_balance_money_format">$ %s</string>
+    <string name="account_balance_money_format_code">%s %s</string>
     <string name="confirm_button_title">Confirm</string>
 </resources>

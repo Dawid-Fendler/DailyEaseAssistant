@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -17,7 +17,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import pl.dawidfendler.FinanceManagerState
 import pl.dawidfendler.finance_manager.components.AccountBalance
 import pl.dawidfendler.finance_manager.components.bottom_sheet.ActionBottomSheet
@@ -61,7 +60,10 @@ fun FinanceManagerScreen(
             },
             onCurrenciesClick = {
                 isSheetOpen = CurrenciesBottomSheet
-            }
+            },
+            accountBalance = state.accountBalance,
+            selectedCurrencyCode = state.selectedCurrency,
+            accountBalanceColor = state.accountBalanceColor
         )
 
         if (isSheetOpen != null) {
@@ -79,7 +81,7 @@ fun FinanceManagerScreen(
                             onAction.invoke(FinanceManagerAction.GetSelectedCurrencies)
                             CurrenciesBottomSheet(
                                 currencies = state.currencies,
-                                selectedCurrency = state.selectedCurrencies,
+                                selectedCurrency = state.selectedCurrency,
                                 onSelectCurrency = { currency ->
                                     isSheetOpen = null
                                     onAction.invoke(FinanceManagerAction.SavedSelectedCurrencies(currency))
@@ -103,7 +105,7 @@ fun FinanceManagerScreen(
                 },
                 sheetState = sheetState,
                 shape = RoundedCornerShape(dp_24),
-                containerColor = Color.White,
+                containerColor = MaterialTheme.colorScheme.inverseOnSurface,
                 onDismissRequest = {
                     isSheetOpen = null
                 },

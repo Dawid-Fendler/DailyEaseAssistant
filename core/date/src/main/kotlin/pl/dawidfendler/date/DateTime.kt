@@ -7,4 +7,5 @@ interface DateTime {
     fun getCurrentDate(): OffsetDateTime
     fun convertDateToIsoLocalDateFormat(date: OffsetDateTime): String
     fun isToday(dateTime: OffsetDateTime): Boolean
+    fun convertStringToOffsetDateTimeIsoFormat(date: String): OffsetDateTime
 }

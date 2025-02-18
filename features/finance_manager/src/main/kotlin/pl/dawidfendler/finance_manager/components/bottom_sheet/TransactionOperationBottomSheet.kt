@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import pl.dawidfendler.components.button.DailyEaseAssistantButton
 import pl.dawidfendler.components.text_field.CustomText
 import pl.dawidfendler.components.text_field.MyTextField
@@ -46,12 +47,15 @@ fun TransactionOperationBottomSheet(
                 stringResource(R.string.spent_money)
             },
             modifier = Modifier
-                .padding(dp_16)
+                .padding(dp_16),
+            textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier
-            .height(dp_16)
-            .weight(0.2f))
+        Spacer(
+            modifier = Modifier
+                .height(dp_16)
+                .weight(0.2f)
+        )
 
         MyTextField(
             value = moneyValue,
@@ -65,7 +69,7 @@ fun TransactionOperationBottomSheet(
                         }
                     }
 
-                        moneyValue = filteredValue
+                moneyValue = filteredValue
             },
             hintText = if (transactionOperations == TransactionOperations.ADD) {
                 stringResource(R.string.add_money)
@@ -76,13 +80,15 @@ fun TransactionOperationBottomSheet(
             keyboardType = KeyboardType.Number
         )
 
-        Spacer(modifier = Modifier
-            .height(dp_16)
-            .weight(0.5f))
+        Spacer(
+            modifier = Modifier
+                .height(dp_16)
+                .weight(0.5f)
+        )
 
         DailyEaseAssistantButton(
             name = stringResource(pl.dawidfendler.ui.R.string.confirm_button_title),
-            onClick = { moneyOperationOnClick(moneyValue)},
+            onClick = { moneyOperationOnClick(moneyValue) },
             modifier = Modifier
                 .padding(bottom = dp_16),
             isEnabled = moneyValue.isNotBlank()

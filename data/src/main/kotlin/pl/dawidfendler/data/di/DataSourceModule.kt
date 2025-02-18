@@ -7,8 +7,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pl.dawidfendler.data.datasource.database.currencies.CurrenciesDatabase
-import pl.dawidfendler.data.datasource.local.CurrenciesLocalDataSource
-import pl.dawidfendler.data.datasource.local.CurrenciesLocalDataSourceImpl
+import pl.dawidfendler.data.datasource.database.user.UserDatabase
+import pl.dawidfendler.data.datasource.local.currencies.CurrenciesLocalDataSource
+import pl.dawidfendler.data.datasource.local.currencies.CurrenciesLocalDataSourceImpl
+import pl.dawidfendler.data.datasource.local.user.UserLocalDataSource
+import pl.dawidfendler.data.datasource.local.user.UserLocalDataSourceImpl
 import pl.dawidfendler.data.datasource.remote.currencies.CurrenciesRemoteDataSource
 import pl.dawidfendler.data.datasource.remote.currencies.CurrenciesRemoteDataSourceImpl
 import pl.dawidfendler.data.service.currency.CurrenciesApi
@@ -30,4 +33,8 @@ object DataSourceModule {
     @Provides
     fun provideCurrenciesLocalDataSource(db: CurrenciesDatabase): CurrenciesLocalDataSource =
         CurrenciesLocalDataSourceImpl(db.currenciesDao())
+
+    @Provides
+    fun provideUserLocalDataSource(db: UserDatabase): UserLocalDataSource =
+        UserLocalDataSourceImpl(db.userDao())
 }
