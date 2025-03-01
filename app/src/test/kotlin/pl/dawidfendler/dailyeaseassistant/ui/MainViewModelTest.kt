@@ -12,6 +12,7 @@ import org.junit.Test
 import pl.dawidfendler.dailyeaseassistant.ui.MainDispatcherRule
 import pl.dawidfendler.dailyeaseassistant.ui.MainState
 import pl.dawidfendler.dailyeaseassistant.ui.MainViewModel
+import pl.dawidfendler.domain.use_case.home_use_case.GetDisplayHomeUseCase
 import pl.dawidfendler.domain.use_case.onboarding_use_case.GetOnboardingDisplayedUseCase
 import pl.dawidfendler.util.navigation.Navigation
 
@@ -24,12 +25,14 @@ class MainViewModelTest {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var getOnboardingDisplayedUseCase: GetOnboardingDisplayedUseCase
+    private lateinit var getDisplayHomeUseCase: GetDisplayHomeUseCase
 
     @Before
     fun setUp() {
         getOnboardingDisplayedUseCase = mockk()
         mainViewModel = MainViewModel(
-            getOnboardingDisplayedUseCase = getOnboardingDisplayedUseCase
+            getOnboardingDisplayedUseCase = getOnboardingDisplayedUseCase,
+            getDisplayHomeUseCase = getDisplayHomeUseCase
         )
     }
 

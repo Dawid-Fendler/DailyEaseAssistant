@@ -7,7 +7,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class DateTimeUtils @Inject constructor(): DateTime {
+class DateTimeUtils @Inject constructor() : DateTime {
 
     override fun getCurrentDate(): OffsetDateTime = OffsetDateTime.now()
     override fun convertDateToIsoLocalDateFormat(date: OffsetDateTime): String {
@@ -25,5 +25,4 @@ class DateTimeUtils @Inject constructor(): DateTime {
         val zoneId = ZoneId.of(EUROPE_OFFSET)
         return localDate.atStartOfDay(zoneId).toOffsetDateTime()
     }
-
 }

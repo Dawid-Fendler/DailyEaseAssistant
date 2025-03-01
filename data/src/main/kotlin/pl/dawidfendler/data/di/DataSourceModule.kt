@@ -6,8 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import pl.dawidfendler.data.datasource.database.currencies.CurrenciesDatabase
-import pl.dawidfendler.data.datasource.database.user.UserDatabase
+import pl.dawidfendler.data.database.UserDatabase
 import pl.dawidfendler.data.datasource.local.currencies.CurrenciesLocalDataSource
 import pl.dawidfendler.data.datasource.local.currencies.CurrenciesLocalDataSourceImpl
 import pl.dawidfendler.data.datasource.local.user.UserLocalDataSource
@@ -31,7 +30,7 @@ object DataSourceModule {
         CurrenciesRemoteDataSourceImpl(api)
 
     @Provides
-    fun provideCurrenciesLocalDataSource(db: CurrenciesDatabase): CurrenciesLocalDataSource =
+    fun provideCurrenciesLocalDataSource(db: UserDatabase): CurrenciesLocalDataSource =
         CurrenciesLocalDataSourceImpl(db.currenciesDao())
 
     @Provides

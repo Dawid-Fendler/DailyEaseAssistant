@@ -5,8 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import pl.dawidfendler.authentication.login.loginRoute
 import pl.dawidfendler.authentication.registration.registrationRoute
-import pl.dawidfendler.finance_manager.financeManagerRout
-import pl.dawidfendler.main.homeRoute
 import pl.dawidfendler.onboarding.navigation.onboardingRoute
 import pl.dawidfendler.util.navigation.Navigation
 
@@ -54,4 +52,3 @@ internal fun AuthNavHost(
         MainNavGraph(navController = navController)
     }
 }
-

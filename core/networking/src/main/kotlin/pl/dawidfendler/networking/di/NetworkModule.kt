@@ -51,6 +51,4 @@ object NetworkModule {
             .addConverterFactory(moshiConverterFactory)
             .build()
     }
-
-
 }

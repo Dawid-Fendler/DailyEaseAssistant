@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,8 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -32,11 +29,8 @@ import pl.dawidfendler.components.text_field.CustomText
 import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.ui.theme.dp_200
 import pl.dawidfendler.ui.theme.dp_24
-import pl.dawidfendler.ui.theme.dp_40
 import pl.dawidfendler.ui.theme.dp_80
 import pl.dawidfendler.ui.theme.sp_20
-import pl.dawidfendler.ui.theme.sp_24
-import pl.dawidfendler.ui.theme.sp_36
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,17 +50,16 @@ fun CustomBottomSheet(
     var ticks by rememberSaveable { mutableIntStateOf(0) }
 
     LaunchedEffect(Unit) {
-        while(ticks < 5) {
+        while (ticks < TIME_TO_DISMISS_BOTTOM_DIALOG) {
             delay(TICK_VALUE.seconds)
             ticks++
-            if (ticks == 5) {
+            if (ticks == TIME_TO_DISMISS_BOTTOM_DIALOG) {
                 sheetState.hide()
                 onDismissAction.invoke()
                 break
             }
         }
     }
-
 
     ModalBottomSheet(
         sheetState = sheetState,

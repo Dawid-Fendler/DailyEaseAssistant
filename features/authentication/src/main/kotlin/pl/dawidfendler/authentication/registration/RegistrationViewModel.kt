@@ -58,43 +58,44 @@ class RegistrationViewModel @Inject constructor(
                     password = action.password
                 )
             }
+
             is RegistrationAction.OnGoogleLoginClick -> googleLogin(action.idToken)
             is RegistrationAction.OnGoogleLoginError -> googleLoginError()
         }
     }
 
     private fun register() {
-            state = state.copy(isRegistering = true)
-            val emailValidationResult = emailValidator.validateEmail(state.email)
-            val passwordValidationResult = passwordValidator.validatePassword(state.password)
-            if (emailValidationResult.isEmailError || passwordValidationResult.isPasswordError) {
-                state = state.copy(
-                    isEmailValid = emailValidationResult.isEmailError,
-                    isPasswordValid = passwordValidationResult.isPasswordError,
-                    emailErrorMessage = emailValidationResult.errorMessage,
-                    passwordErrorMessage = passwordValidationResult.errorMessage
-                )
-                return
-            }
-            registrationUseCase.invoke(
-                email = state.email,
-                password = state.password
-            ).onEach { result ->
-                state = state.copy(isRegistering = false)
-                when (result) {
-                    is DomainResult.Error -> {
-                        _eventChannel.send(
-                            RegistrationEvent.Error(
-                                error = UiText.StringResource(R.string.registration_error_message)
-                            )
+        state = state.copy(isRegistering = true)
+        val emailValidationResult = emailValidator.validateEmail(state.email)
+        val passwordValidationResult = passwordValidator.validatePassword(state.password)
+        if (emailValidationResult.isEmailError || passwordValidationResult.isPasswordError) {
+            state = state.copy(
+                isEmailValid = emailValidationResult.isEmailError,
+                isPasswordValid = passwordValidationResult.isPasswordError,
+                emailErrorMessage = emailValidationResult.errorMessage,
+                passwordErrorMessage = passwordValidationResult.errorMessage
+            )
+            return
+        }
+        registrationUseCase.invoke(
+            email = state.email,
+            password = state.password
+        ).onEach { result ->
+            state = state.copy(isRegistering = false)
+            when (result) {
+                is DomainResult.Error -> {
+                    _eventChannel.send(
+                        RegistrationEvent.Error(
+                            error = UiText.StringResource(R.string.registration_error_message)
                         )
-                    }
-
-                    is DomainResult.Success -> {
-                        _eventChannel.send(RegistrationEvent.RegistrationSuccess)
-                    }
+                    )
                 }
-            }.launchIn(viewModelScope)
+
+                is DomainResult.Success -> {
+                    _eventChannel.send(RegistrationEvent.RegistrationSuccess)
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun googleLogin(idToken: String) {

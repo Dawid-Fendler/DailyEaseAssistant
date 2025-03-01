@@ -19,7 +19,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import pl.dawidfendler.ui.R
-import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_OUTLINE
 import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.ui.theme.dp_24
 import pl.dawidfendler.ui.theme.dp_8

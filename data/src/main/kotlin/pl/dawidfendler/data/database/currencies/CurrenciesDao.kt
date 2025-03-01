@@ -1,4 +1,4 @@
-package pl.dawidfendler.data.datasource.database.currencies
+package pl.dawidfendler.data.database.currencies
 
 import androidx.room.Dao
 import androidx.room.Insert

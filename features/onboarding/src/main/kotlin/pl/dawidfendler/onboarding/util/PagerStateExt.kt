@@ -1,6 +1,5 @@
 package pl.dawidfendler.onboarding.util
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
 
 internal val PagerState.pageOffset: Float

@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_OUTLINE
 import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.ui.theme.dp_24
 

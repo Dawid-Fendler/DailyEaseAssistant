@@ -1,4 +1,3 @@
 package pl.dawidfendler.main
 
-interface HomeAction {
-}
+interface HomeAction

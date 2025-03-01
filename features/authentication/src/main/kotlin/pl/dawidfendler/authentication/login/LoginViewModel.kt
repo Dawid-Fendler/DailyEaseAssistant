@@ -62,35 +62,35 @@ internal class LoginViewModel @Inject constructor(
     }
 
     private fun login() {
-            state = state.copy(isLogin = true)
-            loginUseCase.invoke(
-                email = state.email,
-                password = state.password
-            ).onEach { result ->
-                state = state.copy(isLogin = false)
-                when (result) {
-                    is DomainResult.Error -> {
-                        state = state.copy(
-                            isError = true,
-                            errorMessage = R.string.login_field_error_message
+        state = state.copy(isLogin = true)
+        loginUseCase.invoke(
+            email = state.email,
+            password = state.password
+        ).onEach { result ->
+            state = state.copy(isLogin = false)
+            when (result) {
+                is DomainResult.Error -> {
+                    state = state.copy(
+                        isError = true,
+                        errorMessage = R.string.login_field_error_message
+                    )
+                    _eventChannel.send(
+                        LoginEvent.Error(
+                            error = UiText.StringResource(R.string.login_error_message)
                         )
-                        _eventChannel.send(
-                            LoginEvent.Error(
-                                error = UiText.StringResource(R.string.login_error_message)
-                            )
-                        )
-                    }
-
-                    is DomainResult.Success -> {
-                        state = state.copy(
-                            isError = false,
-                            errorMessage = 0
-                        )
-                        saveOnboardingDisplayed()
-                        _eventChannel.send(LoginEvent.LoginSuccess)
-                    }
+                    )
                 }
-            }.launchIn(viewModelScope)
+
+                is DomainResult.Success -> {
+                    state = state.copy(
+                        isError = false,
+                        errorMessage = 0
+                    )
+                    saveOnboardingDisplayed()
+                    _eventChannel.send(LoginEvent.LoginSuccess)
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun googleLogin(idToken: String) {

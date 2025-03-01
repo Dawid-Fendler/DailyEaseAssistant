@@ -42,7 +42,6 @@ dependencies {
     implementation(project(":common:ui"))
     implementation(project(":common:util"))
     implementation(project(":core:coroutines"))
-    implementation(project(":data"))
     implementation(project(":domain"))
 
     implementation(platform(libs.compose.bom))

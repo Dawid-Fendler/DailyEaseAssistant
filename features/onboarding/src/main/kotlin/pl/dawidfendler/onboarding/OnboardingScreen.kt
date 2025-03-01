@@ -73,15 +73,16 @@ internal fun OnboardingScreen(
             Button(
                 shape = RoundedCornerShape(dp_16),
                 onClick = {
-                if (pagerState.currentPage == ONBOARDING_THIRD_PAGE) {
-                    onFinishButtonClick.invoke()
-                    navigateToAuth.invoke()
-                } else {
-                    coroutineScope.launch {
-                        pagerState.scrollToPage(pagerState.currentPage + 1)
+                    if (pagerState.currentPage == ONBOARDING_THIRD_PAGE) {
+                        onFinishButtonClick.invoke()
+                        navigateToAuth.invoke()
+                    } else {
+                        coroutineScope.launch {
+                            pagerState.scrollToPage(pagerState.currentPage + 1)
+                        }
                     }
                 }
-            }) {
+            ) {
                 Text(text = buttonState.value)
             }
         }

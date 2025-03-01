@@ -1,6 +1,5 @@
 package pl.dawidfendler.onboarding.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import pl.dawidfendler.onboarding.util.wormTransition
 import pl.dawidfendler.ui.theme.WORM_INDICATOR_SIZE
 import pl.dawidfendler.ui.theme.WORM_INDICATOR_SPACING_SIZE
-import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 
 // Using https://blog.canopas.com/jetpack-compose-how-to-implement-custom-pager-indicators-8b6a01d63964
 @Composable

@@ -5,5 +5,5 @@ import java.text.NumberFormat
 import java.util.Locale
 
 fun formatAccountBalance(accountBalance: BigDecimal): String {
-   return NumberFormat.getNumberInstance(Locale.FRANCE).format(accountBalance)
+    return NumberFormat.getNumberInstance(Locale.FRANCE).format(accountBalance)
 }

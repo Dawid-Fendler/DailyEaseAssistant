@@ -22,7 +22,6 @@ import pl.dawidfendler.domain.use_case.authentication_use_case.GetSelectedCurren
 import pl.dawidfendler.domain.use_case.currencies_use_case.GetCurrenciesUseCase
 import pl.dawidfendler.domain.use_case.user_use_case.GetAccountBalanceUseCase
 import pl.dawidfendler.domain.use_case.user_use_case.UpdateAccountBalanceUseCase
-import pl.dawidfendler.domain.util.Constants.ERROR_TITLE
 import pl.dawidfendler.domain.util.Constants.POLISH_ZLOTY
 import pl.dawidfendler.domain.util.Constants.POLISH_ZLOTY_CODE
 import pl.dawidfendler.domain.util.Constants.POLISH_ZLOTY_VALUE
@@ -65,12 +64,12 @@ class FinanceManagerViewModel @Inject constructor(
                         )
 
                     is DomainResult.Error -> {
-                        //TODO add error handling
+                        // TODO add error handling
                     }
                 }
             }.catch {
                 Log.d("FinanceManagerViewModel", "getAccountBalance Error: $it")
-                //TODO add error handling
+                // TODO add error handling
             }.launchIn(viewModelScope)
     }
 
@@ -80,7 +79,8 @@ class FinanceManagerViewModel @Inject constructor(
                 is DomainResult.Success -> {
                     val newCurrencies = it.data.toMutableList()
                     newCurrencies.add(
-                        0, ExchangeRateTable(
+                        0,
+                        ExchangeRateTable(
                             currencyName = POLISH_ZLOTY,
                             currencyCode = POLISH_ZLOTY_CODE,
                             currencyMidValue = POLISH_ZLOTY_VALUE
@@ -92,16 +92,15 @@ class FinanceManagerViewModel @Inject constructor(
                 }
 
                 is DomainResult.Error -> {
-                    //TODO add error handling
+                    // TODO add error handling
                 }
             }
         }.catch {
-            //TODO add error handling
+            // TODO add error handling
         }.launchIn(viewModelScope)
 
         getAccountBalance()
     }
-
 
     fun onAction(action: FinanceManagerAction) {
         when (action) {
@@ -111,7 +110,6 @@ class FinanceManagerViewModel @Inject constructor(
             is FinanceManagerAction.SpentMoney -> spentMoney(action.spentMoney)
         }
     }
-
 
     private fun savedSelectedCurrencies(selectedCurrencies: String) {
         viewModelScope.launch {

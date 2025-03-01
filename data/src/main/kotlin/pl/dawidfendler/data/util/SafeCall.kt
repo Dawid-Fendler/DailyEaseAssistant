@@ -14,10 +14,10 @@ internal suspend inline fun <reified T> safeCall(
 ): DataResult<T?, NetworkError> {
     val response = try {
         execute()
-    } catch(e: UnresolvedAddressException) {
+    } catch (e: UnresolvedAddressException) {
         Log.e(responseName, "$e")
         return DataResult.Error(NetworkError.NO_INTERNET)
-    } catch(e: Exception) {
+    } catch (e: Exception) {
         coroutineContext.ensureActive()
         Log.e(responseName, "$e")
         return DataResult.Error(NetworkError.UNKNOWN)

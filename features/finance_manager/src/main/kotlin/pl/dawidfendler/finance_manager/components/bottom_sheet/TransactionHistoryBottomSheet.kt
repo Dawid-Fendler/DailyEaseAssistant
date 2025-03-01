@@ -7,6 +7,4 @@ import androidx.compose.ui.Modifier
 fun TransactionsHistoryBottomSheet(
     modifier: Modifier = Modifier,
     transactionsHistory: List<String>
-) {
-
-}
+) {}

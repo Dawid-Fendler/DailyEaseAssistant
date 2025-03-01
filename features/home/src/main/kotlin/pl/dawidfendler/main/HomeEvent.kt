@@ -1,4 +1,3 @@
 package pl.dawidfendler.main
 
-interface HomeEvent {
-}
+interface HomeEvent

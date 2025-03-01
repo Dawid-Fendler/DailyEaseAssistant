@@ -1,6 +1,5 @@
 package pl.dawidfendler.onboarding.util
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind

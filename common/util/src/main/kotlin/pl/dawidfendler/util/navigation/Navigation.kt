@@ -13,8 +13,8 @@ sealed class Navigation {
     data object RegistrationNavigation : Navigation()
 
     @Serializable
-    data object HomeNavigation: Navigation()
+    data object HomeNavigation : Navigation()
 
     @Serializable
-    data object FinanceManager: Navigation()
+    data object FinanceManager : Navigation()
 }

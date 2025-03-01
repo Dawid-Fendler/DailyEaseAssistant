@@ -7,9 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import pl.dawidfendler.data.datasource.database.currencies.CurrenciesDatabase
-import pl.dawidfendler.data.datasource.database.user.UserDatabase
-import pl.dawidfendler.data.util.Constants.CURRENCIES_DATABASE_NAME
+import pl.dawidfendler.data.database.UserDatabase
 import pl.dawidfendler.data.util.Constants.USER_DATABASE_NAME
 
 @Module
@@ -17,17 +15,7 @@ import pl.dawidfendler.data.util.Constants.USER_DATABASE_NAME
 object DatabaseModule {
 
     @Provides
-    fun provideCurrenciesDatabase(@ApplicationContext context: Context): CurrenciesDatabase {
-        return Room.databaseBuilder(
-            context,
-            CurrenciesDatabase::class.java,
-            CURRENCIES_DATABASE_NAME
-        )
-            .build()
-    }
-
-    @Provides
-    fun provideUserDatabase(@ApplicationContext context: Context): UserDatabase{
+    fun provideCurrenciesDatabase(@ApplicationContext context: Context): UserDatabase {
         return Room.databaseBuilder(
             context,
             UserDatabase::class.java,

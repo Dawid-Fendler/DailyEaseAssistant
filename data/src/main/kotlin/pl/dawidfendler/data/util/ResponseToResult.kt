@@ -15,22 +15,22 @@ internal inline fun <reified T> responseToResult(
         }
 
         408 -> {
-            Log.e(responseName,"${response.errorBody()}")
+            Log.e(responseName, "${response.errorBody()}")
             DataResult.Error(NetworkError.REQUEST_TIMEOUT)
         }
 
         429 -> {
-            Log.e(responseName,"${response.errorBody()}")
+            Log.e(responseName, "${response.errorBody()}")
             DataResult.Error(NetworkError.TOO_MANY_REQUESTS)
         }
 
         in 500..599 -> {
-            Log.e(responseName,"${response.errorBody()}")
+            Log.e(responseName, "${response.errorBody()}")
             DataResult.Error(NetworkError.SERVER_ERROR)
         }
 
         else -> {
-            Log.e(responseName,"${response.errorBody()}")
+            Log.e(responseName, "${response.errorBody()}")
             DataResult.Error(NetworkError.UNKNOWN)
         }
     }

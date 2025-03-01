@@ -44,7 +44,6 @@ dependencies {
     implementation(project(":core:coroutines"))
     implementation(project(":core:datastore"))
     implementation(project(":domain"))
-    implementation(project(":core:datastore"))
 
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -59,5 +58,4 @@ dependencies {
     implementation(libs.data.store)
 
     kapt(libs.hilt.compiler)
-    implementation(libs.data.store)
 }
