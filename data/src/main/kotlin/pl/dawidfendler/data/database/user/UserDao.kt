@@ -13,7 +13,7 @@ interface UserDao {
     suspend fun insert(user: UserEntity)
 
     @Query("SELECT * FROM user ")
-    suspend fun getUser(): UserEntity
+    suspend fun getUser(): UserEntity?
 
     @Query("SELECT accountBalance FROM user ")
     suspend fun getAccountBalance(): Double?

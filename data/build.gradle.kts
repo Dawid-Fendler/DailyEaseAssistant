@@ -53,4 +53,10 @@ dependencies {
     implementation(libs.retrofit)
     kapt(libs.room.compiler)
     kapt(libs.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth.test)
+    testImplementation(libs.mockk.test)
+    testImplementation(libs.turbine.test)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

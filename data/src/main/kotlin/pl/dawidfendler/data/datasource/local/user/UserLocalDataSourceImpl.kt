@@ -11,7 +11,7 @@ class UserLocalDataSourceImpl @Inject constructor(
         userDao.insert(user)
     }
 
-    override suspend fun getUser(): UserEntity {
+    override suspend fun getUser(): UserEntity? {
         return userDao.getUser()
     }
 
