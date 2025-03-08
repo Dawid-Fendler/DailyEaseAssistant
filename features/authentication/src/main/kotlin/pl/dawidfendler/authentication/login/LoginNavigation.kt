@@ -29,6 +29,7 @@ fun NavGraphBuilder.loginRoute(
                 }
 
                 LoginEvent.LoginSuccess -> {
+                    viewModel.saveOnboardingDisplayed()
                     keyboardController?.hide()
                     navigateToMainScreen()
                 }

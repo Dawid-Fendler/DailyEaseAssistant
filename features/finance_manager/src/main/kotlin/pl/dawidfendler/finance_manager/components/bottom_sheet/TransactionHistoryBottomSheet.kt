@@ -6,5 +6,6 @@ import androidx.compose.ui.Modifier
 @Composable
 fun TransactionsHistoryBottomSheet(
     modifier: Modifier = Modifier,
-    transactionsHistory: List<String>
+    transactionsHistory: List<String>,
+    isTransactionFetchError: Boolean
 ) {}

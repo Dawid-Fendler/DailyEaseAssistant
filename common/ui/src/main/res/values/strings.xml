@@ -6,4 +6,6 @@
     <string name="account_balance_money_format">$ %s</string>
     <string name="account_balance_money_format_code">%s %s</string>
     <string name="confirm_button_title">Confirm</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="try_again">Try again! Swipe to refresh</string>
 </resources>

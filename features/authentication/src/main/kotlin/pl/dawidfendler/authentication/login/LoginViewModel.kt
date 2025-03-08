@@ -86,7 +86,6 @@ internal class LoginViewModel @Inject constructor(
                         isError = false,
                         errorMessage = 0
                     )
-                    saveOnboardingDisplayed()
                     _eventChannel.send(LoginEvent.LoginSuccess)
                 }
             }
@@ -105,7 +104,6 @@ internal class LoginViewModel @Inject constructor(
                         )
 
                     is DomainResult.Success -> {
-                        saveOnboardingDisplayed()
                         _eventChannel.send(LoginEvent.LoginSuccess)
                     }
                 }
@@ -122,7 +120,7 @@ internal class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun saveOnboardingDisplayed() {
+    fun saveOnboardingDisplayed() {
         viewModelScope.launch(dispatcherProvider.io) {
             dataStore.putPreference(DISPLAY_HOME, true)
         }

@@ -1,4 +1,4 @@
-package pl.dawidfendler.data.database.currencies
+package pl.dawidfendler.data.database.finance_manger.currencies
 
 import androidx.room.Dao
 import androidx.room.Insert

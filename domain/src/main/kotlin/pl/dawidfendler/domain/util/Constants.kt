@@ -11,4 +11,6 @@ object Constants {
     const val MIN_ACCOUNT_BALANCE = -1000000000000
     const val ERROR_TITLE = "Error"
     const val SOMETHING_WENT_WRONG = "Something went wrong"
+    const val PLUS = "+"
+    const val MINUS = "-"
 }

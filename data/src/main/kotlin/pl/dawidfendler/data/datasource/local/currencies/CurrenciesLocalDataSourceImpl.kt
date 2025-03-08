@@ -1,6 +1,6 @@
 package pl.dawidfendler.data.datasource.local.currencies
 
-import pl.dawidfendler.data.database.currencies.CurrenciesDao
+import pl.dawidfendler.data.database.finance_manger.currencies.CurrenciesDao
 import pl.dawidfendler.data.model.currency.local.currencies.ExchangeRateTableEntity
 import javax.inject.Inject
 

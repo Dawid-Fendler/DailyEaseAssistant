@@ -8,6 +8,7 @@ import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.domain.repository.AuthenticationRepository
 import pl.dawidfendler.domain.repository.CurrenciesRepository
+import pl.dawidfendler.domain.repository.TransactionRepository
 import pl.dawidfendler.domain.repository.UserRepository
 import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
@@ -18,6 +19,9 @@ import pl.dawidfendler.domain.use_case.currencies_use_case.GetCurrenciesByCodeUs
 import pl.dawidfendler.domain.use_case.currencies_use_case.GetCurrenciesUseCase
 import pl.dawidfendler.domain.use_case.home_use_case.GetDisplayHomeUseCase
 import pl.dawidfendler.domain.use_case.onboarding_use_case.GetOnboardingDisplayedUseCase
+import pl.dawidfendler.domain.use_case.transaction_use_case.CreateTransactionUseCase
+import pl.dawidfendler.domain.use_case.transaction_use_case.DeleteTransactionsUseCase
+import pl.dawidfendler.domain.use_case.transaction_use_case.GetTransactionUseCase
 import pl.dawidfendler.domain.use_case.user_use_case.CreateUserUseCase
 import pl.dawidfendler.domain.use_case.user_use_case.DeleteUserUseCase
 import pl.dawidfendler.domain.use_case.user_use_case.GetAccountBalanceUseCase
@@ -133,6 +137,33 @@ object UseCaseModule {
         dispatcherProvider: DispatcherProvider
     ) = DeleteUserUseCase(
         userRepository = userRepository,
+        dispatcher = dispatcherProvider
+    )
+
+    @Provides
+    fun provideCreateTransactionUseCase(
+        transactionRepository: TransactionRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = CreateTransactionUseCase(
+        transactionRepository = transactionRepository,
+        dispatcher = dispatcherProvider
+    )
+
+    @Provides
+    fun provideDeleteTransactionUseCase(
+        transactionRepository: TransactionRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = DeleteTransactionsUseCase(
+        transactionRepository = transactionRepository,
+        dispatcher = dispatcherProvider
+    )
+
+    @Provides
+    fun provideGetTransactionUseCase(
+        transactionRepository: TransactionRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = GetTransactionUseCase(
+        transactionRepository = transactionRepository,
         dispatcher = dispatcherProvider
     )
 }

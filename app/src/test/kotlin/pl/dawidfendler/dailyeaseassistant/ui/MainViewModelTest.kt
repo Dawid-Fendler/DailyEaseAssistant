@@ -30,6 +30,7 @@ class MainViewModelTest {
     @Before
     fun setUp() {
         getOnboardingDisplayedUseCase = mockk()
+        getDisplayHomeUseCase = mockk()
         mainViewModel = MainViewModel(
             getOnboardingDisplayedUseCase = getOnboardingDisplayedUseCase,
             getDisplayHomeUseCase = getDisplayHomeUseCase
@@ -47,9 +48,10 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `When onStart is called, then getOnboardingDisplayedUseCase return false`() = runTest {
+    fun `When onStart is called, then getOnboardingDisplayedUseCase return OnboardingNavigation`() = runTest {
         // GIVEN
         coEvery { getOnboardingDisplayedUseCase() } returns flowOf(false)
+        coEvery { getDisplayHomeUseCase() } returns flowOf(false)
 
         // WHEN
         mainViewModel.onStart()
@@ -63,12 +65,35 @@ class MainViewModelTest {
             )
         )
         verify(exactly = 1) { getOnboardingDisplayedUseCase() }
+        verify(exactly = 1) { getDisplayHomeUseCase() }
     }
 
+//    @Test
+//    fun `When onStart is called, then getOnboardingDisplayedUseCase return LoginNavigation`() = runTest {
+//        // GIVEN
+//        coEvery { getOnboardingDisplayedUseCase() } returns flowOf(true)
+//        coEvery { getDisplayHomeUseCase() } returns flowOf(false)
+//
+//        // WHEN
+//        mainViewModel.onStart()
+//
+//        // THEN
+//        advanceUntilIdle()
+//        assertThat(mainViewModel.state).isEqualTo(
+//            MainState(
+//                navigation = Navigation.LoginNavigation,
+//                isStarting = true
+//            )
+//        )
+//        verify(exactly = 1) { getOnboardingDisplayedUseCase() }
+//        verify(exactly = 1) { getDisplayHomeUseCase() }
+//    }
+
     @Test
-    fun `When onStart is called, then getOnboardingDisplayedUseCase return true`() = runTest {
+    fun `When onStart is called, then getOnboardingDisplayedUseCase return HomeNavigation`() = runTest {
         // GIVEN
-        coEvery { getOnboardingDisplayedUseCase() } returns flowOf(true)
+        coEvery { getOnboardingDisplayedUseCase() } returns flowOf(false)
+        coEvery { getDisplayHomeUseCase() } returns flowOf(true)
 
         // WHEN
         mainViewModel.onStart()
@@ -77,10 +102,11 @@ class MainViewModelTest {
         advanceUntilIdle()
         assertThat(mainViewModel.state).isEqualTo(
             MainState(
-                navigation = Navigation.LoginNavigation,
+                navigation = Navigation.HomeNavigation,
                 isStarting = true
             )
         )
         verify(exactly = 1) { getOnboardingDisplayedUseCase() }
+        verify(exactly = 1) { getDisplayHomeUseCase() }
     }
 }

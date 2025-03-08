@@ -40,6 +40,7 @@ fun NavGraphBuilder.registrationRoute(
                     navigateToLogin()
                 }
                 RegistrationEvent.LoginSuccess -> {
+                    viewModel.saveOnboardingDisplayed()
                     navigateToMain()
                 }
             }

@@ -5,4 +5,5 @@ sealed interface FinanceManagerAction {
     data object GetSelectedCurrencies : FinanceManagerAction
     data class AddMoney(val addMoney: String) : FinanceManagerAction
     data class SpentMoney(val spentMoney: String) : FinanceManagerAction
+    data object GetTransaction: FinanceManagerAction
 }

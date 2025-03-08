@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pl.dawidfendler.authentication.R
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
@@ -110,7 +111,6 @@ class RegistrationViewModel @Inject constructor(
                         )
 
                     is DomainResult.Success -> {
-                        saveOnboardingDisplayed()
                         _eventChannel.send(RegistrationEvent.LoginSuccess)
                     }
                 }
@@ -127,7 +127,7 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-    private fun saveOnboardingDisplayed() {
+    fun saveOnboardingDisplayed() {
         viewModelScope.launch(dispatcherProvider.io) {
             dataStore.putPreference(DISPLAY_HOME, true)
         }

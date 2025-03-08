@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import pl.dawidfendler.data.model.currency.local.user.UserEntity
+import pl.dawidfendler.data.model.user.UserEntity
 
 @Dao
 interface UserDao {

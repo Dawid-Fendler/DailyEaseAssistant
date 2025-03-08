@@ -4,9 +4,13 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.google.firebase.auth.FirebaseUser
 import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -14,6 +18,7 @@ import org.junit.Test
 import pl.dawidfendler.authentication.MainDispatcherRule
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
+import pl.dawidfendler.datastore.DataStoreConstants.DISPLAY_HOME
 import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
 import pl.dawidfendler.util.flow.DomainResult
@@ -35,6 +40,7 @@ class LoginViewModelTest {
         googleLoginUseCase = mockk()
         dataStore = mockk()
         dispatcherProvider = mockk()
+        every { dispatcherProvider.io } returns Dispatchers.IO
         loginViewModel = LoginViewModel(
             loginUseCase = loginUseCase,
             googleLoginUseCase = googleLoginUseCase,
@@ -245,4 +251,20 @@ class LoginViewModelTest {
         }
 
 
+    @Test
+    fun `When login on success, then save onboarding displayed to datastore`() =
+        runTest {
+            // GIVEN
+            coEvery {
+                dataStore.putPreference(DISPLAY_HOME, true)
+            } returns Unit
+
+            // WHEN
+            loginViewModel.saveOnboardingDisplayed()
+
+            // THEN
+            advanceUntilIdle()
+            coVerify { dataStore.putPreference(DISPLAY_HOME, true) }
+
+        }
 }

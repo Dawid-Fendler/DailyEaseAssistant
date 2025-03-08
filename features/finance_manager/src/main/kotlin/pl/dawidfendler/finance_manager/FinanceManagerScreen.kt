@@ -77,14 +77,20 @@ fun FinanceManagerScreen(
                                 onAction.invoke(FinanceManagerAction.AddMoney(money))
                             }
                         )
+
                         CurrenciesBottomSheet -> {
                             onAction.invoke(FinanceManagerAction.GetSelectedCurrencies)
                             CurrenciesBottomSheet(
                                 currencies = state.currencies,
+                                isCurrenciesFetchDataError = state.isCurrenciesFetchDataError,
                                 selectedCurrency = state.selectedCurrency,
                                 onSelectCurrency = { currency ->
                                     isSheetOpen = null
-                                    onAction.invoke(FinanceManagerAction.SavedSelectedCurrencies(currency))
+                                    onAction.invoke(
+                                        FinanceManagerAction.SavedSelectedCurrencies(
+                                            currency
+                                        )
+                                    )
                                 }
                             )
                         }
@@ -96,9 +102,14 @@ fun FinanceManagerScreen(
                                 onAction.invoke(FinanceManagerAction.SpentMoney(money))
                             }
                         )
-                        TransactionHistoryBottomSheet -> TransactionsHistoryBottomSheet(
-                            transactionsHistory = emptyList()
-                        )
+
+                        TransactionHistoryBottomSheet -> {
+                            onAction.invoke(FinanceManagerAction.GetTransaction)
+                            TransactionsHistoryBottomSheet(
+                                transactionsHistory = state.transaction,
+                                isTransactionFetchError = state.isTransactionFetchDataError
+                            )
+                        }
 
                         null -> Unit
                     }

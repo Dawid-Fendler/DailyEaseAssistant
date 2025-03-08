@@ -2,9 +2,9 @@ package pl.dawidfendler.data.model.currency.local.currencies
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import pl.dawidfendler.data.util.Constants.CURRENCIES_DATABASE_TABLE_NAME
+import pl.dawidfendler.data.util.Constants.CURRENCIES_TABLE_NAME
 
-@Entity(tableName = CURRENCIES_DATABASE_TABLE_NAME)
+@Entity(tableName = CURRENCIES_TABLE_NAME)
 data class ExchangeRateTableEntity(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val code: String,

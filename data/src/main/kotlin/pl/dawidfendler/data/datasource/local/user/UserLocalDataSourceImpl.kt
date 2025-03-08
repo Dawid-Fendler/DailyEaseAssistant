@@ -1,7 +1,7 @@
 package pl.dawidfendler.data.datasource.local.user
 
 import pl.dawidfendler.data.database.user.UserDao
-import pl.dawidfendler.data.model.currency.local.user.UserEntity
+import pl.dawidfendler.data.model.user.UserEntity
 import javax.inject.Inject
 
 class UserLocalDataSourceImpl @Inject constructor(

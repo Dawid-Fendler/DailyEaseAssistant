@@ -1,6 +1,6 @@
 package pl.dawidfendler.data.datasource.local.user
 
-import pl.dawidfendler.data.model.currency.local.user.UserEntity
+import pl.dawidfendler.data.model.user.UserEntity
 
 interface UserLocalDataSource {
 

@@ -17,9 +17,13 @@ import kotlinx.coroutines.launch
 import pl.dawidfendler.FinanceManagerState
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.datastore.DataStoreConstants.SELECTED_CURRENCY
+import pl.dawidfendler.date.DateTime
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
+import pl.dawidfendler.domain.model.transaction.Transaction
 import pl.dawidfendler.domain.use_case.authentication_use_case.GetSelectedCurrenciesUseCase
 import pl.dawidfendler.domain.use_case.currencies_use_case.GetCurrenciesUseCase
+import pl.dawidfendler.domain.use_case.transaction_use_case.CreateTransactionUseCase
+import pl.dawidfendler.domain.use_case.transaction_use_case.GetTransactionUseCase
 import pl.dawidfendler.domain.use_case.user_use_case.GetAccountBalanceUseCase
 import pl.dawidfendler.domain.use_case.user_use_case.UpdateAccountBalanceUseCase
 import pl.dawidfendler.domain.util.Constants.POLISH_ZLOTY
@@ -40,7 +44,10 @@ class FinanceManagerViewModel @Inject constructor(
     private val dataStore: DataStore,
     private val getSelectedCurrenciesUseCase: GetSelectedCurrenciesUseCase,
     private val updateAccountBalanceUseCase: UpdateAccountBalanceUseCase,
-    private val getAccountBalanceUseCase: GetAccountBalanceUseCase
+    private val getAccountBalanceUseCase: GetAccountBalanceUseCase,
+    private val createTransactionUseCase: CreateTransactionUseCase,
+    private val getTransactionUseCase: GetTransactionUseCase,
+    private val dateTime: DateTime
 ) : ViewModel() {
 
     var state by mutableStateOf(FinanceManagerState())
@@ -64,12 +71,12 @@ class FinanceManagerViewModel @Inject constructor(
                         )
 
                     is DomainResult.Error -> {
-                        // TODO add error handling
+                        _eventChannel.send(FinanceManagerEvent.ShowErrorBottomDialog("Problem with download account balance"))
                     }
                 }
             }.catch {
-                Log.d("FinanceManagerViewModel", "getAccountBalance Error: $it")
-                // TODO add error handling
+                Log.e("FinanceManagerViewModel", "getAccountBalance Error: $it")
+                _eventChannel.send(FinanceManagerEvent.ShowErrorBottomDialog("Problem with download account balance"))
             }.launchIn(viewModelScope)
     }
 
@@ -80,26 +87,46 @@ class FinanceManagerViewModel @Inject constructor(
                     val newCurrencies = it.data.toMutableList()
                     newCurrencies.add(
                         0,
-                        ExchangeRateTable(
-                            currencyName = POLISH_ZLOTY,
-                            currencyCode = POLISH_ZLOTY_CODE,
-                            currencyMidValue = POLISH_ZLOTY_VALUE
-                        )
+                        getPolishCurrency()
                     )
-                    state = state.copy(
-                        currencies = newCurrencies
-                    )
+                    setStateForFetchCurrencies(currencies = newCurrencies)
                 }
 
                 is DomainResult.Error -> {
-                    // TODO add error handling
+                    Log.e("FinanceManagerViewModel", "GetCurrencies Error: ${it.error}")
+                    setStateForFetchCurrencies(
+                        currencies = listOf(getPolishCurrency()),
+                        isFetchError = true
+                    )
+                    _eventChannel.send(FinanceManagerEvent.ShowErrorBottomDialog("Problem with download currencies"))
                 }
             }
-        }.catch {
-            // TODO add error handling
+        }.catch { err ->
+            Log.e("FinanceManagerViewModel", "GetCurrencies Error: $err")
+            setStateForFetchCurrencies(
+                currencies = listOf(getPolishCurrency()),
+                isFetchError = true
+            )
+            _eventChannel.send(FinanceManagerEvent.ShowErrorBottomDialog("Problem with download currencies"))
         }.launchIn(viewModelScope)
 
         getAccountBalance()
+    }
+
+    private fun getPolishCurrency() = ExchangeRateTable(
+        currencyName = POLISH_ZLOTY,
+        currencyCode = POLISH_ZLOTY_CODE,
+        currencyMidValue = POLISH_ZLOTY_VALUE
+    )
+
+    private fun setStateForFetchCurrencies(
+        currencies: List<ExchangeRateTable>,
+        isFetchError: Boolean = false
+    ) {
+        state = state.copy(
+            currencies = currencies,
+            isCurrenciesFetchDataError = isFetchError
+        )
     }
 
     fun onAction(action: FinanceManagerAction) {
@@ -108,6 +135,7 @@ class FinanceManagerViewModel @Inject constructor(
             is GetSelectedCurrencies -> getSelectedCurrencies()
             is FinanceManagerAction.AddMoney -> addMoney(action.addMoney)
             is FinanceManagerAction.SpentMoney -> spentMoney(action.spentMoney)
+            is FinanceManagerAction.GetTransaction -> getTransaction()
         }
     }
 
@@ -132,6 +160,7 @@ class FinanceManagerViewModel @Inject constructor(
             isAddMoney = true
         ).onEach {
             getAccountBalance()
+            createTransaction(money = money, isAdd = true)
         }.catch { err ->
             if (err is MaxAccountBalanceException) {
                 _eventChannel.send(FinanceManagerEvent.ShowErrorBottomDialog(err.message))
@@ -142,12 +171,29 @@ class FinanceManagerViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    private fun createTransaction(money: String, isAdd: Boolean) {
+        createTransactionUseCase.invoke(
+            transaction = Transaction(
+                content = prepareTransactionContent(
+                    money = money,
+                    isAdd = isAdd,
+                    date = dateTime.getCurrentDate()
+                )
+            )
+        ).onEach {
+            Log.d("FinanceManagerViewModel", "createTransaction Success")
+        }.catch { err ->
+            Log.d("FinanceManagerViewModel", "createTransaction Error: $err")
+        }.launchIn(viewModelScope)
+    }
+
     private fun spentMoney(money: String) {
         updateAccountBalanceUseCase.invoke(
             money = money.toBigDecimal(),
             isAddMoney = false
         ).onEach {
             getAccountBalance()
+            createTransaction(money = money, isAdd = false)
         }.catch { err ->
             if (err is MinAccountBalanceException) {
                 _eventChannel.send(FinanceManagerEvent.ShowErrorBottomDialog(err.message))
@@ -156,5 +202,42 @@ class FinanceManagerViewModel @Inject constructor(
             }
             Log.d("FinanceManagerViewModel", "spentMoney Error: $err")
         }.launchIn(viewModelScope)
+    }
+
+    private fun getTransaction() {
+        getTransactionUseCase.invoke()
+            .onEach { result ->
+                when (result) {
+                    is DomainResult.Success ->
+                        setStateForFetchTransaction(
+                            transaction = result.data,
+                            isFetchError = false
+                        )
+
+                    is DomainResult.Error -> {
+                        Log.e("FinanceManagerViewModel", "getTransaction Error: ${result.error}")
+                        setStateForFetchTransaction(
+                            transaction = emptyList(),
+                            isFetchError = true
+                        )
+                    }
+                }
+            }.catch { err ->
+                Log.e("FinanceManagerViewModel", "getTransaction Error: $err")
+                setStateForFetchTransaction(
+                    transaction = emptyList(),
+                    isFetchError = true
+                )
+            }.launchIn(viewModelScope)
+    }
+
+    private fun setStateForFetchTransaction(
+        transaction: List<Transaction>,
+        isFetchError: Boolean = false
+    ) {
+        state = state.copy(
+            transaction = transaction.map { it.content },
+            isTransactionFetchDataError = isFetchError
+        )
     }
 }
