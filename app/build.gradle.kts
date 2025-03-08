@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "pl.dawidfendler.dailyeaseassistant"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "pl.dawidfendler.dailyeaseassistant"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -46,6 +46,27 @@ android {
         jvmTarget = "1.8"
     }
 }
+
+kover {
+
+    project(":app")
+    project(":data")
+    project(":domain")
+    project(":common:ui")
+    project(":common:util")
+    project(":core:coroutines")
+    project(":core:datastore")
+    project(":core:date")
+    project(":core:networking")
+    project(":features:authentication")
+    project(":features:home")
+    project(":features:onboarding")
+    project(":features:finance_manager")
+    reports {
+        filters.excludes.androidGeneratedClasses()
+    }
+}
+
 
 dependencies {
     implementation(project(":common:ui"))

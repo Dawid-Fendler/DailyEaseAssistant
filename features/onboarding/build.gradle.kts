@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "pl.dawidfendler.onboarding"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 30

@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "pl.dawidfendler.finance_manager"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 30
@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":common:util"))
     implementation(project(":core:coroutines"))
     implementation(project(":core:datastore"))
+    implementation(project(":core:date"))
     implementation(project(":domain"))
 
     implementation(platform(libs.compose.bom))

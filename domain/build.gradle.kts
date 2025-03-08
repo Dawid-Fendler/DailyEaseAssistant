@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "pl.dawidfendler.domain"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 30
