@@ -1,6 +1,5 @@
 package pl.dawidfendler.data.util
 
-import android.util.Log
 import pl.dawidfendler.util.flow.DataResult
 import pl.dawidfendler.util.network.NetworkError
 import retrofit2.Response
@@ -15,22 +14,22 @@ internal inline fun <reified T> responseToResult(
         }
 
         408 -> {
-            Log.e(responseName, "${response.errorBody()}")
+            //  TODO ADD OWN LOGGER
             DataResult.Error(NetworkError.REQUEST_TIMEOUT)
         }
 
         429 -> {
-            Log.e(responseName, "${response.errorBody()}")
+            //  TODO ADD OWN LOGGER
             DataResult.Error(NetworkError.TOO_MANY_REQUESTS)
         }
 
         in 500..599 -> {
-            Log.e(responseName, "${response.errorBody()}")
+            //  TODO ADD OWN LOGGER
             DataResult.Error(NetworkError.SERVER_ERROR)
         }
 
         else -> {
-            Log.e(responseName, "${response.errorBody()}")
+            //  TODO ADD OWN LOGGER
             DataResult.Error(NetworkError.UNKNOWN)
         }
     }

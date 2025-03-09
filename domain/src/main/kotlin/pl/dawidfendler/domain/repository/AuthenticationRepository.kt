@@ -1,12 +1,13 @@
 package pl.dawidfendler.domain.repository
 
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.Flow
+import pl.dawidfendler.domain.util.AuthenticationError
+import pl.dawidfendler.util.flow.DataResult
 
 interface AuthenticationRepository {
-    fun login(email: String, password: String): Flow<FirebaseUser?>
-    fun googleLogin(idToken: String): Flow<FirebaseUser?>
-    fun registerUser(email: String, password: String): Flow<FirebaseUser?>
-    fun logout(): Flow<Unit>
-    fun getUser(): Flow<FirebaseUser?>
+    suspend fun login(email: String, password: String): DataResult<Unit?, AuthenticationError>
+    suspend fun googleLogin(idToken: String): DataResult<Unit?, AuthenticationError>
+    suspend fun registerUser(email: String, password: String): DataResult<Unit?, AuthenticationError>
+    suspend fun logout(): DataResult<Unit, AuthenticationError>
+    suspend fun getUser(): DataResult<FirebaseUser?, AuthenticationError>
 }

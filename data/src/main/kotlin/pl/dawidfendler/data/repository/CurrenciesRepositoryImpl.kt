@@ -30,7 +30,7 @@ class CurrenciesRepositoryImpl @Inject constructor(
                 dateTime = dateTimeUtils.convertStringToOffsetDateTimeIsoFormat(it)
             )
         }
-        return if (currenciesFromDb.isNotEmpty() || lastUpdatedDate == true) {
+        return if (currenciesFromDb.isNotEmpty() && lastUpdatedDate == false) {
             DataResult.Success(currenciesFromDb.map { it.toDomain() })
         } else {
             val getTableA = safeCall(
@@ -67,7 +67,7 @@ class CurrenciesRepositoryImpl @Inject constructor(
                 dateTime = dateTimeUtils.convertStringToOffsetDateTimeIsoFormat(it)
             )
         }
-        if (lastUpdatedDate == true) {
+        if (lastUpdatedDate == false) {
             return DataResult.Success(emptyList())
         }
 

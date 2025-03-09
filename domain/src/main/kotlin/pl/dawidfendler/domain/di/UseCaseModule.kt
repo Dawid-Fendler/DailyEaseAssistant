@@ -33,30 +33,38 @@ object UseCaseModule {
 
     @Provides
     fun provideLoginUseCase(
-        authenticationRepository: AuthenticationRepository
+        authenticationRepository: AuthenticationRepository,
+        dispatcherProvider: DispatcherProvider
     ) = LoginUseCase(
-        authenticationRepository = authenticationRepository
+        authenticationRepository = authenticationRepository,
+        dispatcherProvider = dispatcherProvider
     )
 
     @Provides
     fun provideLogoutUseCase(
-        authenticationRepository: AuthenticationRepository
+        authenticationRepository: AuthenticationRepository,
+        dispatcherProvider: DispatcherProvider
     ) = LogoutUseCase(
-        authenticationRepository = authenticationRepository
+        authenticationRepository = authenticationRepository,
+        dispatcherProvider = dispatcherProvider
     )
 
     @Provides
     fun provideGoogleLoginUseCase(
-        authenticationRepository: AuthenticationRepository
+        authenticationRepository: AuthenticationRepository,
+        dispatcherProvider: DispatcherProvider
     ) = GoogleLoginUseCase(
-        authenticationRepository = authenticationRepository
+        authenticationRepository = authenticationRepository,
+        dispatcherProvider = dispatcherProvider
     )
 
     @Provides
     fun provideRegistrationUseCase(
-        authenticationRepository: AuthenticationRepository
+        authenticationRepository: AuthenticationRepository,
+        dispatcherProvider: DispatcherProvider
     ) = RegistrationUseCase(
-        authenticationRepository = authenticationRepository
+        authenticationRepository = authenticationRepository,
+        dispatcherProvider = dispatcherProvider
     )
 
     @Provides

@@ -1,6 +1,5 @@
 package pl.dawidfendler.data.util
 
-import android.util.Log
 import kotlinx.coroutines.ensureActive
 import pl.dawidfendler.util.flow.DataResult
 import pl.dawidfendler.util.network.NetworkError
@@ -15,11 +14,11 @@ internal suspend inline fun <reified T> safeCall(
     val response = try {
         execute()
     } catch (e: UnresolvedAddressException) {
-        Log.e(responseName, "$e")
+        //  TODO ADD OWN LOGGER
         return DataResult.Error(NetworkError.NO_INTERNET)
     } catch (e: Exception) {
         coroutineContext.ensureActive()
-        Log.e(responseName, "$e")
+        //  TODO ADD OWN LOGGER
         return DataResult.Error(NetworkError.UNKNOWN)
     }
 

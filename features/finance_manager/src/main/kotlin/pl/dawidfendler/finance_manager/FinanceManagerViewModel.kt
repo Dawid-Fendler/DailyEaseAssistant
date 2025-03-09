@@ -20,7 +20,7 @@ import pl.dawidfendler.datastore.DataStoreConstants.SELECTED_CURRENCY
 import pl.dawidfendler.date.DateTime
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.domain.model.transaction.Transaction
-import pl.dawidfendler.domain.use_case.authentication_use_case.GetSelectedCurrenciesUseCase
+import pl.dawidfendler.domain.use_case.currencies_use_case.GetSelectedCurrenciesUseCase
 import pl.dawidfendler.domain.use_case.currencies_use_case.GetCurrenciesUseCase
 import pl.dawidfendler.domain.use_case.transaction_use_case.CreateTransactionUseCase
 import pl.dawidfendler.domain.use_case.transaction_use_case.GetTransactionUseCase

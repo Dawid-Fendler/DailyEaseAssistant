@@ -1,4 +1,4 @@
-package pl.dawidfendler.domain.use_case.authentication_use_case
+package pl.dawidfendler.domain.use_case.currencies_use_case
 
 import android.util.Log
 import kotlinx.coroutines.flow.catch

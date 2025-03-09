@@ -1,4 +1,4 @@
-package pl.dawidfendler.data.datasource.local.currencies
+package pl.dawidfendler.data.datasource.remote.currencies
 
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
@@ -8,7 +8,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
-import pl.dawidfendler.data.datasource.remote.currencies.CurrenciesRemoteDataSourceImpl
 import pl.dawidfendler.data.model.currencies.exchangeRateTableResponseData
 import pl.dawidfendler.data.model.currency.remote.ExchangeRateTableResponse
 import pl.dawidfendler.data.service.currency.CurrenciesApi
