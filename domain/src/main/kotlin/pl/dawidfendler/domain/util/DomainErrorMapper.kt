@@ -6,7 +6,6 @@ import pl.dawidfendler.util.network.NetworkError.TOO_MANY_REQUESTS
 import pl.dawidfendler.util.network.NetworkError.NO_INTERNET
 import pl.dawidfendler.util.network.NetworkError.SERVER_ERROR
 import pl.dawidfendler.util.network.NetworkError.UNKNOWN
-import pl.dawidfendler.domain.util.AuthenticationError.GetUserFirebaseException
 import pl.dawidfendler.domain.util.AuthenticationError.RegistrationFirebaseException
 import pl.dawidfendler.domain.util.AuthenticationError.LoginFirebaseException
 import pl.dawidfendler.domain.util.AuthenticationError.LogoutFirebaseException
@@ -27,5 +26,4 @@ fun AuthenticationError.mapToCustomException() =
         GoogleLoginFirebaseException -> GoogleLoginFirebaseException()
         RegistrationFirebaseException -> RegistrationFirebaseException()
         LogoutFirebaseException -> LogoutFirebaseException()
-        GetUserFirebaseException -> GetUserFirebaseException()
     }

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import pl.dawidfendler.domain.model.user.User
-import pl.dawidfendler.domain.use_case.user_use_case.CreateUserUseCase
+import pl.dawidfendler.domain.use_case.user.CreateUserUseCase
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,7 +1,6 @@
 package pl.dawidfendler.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import pl.dawidfendler.domain.repository.AuthenticationRepository
 import pl.dawidfendler.domain.util.AuthenticationError
@@ -57,16 +56,6 @@ class AuthenticationRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             //  TODO ADD OWN LOGGER
             return DataResult.Error(AuthenticationError.LogoutFirebaseException)
-        }
-    }
-
-    override suspend fun getUser(): DataResult<FirebaseUser?, AuthenticationError> {
-        try {
-            val currentUser = firebaseAuth.currentUser
-            return DataResult.Success(currentUser)
-        } catch (e: Exception) {
-            //  TODO ADD OWN LOGGER
-            return DataResult.Error(AuthenticationError.GetUserFirebaseException)
         }
     }
 }

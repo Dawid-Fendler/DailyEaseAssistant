@@ -11,13 +11,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import pl.dawidfendler.authentication.R
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.datastore.DataStoreConstants.DISPLAY_HOME
-import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
-import pl.dawidfendler.domain.use_case.authentication_use_case.RegistrationUseCase
+import pl.dawidfendler.domain.use_case.authentication.GoogleLoginUseCase
+import pl.dawidfendler.domain.use_case.authentication.RegistrationUseCase
 import pl.dawidfendler.domain.validator.EmailValidator
 import pl.dawidfendler.domain.validator.PasswordValidator
 import pl.dawidfendler.util.UiText

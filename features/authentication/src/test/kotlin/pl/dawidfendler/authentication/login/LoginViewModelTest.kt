@@ -19,8 +19,8 @@ import pl.dawidfendler.authentication.MainDispatcherRule
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.datastore.DataStoreConstants.DISPLAY_HOME
-import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
-import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
+import pl.dawidfendler.domain.use_case.authentication.GoogleLoginUseCase
+import pl.dawidfendler.domain.use_case.authentication.LoginUseCase
 import pl.dawidfendler.util.flow.DomainResult
 
 class LoginViewModelTest {
@@ -39,8 +39,9 @@ class LoginViewModelTest {
         loginUseCase = mockk()
         googleLoginUseCase = mockk()
         dataStore = mockk()
-        dispatcherProvider = mockk()
-        every { dispatcherProvider.io } returns Dispatchers.IO
+        dispatcherProvider = mockk {
+            every { io } returns mainDispatcherRule.testDispatcher
+        }
         loginViewModel = LoginViewModel(
             loginUseCase = loginUseCase,
             googleLoginUseCase = googleLoginUseCase,
@@ -109,10 +110,9 @@ class LoginViewModelTest {
     fun `When onAction is called with OnGoogleLoginClick and googleLoginUseCase return DataResult Success, then send LoginEvent equal Success`() =
         runTest {
             // GIVEN
-            val mockFirebaseUser = mockk<FirebaseUser>()
             coEvery { googleLoginUseCase(idToken = "token") } returns flowOf(
                 DomainResult.Success(
-                    mockFirebaseUser
+                    Unit
                 )
             )
 
@@ -121,7 +121,7 @@ class LoginViewModelTest {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DomainResult.Success(mockFirebaseUser))
+                assertThat(result).isEqualTo(DomainResult.Success(Unit))
                 awaitComplete()
             }
 
@@ -173,20 +173,19 @@ class LoginViewModelTest {
     fun `When onAction is called with OnLoginClick and loginUseCase return DataResult Success, then send LoginEvent equal Success`() =
         runTest {
             // GIVEN
-            val mockFirebaseUser = mockk<FirebaseUser>()
             coEvery {
                 loginUseCase(
                     email = "test",
                     password = "test"
                 )
-            } returns flowOf(DomainResult.Success(mockFirebaseUser))
+            } returns flowOf(DomainResult.Success(Unit))
 
             // WHEN
             loginUseCase(email = "test", password = "test").test {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DomainResult.Success(mockFirebaseUser))
+                assertThat(result).isEqualTo(DomainResult.Success(Unit))
                 awaitComplete()
             }
 

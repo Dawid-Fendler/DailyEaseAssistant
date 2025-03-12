@@ -2,7 +2,6 @@ package pl.dawidfendler.authentication.registration
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.google.firebase.auth.FirebaseUser
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -19,8 +18,8 @@ import pl.dawidfendler.authentication.MainDispatcherRule
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.datastore.DataStoreConstants.DISPLAY_HOME
-import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
-import pl.dawidfendler.domain.use_case.authentication_use_case.RegistrationUseCase
+import pl.dawidfendler.domain.use_case.authentication.GoogleLoginUseCase
+import pl.dawidfendler.domain.use_case.authentication.RegistrationUseCase
 import pl.dawidfendler.domain.validator.EmailValidResult
 import pl.dawidfendler.domain.validator.EmailValidator
 import pl.dawidfendler.domain.validator.PasswordValidResult
@@ -47,8 +46,9 @@ class RegistrationViewModelTest {
         emailValidator = mockk()
         passwordValidator = mockk()
         dataStore = mockk()
-        dispatcherProvider = mockk()
-        every { dispatcherProvider.io } returns Dispatchers.IO
+        dispatcherProvider = mockk {
+            every { io } returns mainDispatcherRule.testDispatcher
+        }
         registrationViewModel = RegistrationViewModel(
             googleLoginUseCase = googleLoginUseCase,
             registrationUseCase = registrationUseCase,
@@ -121,10 +121,9 @@ class RegistrationViewModelTest {
     fun `When onAction is called with OnGoogleLoginClick and googleLoginUseCase return DataResult Success, then send RegistrationEvent equal Success`() =
         runTest {
             // GIVEN
-            val mockFirebaseUser = mockk<FirebaseUser>()
             coEvery { googleLoginUseCase(idToken = "token") } returns flowOf(
                 DomainResult.Success(
-                    mockFirebaseUser
+                    Unit
                 )
             )
 
@@ -133,7 +132,7 @@ class RegistrationViewModelTest {
                 val result = awaitItem()
 
                 // THEN
-                assertThat(result).isEqualTo(DomainResult.Success(mockFirebaseUser))
+                assertThat(result).isEqualTo(DomainResult.Success(Unit))
                 awaitComplete()
             }
 

@@ -20,12 +20,12 @@ import pl.dawidfendler.datastore.DataStoreConstants.SELECTED_CURRENCY
 import pl.dawidfendler.date.DateTime
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.domain.model.transaction.Transaction
-import pl.dawidfendler.domain.use_case.currencies_use_case.GetSelectedCurrenciesUseCase
-import pl.dawidfendler.domain.use_case.currencies_use_case.GetCurrenciesUseCase
-import pl.dawidfendler.domain.use_case.transaction_use_case.CreateTransactionUseCase
-import pl.dawidfendler.domain.use_case.transaction_use_case.GetTransactionUseCase
-import pl.dawidfendler.domain.use_case.user_use_case.GetAccountBalanceUseCase
-import pl.dawidfendler.domain.use_case.user_use_case.UpdateAccountBalanceUseCase
+import pl.dawidfendler.domain.use_case.currencies.GetSelectedCurrenciesUseCase
+import pl.dawidfendler.domain.use_case.currencies.GetCurrenciesUseCase
+import pl.dawidfendler.domain.use_case.transaction.CreateTransactionUseCase
+import pl.dawidfendler.domain.use_case.transaction.GetTransactionUseCase
+import pl.dawidfendler.domain.use_case.user.GetAccountBalanceUseCase
+import pl.dawidfendler.domain.use_case.user.UpdateAccountBalanceUseCase
 import pl.dawidfendler.domain.util.Constants.POLISH_ZLOTY
 import pl.dawidfendler.domain.util.Constants.POLISH_ZLOTY_CODE
 import pl.dawidfendler.domain.util.Constants.POLISH_ZLOTY_VALUE
@@ -149,7 +149,7 @@ class FinanceManagerViewModel @Inject constructor(
         getSelectedCurrenciesUseCase.invoke()
             .onEach {
                 state = state.copy(
-                    selectedCurrency = it
+                    selectedCurrency = it ?: POLISH_ZLOTY_CODE
                 )
             }.launchIn(viewModelScope)
     }

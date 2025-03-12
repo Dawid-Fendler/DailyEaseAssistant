@@ -15,8 +15,8 @@ import pl.dawidfendler.authentication.R
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.datastore.DataStoreConstants.DISPLAY_HOME
-import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
-import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
+import pl.dawidfendler.domain.use_case.authentication.GoogleLoginUseCase
+import pl.dawidfendler.domain.use_case.authentication.LoginUseCase
 import pl.dawidfendler.util.UiText
 import pl.dawidfendler.util.flow.DomainResult
 import javax.inject.Inject

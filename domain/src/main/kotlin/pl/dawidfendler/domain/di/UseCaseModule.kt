@@ -10,22 +10,22 @@ import pl.dawidfendler.domain.repository.AuthenticationRepository
 import pl.dawidfendler.domain.repository.CurrenciesRepository
 import pl.dawidfendler.domain.repository.TransactionRepository
 import pl.dawidfendler.domain.repository.UserRepository
-import pl.dawidfendler.domain.use_case.authentication_use_case.GoogleLoginUseCase
-import pl.dawidfendler.domain.use_case.authentication_use_case.LoginUseCase
-import pl.dawidfendler.domain.use_case.authentication_use_case.LogoutUseCase
-import pl.dawidfendler.domain.use_case.authentication_use_case.RegistrationUseCase
-import pl.dawidfendler.domain.use_case.currencies_use_case.DeleteCurrenciesUseCase
-import pl.dawidfendler.domain.use_case.currencies_use_case.GetCurrenciesByCodeUseCase
-import pl.dawidfendler.domain.use_case.currencies_use_case.GetCurrenciesUseCase
-import pl.dawidfendler.domain.use_case.home_use_case.GetDisplayHomeUseCase
-import pl.dawidfendler.domain.use_case.onboarding_use_case.GetOnboardingDisplayedUseCase
-import pl.dawidfendler.domain.use_case.transaction_use_case.CreateTransactionUseCase
-import pl.dawidfendler.domain.use_case.transaction_use_case.DeleteTransactionsUseCase
-import pl.dawidfendler.domain.use_case.transaction_use_case.GetTransactionUseCase
-import pl.dawidfendler.domain.use_case.user_use_case.CreateUserUseCase
-import pl.dawidfendler.domain.use_case.user_use_case.DeleteUserUseCase
-import pl.dawidfendler.domain.use_case.user_use_case.GetAccountBalanceUseCase
-import pl.dawidfendler.domain.use_case.user_use_case.UpdateAccountBalanceUseCase
+import pl.dawidfendler.domain.use_case.authentication.GoogleLoginUseCase
+import pl.dawidfendler.domain.use_case.authentication.LoginUseCase
+import pl.dawidfendler.domain.use_case.authentication.LogoutUseCase
+import pl.dawidfendler.domain.use_case.authentication.RegistrationUseCase
+import pl.dawidfendler.domain.use_case.currencies.DeleteCurrenciesUseCase
+import pl.dawidfendler.domain.use_case.currencies.GetCurrenciesByCodeUseCase
+import pl.dawidfendler.domain.use_case.currencies.GetCurrenciesUseCase
+import pl.dawidfendler.domain.use_case.home.GetDisplayHomeUseCase
+import pl.dawidfendler.domain.use_case.onboarding.GetOnboardingDisplayedUseCase
+import pl.dawidfendler.domain.use_case.transaction.CreateTransactionUseCase
+import pl.dawidfendler.domain.use_case.transaction.DeleteTransactionsUseCase
+import pl.dawidfendler.domain.use_case.transaction.GetTransactionUseCase
+import pl.dawidfendler.domain.use_case.user.CreateUserUseCase
+import pl.dawidfendler.domain.use_case.user.DeleteUserUseCase
+import pl.dawidfendler.domain.use_case.user.GetAccountBalanceUseCase
+import pl.dawidfendler.domain.use_case.user.UpdateAccountBalanceUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)
