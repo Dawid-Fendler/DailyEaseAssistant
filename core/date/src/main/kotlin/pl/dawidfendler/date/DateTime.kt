@@ -8,4 +8,5 @@ interface DateTime {
     fun convertDateToIsoLocalDateFormat(date: OffsetDateTime): String
     fun isToday(dateTime: OffsetDateTime): Boolean
     fun convertStringToOffsetDateTimeIsoFormat(date: String): OffsetDateTime
+    fun convertDateToDayMonthYearHourMinuteFormat(date: OffsetDateTime): String
 }

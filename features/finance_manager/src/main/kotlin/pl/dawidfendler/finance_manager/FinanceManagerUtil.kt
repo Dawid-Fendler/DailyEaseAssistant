@@ -7,7 +7,7 @@ import java.time.OffsetDateTime
 internal fun prepareTransactionContent(
     money: String,
     isAdd: Boolean,
-    date: OffsetDateTime
+    date: String
 ): String {
     val sign = if (isAdd) {
         PLUS
@@ -15,5 +15,5 @@ internal fun prepareTransactionContent(
         MINUS
     }
 
-    return "Date:$date - Transaction:$sign$money"
+    return "Date:$date - Transaction: $sign$money"
 }

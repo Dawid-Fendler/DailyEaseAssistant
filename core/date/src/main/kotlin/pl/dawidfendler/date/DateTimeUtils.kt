@@ -25,4 +25,12 @@ class DateTimeUtils @Inject constructor() : DateTime {
         val zoneId = ZoneId.of(EUROPE_OFFSET)
         return localDate.atStartOfDay(zoneId).toOffsetDateTime()
     }
+
+    override fun convertDateToDayMonthYearHourMinuteFormat(date: OffsetDateTime): String {
+        return date.format(DateTimeFormatter.ofPattern(DD_MM_YYYY_HH_MM_DOT))
+    }
+
+    companion object {
+        private const val DD_MM_YYYY_HH_MM_DOT = "dd.MM.yyyy HH:mm"
+    }
 }

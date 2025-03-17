@@ -177,7 +177,7 @@ class FinanceManagerViewModel @Inject constructor(
                 content = prepareTransactionContent(
                     money = money,
                     isAdd = isAdd,
-                    date = dateTime.getCurrentDate()
+                    date = dateTime.convertDateToDayMonthYearHourMinuteFormat(dateTime.getCurrentDate())
                 )
             )
         ).onEach {
@@ -209,10 +209,17 @@ class FinanceManagerViewModel @Inject constructor(
             .onEach { result ->
                 when (result) {
                     is DomainResult.Success ->
-                        setStateForFetchTransaction(
-                            transaction = result.data,
-                            isFetchError = false
-                        )
+                        if (result.data.isEmpty()) {
+                            setStateForFetchTransaction(
+                                transaction = result.data,
+                                isFetchError = true
+                            )
+                        } else {
+                            setStateForFetchTransaction(
+                                transaction = result.data,
+                                isFetchError = false
+                            )
+                        }
 
                     is DomainResult.Error -> {
                         Log.e("FinanceManagerViewModel", "getTransaction Error: ${result.error}")
