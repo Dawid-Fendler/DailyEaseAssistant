@@ -3,14 +3,14 @@ name: Ktlint Check
 on:
   pull_request:
     branches:
-      - '*'  # This applies to any branch for PRs
+      - '*'  # Trigger for any pull request targeting any branch
     paths:
       - '**/*.kt'
       - '**/*.kts'
 
   push:
     branches:
-      - '*'  # This applies to any branch for pushes
+      - '*'  # Trigger for any push to any branch
     paths:
       - '**/*.kt'
       - '**/*.kts'
@@ -28,16 +28,17 @@ jobs:
         with:
           java-version: '17'
 
-      # Cache Gradle dependencies (with updated cache key)
       - name: Cache Gradle dependencies
         uses: actions/cache@v2
         with:
-          path: ~/.gradle/caches
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper/
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/*.kts', '**/*.properties') }}
           restore-keys: |
             gradle-${{ runner.os }}-
 
-      - name: Set up Gradle
+      - name: Set up Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
       - name: Run Ktlint Check
