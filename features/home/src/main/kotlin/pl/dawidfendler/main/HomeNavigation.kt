@@ -10,7 +10,6 @@ fun NavGraphBuilder.homeRoute(
     navigateToFinanceManager: () -> Unit,
     modifier: Modifier
 ) {
-
     composable<Navigation.HomeNavigation> {
         val viewModel: HomeViewModel = hiltViewModel()
 

@@ -60,7 +60,6 @@ fun FinanceManagerWidget(
                 ),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
-
             CustomText(
                 text = stringResource(R.string.account_balance_title),
                 modifier = Modifier

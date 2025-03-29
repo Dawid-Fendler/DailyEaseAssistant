@@ -2,7 +2,6 @@ package pl.dawidfendler.components.empty_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -28,7 +27,6 @@ fun EmptyScreen(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         CustomText(
             modifier = Modifier.padding(vertical = dp_8),
             text = stringResource(R.string.something_went_wrong),

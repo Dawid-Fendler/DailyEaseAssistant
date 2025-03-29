@@ -51,7 +51,6 @@ fun CustomButton(
     textColor: Color = Color.Black,
     imageTintColor: Color = Color.White
 ) {
-
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally

@@ -22,7 +22,10 @@ internal fun Modifier.wormTransition(
         val tail = xPos + size.width + 1f.coerceAtMost(wormOffset) * distance
 
         val worm = RoundRect(
-            head, 0f, tail, size.height,
+            head,
+            0f,
+            tail,
+            size.height,
             CornerRadius(50f)
         )
 

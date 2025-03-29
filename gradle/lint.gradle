@@ -1,0 +1,11 @@
+ext.lintConfig = {
+    lintOptions {
+        abortOnError true
+        warningsAsErrors true
+        checkReleaseBuilds true
+        xmlReport true
+        htmlReport true
+        htmlOutput file("$rootDir/build/reports/lint/lint-report.html")
+        xmlOutput file("$rootDir/build/reports/lint/lint-report.xml")
+    }
+}

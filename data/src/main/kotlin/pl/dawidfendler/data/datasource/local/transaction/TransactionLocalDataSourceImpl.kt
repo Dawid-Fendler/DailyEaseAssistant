@@ -20,4 +20,3 @@ class TransactionLocalDataSourceImpl @Inject constructor(
         transactionDao.deleteTransaction()
     }
 }
-

@@ -10,16 +10,12 @@ import pl.dawidfendler.main.components.FinanceManagerWidget
 fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeState,
-
     navigateToFinanceManager: () -> Unit
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
     ) {
-
-        FinanceManagerWidget(
-            navigateToFinanceManager = navigateToFinanceManager
-        )
+        FinanceManagerWidget(navigateToFinanceManager = navigateToFinanceManager)
     }
 }

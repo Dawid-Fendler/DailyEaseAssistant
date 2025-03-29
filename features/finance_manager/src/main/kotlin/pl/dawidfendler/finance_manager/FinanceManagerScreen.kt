@@ -47,7 +47,6 @@ fun FinanceManagerScreen(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         AccountBalance(
             onAddClick = {
                 isSheetOpen = AddMoneyBottomSheet

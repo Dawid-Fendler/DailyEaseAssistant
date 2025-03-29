@@ -1,14 +1,10 @@
 package pl.dawidfendler.domain.use_case.onboarding
 
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onEach
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
-import pl.dawidfendler.datastore.DataStoreConstants.DISPLAY_HOME
 import pl.dawidfendler.datastore.DataStoreConstants.ONBOARDING_DISPLAYED
 import javax.inject.Inject
 

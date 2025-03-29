@@ -50,7 +50,6 @@ fun TransactionsHistoryBottomSheet(
             .height(dp_400),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         LazyColumn(
             modifier = modifier
                 .fillMaxWidth()

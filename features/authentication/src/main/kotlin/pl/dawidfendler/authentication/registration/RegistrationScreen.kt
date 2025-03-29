@@ -89,7 +89,6 @@ fun RegistrationScreen(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         TopBackButton(onBackClick)
 
         Spacer(modifier = Modifier.height(dp_56))

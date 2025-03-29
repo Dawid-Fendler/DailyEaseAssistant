@@ -24,7 +24,6 @@ import pl.dawidfendler.util.navigation.Navigation
 
 @Composable
 fun MainNavGraph(navController: NavHostController) {
-
     var showBottomDialog by remember { mutableStateOf(CustomBottomSheetModel()) }
 
     ObserveAsEvents(CustomBottomSheetController.event) { events ->

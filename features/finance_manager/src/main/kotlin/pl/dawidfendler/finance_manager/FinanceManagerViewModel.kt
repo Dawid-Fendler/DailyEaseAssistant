@@ -71,7 +71,9 @@ class FinanceManagerViewModel @Inject constructor(
                         )
 
                     is DomainResult.Error -> {
-                        _eventChannel.send(FinanceManagerEvent.ShowErrorBottomDialog("Problem with download account balance"))
+                        _eventChannel.send(
+                            FinanceManagerEvent.ShowErrorBottomDialog("Problem with download account balance")
+                        )
                     }
                 }
             }.catch {
