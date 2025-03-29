@@ -46,7 +46,7 @@ jobs:
 
       # Kover: Generate HTML report
       - name: Generate Kover coverage report
-        run: ./gradlew test -Pkover koverHtmlReport
+        run: ./gradlew koverMergedHtmlReport
 
       # Upload test results
       - name: Upload test results
