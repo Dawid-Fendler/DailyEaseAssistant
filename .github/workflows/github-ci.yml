@@ -81,4 +81,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: kover-report
-          path: "build/kover/html/index.html"
+          path: "build/reports/kover/html/index.html"
