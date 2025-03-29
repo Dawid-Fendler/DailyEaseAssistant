@@ -90,7 +90,6 @@ internal fun LoginScreen(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         LogoImage()
 
         Spacer(modifier = Modifier.height(dp_24))

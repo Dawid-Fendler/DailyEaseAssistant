@@ -1,0 +1,85 @@
+name: CI Pipeline
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build and Verify
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission for Gradle
+        run: chmod +x gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      # Detekt static analysis
+      - name: Run Detekt static analysis
+        run: ./gradlew detekt
+
+      # Ktlint static analysis
+      - name: Run Ktlint static analysis
+        run: ./gradlew ktlintCheck
+
+      # Lint
+      - name: Run Lint checks
+        run: ./gradlew lint
+
+      # Run tests
+      - name: Run Unit Tests
+        run: ./gradlew test
+
+      # Kover: Generate HTML report
+      - name: Generate Kover coverage report
+        run: ./gradlew test -Pkover koverHtmlReport
+
+      # Upload test results
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: "**/test-results/**/TEST-*.xml"
+
+      # Upload Detekt report
+      - name: Upload Detekt static analysis report
+        uses: actions/upload-artifact@v4
+        with:
+          name: detekt-report
+          path: "**/build/reports/detekt/*.xml"
+
+      # Upload Ktlint report
+      - name: Upload Ktlint static analysis report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ktlint-report
+          path: "**/build/reports/ktlint/*.xml"
+
+      # Upload Lint report
+      - name: Upload Lint static analysis report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-report
+          path: "**/build/reports/lint/**/*.html"
+
+      # Upload Kover coverage report
+      - name: Upload Kover coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: kover-report
+          path: "**/build/reports/kover/html/index.html"

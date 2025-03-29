@@ -76,7 +76,6 @@ fun CustomBottomSheet(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
             CustomText(
                 text = title,
                 modifier = Modifier

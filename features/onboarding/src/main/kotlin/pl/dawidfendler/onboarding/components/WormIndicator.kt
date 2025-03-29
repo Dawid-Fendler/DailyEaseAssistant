@@ -26,7 +26,6 @@ internal fun WormIndicator(
     modifier: Modifier = Modifier,
     spacing: Dp = WORM_INDICATOR_SPACING_SIZE
 ) {
-
     Box(
         modifier = modifier,
         contentAlignment = Alignment.CenterStart

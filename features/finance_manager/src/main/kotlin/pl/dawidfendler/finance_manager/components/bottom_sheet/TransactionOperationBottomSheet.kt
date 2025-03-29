@@ -29,7 +29,6 @@ fun TransactionOperationBottomSheet(
     transactionOperations: TransactionOperations,
     moneyOperationOnClick: (String) -> Unit
 ) {
-
     var moneyValue by remember {
         mutableStateOf("")
     }
@@ -39,7 +38,6 @@ fun TransactionOperationBottomSheet(
             .height(dp_300),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         CustomText(
             text = if (transactionOperations == TransactionOperations.ADD) {
                 stringResource(R.string.add_money)

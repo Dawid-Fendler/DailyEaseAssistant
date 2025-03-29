@@ -6,9 +6,9 @@ dependencies {
 }
 
 tasks.register('detekt', JavaExec) {
-    description = "Code smell analysis for Kotlin."
+    description = "Detekt code analysis."
     classpath = configurations.detekt
-    main = "io.gitlab.arturbosch.detekt.cli.Main"
+    getMainClass().set("io.gitlab.arturbosch.detekt.cli.Main")
 
     args "--input", "src/main/kotlin",
             "--excludes", "**/build/**,**/resources/**",

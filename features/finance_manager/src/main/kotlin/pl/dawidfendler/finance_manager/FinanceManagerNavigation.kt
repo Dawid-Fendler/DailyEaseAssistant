@@ -16,7 +16,6 @@ import pl.dawidfendler.util.navigation.Navigation
 fun NavGraphBuilder.financeManagerRout(
     modifier: Modifier
 ) {
-
     composable<Navigation.FinanceManager> {
         val viewModel: FinanceManagerViewModel = hiltViewModel()
         val scope = rememberCoroutineScope()

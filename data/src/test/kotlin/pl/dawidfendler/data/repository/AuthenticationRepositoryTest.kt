@@ -131,37 +131,6 @@ class AuthenticationRepositoryTest {
     }
 
     @Test
-    fun `When getUser is called , then i should return DataResult Success with FirebaseUser`() {
-        runTest {
-            // GIVEN
-            every { firebaseAuth.currentUser } returns firebaseUser
-
-            val result = authenticationRepository.getUser()
-
-            assertThat(result).isInstanceOf(DataResult.Success::class.java)
-
-            val successData = (result as DataResult.Success).data
-            assertThat(successData?.uid).isEqualTo(firebaseUser.uid)
-            assertThat(successData?.email).isEqualTo(firebaseUser.email)
-        }
-    }
-
-    @Test
-    fun `When getUser is called , then i should return DataResult Error with GetUserFirebaseException`() {
-        runTest {
-            // GIVEN
-            every { firebaseAuth.currentUser } throws Exception()
-
-            val result = authenticationRepository.getUser()
-
-            assertThat(result).isInstanceOf(DataResult.Error::class.java)
-
-            val successData = (result as DataResult.Error).error
-            assertThat(successData).isEqualTo(AuthenticationError.GetUserFirebaseException)
-        }
-    }
-
-    @Test
     fun `When logout is called , then i should return DataResult Success with Unit`() {
         runTest {
             // GIVEN

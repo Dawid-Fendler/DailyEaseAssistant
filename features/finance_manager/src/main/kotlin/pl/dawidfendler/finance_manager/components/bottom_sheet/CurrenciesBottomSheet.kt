@@ -58,7 +58,6 @@ internal fun CurrenciesBottomSheet(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         LazyColumn(
             modifier = modifier
                 .fillMaxWidth()

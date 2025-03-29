@@ -49,7 +49,6 @@ fun MainTopAppBar(
                     .height(dp_48),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 BorderIconButton(
                     icon = Icons.Default.Face,
                     onClick = onUserIconClick
@@ -60,7 +59,6 @@ fun MainTopAppBar(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-
                     CustomText(
                         text = name,
                         letterSpacing = sp_0,
