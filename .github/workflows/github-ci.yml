@@ -60,25 +60,25 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: detekt-report
-          path: "**/build/reports/detekt/*.xml"
+          path: "**/build/reports/detekt-report.xml"
 
       # Upload Ktlint report
       - name: Upload Ktlint static analysis report
         uses: actions/upload-artifact@v4
         with:
           name: ktlint-report
-          path: "**/build/reports/ktlint/*.xml"
+          path: "**/build/reports/ktlint-report.xml"
 
       # Upload Lint report
       - name: Upload Lint static analysis report
         uses: actions/upload-artifact@v4
         with:
           name: lint-report
-          path: "**/build/reports/lint/**/*.html"
+          path: "**/build/reports/lint-results-debug.xml"
 
       # Upload Kover coverage report
       - name: Upload Kover coverage report
         uses: actions/upload-artifact@v4
         with:
           name: kover-report
-          path: "**/build/reports/kover/html/index.html"
+          path: "build/kover/html/index.html"
