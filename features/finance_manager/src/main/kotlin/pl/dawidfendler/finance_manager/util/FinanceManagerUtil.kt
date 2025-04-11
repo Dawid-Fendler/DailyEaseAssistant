@@ -1,4 +1,4 @@
-package pl.dawidfendler.finance_manager
+package pl.dawidfendler.finance_manager.util
 
 import pl.dawidfendler.domain.util.Constants.MINUS
 import pl.dawidfendler.domain.util.Constants.PLUS

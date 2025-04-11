@@ -17,17 +17,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import pl.dawidfendler.FinanceManagerState
-import pl.dawidfendler.finance_manager.components.AccountBalance
-import pl.dawidfendler.finance_manager.components.bottom_sheet.ActionBottomSheet
-import pl.dawidfendler.finance_manager.components.bottom_sheet.ActionBottomSheet.AddMoneyBottomSheet
-import pl.dawidfendler.finance_manager.components.bottom_sheet.ActionBottomSheet.CurrenciesBottomSheet
-import pl.dawidfendler.finance_manager.components.bottom_sheet.ActionBottomSheet.SpentMoneyBottomSheet
-import pl.dawidfendler.finance_manager.components.bottom_sheet.ActionBottomSheet.TransactionHistoryBottomSheet
-import pl.dawidfendler.finance_manager.components.bottom_sheet.CurrenciesBottomSheet
-import pl.dawidfendler.finance_manager.components.bottom_sheet.TransactionOperationBottomSheet
-import pl.dawidfendler.finance_manager.components.bottom_sheet.TransactionOperations
-import pl.dawidfendler.finance_manager.components.bottom_sheet.TransactionsHistoryBottomSheet
+import pl.dawidfendler.account_balance.AccountBalance
+import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet
+import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet.AddMoneyBottomSheet
+import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet.CurrenciesBottomSheet
+import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet.SpentMoneyBottomSheet
+import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet.TransactionHistoryBottomSheet
+import pl.dawidfendler.account_balance.bottom_sheet.CurrenciesBottomSheet
+import pl.dawidfendler.account_balance.bottom_sheet.TransactionOperationBottomSheet
+import pl.dawidfendler.account_balance.bottom_sheet.TransactionOperations
+import pl.dawidfendler.account_balance.bottom_sheet.TransactionsHistoryBottomSheet
 import pl.dawidfendler.ui.theme.dp_24
 
 @Composable
@@ -60,7 +59,7 @@ fun FinanceManagerScreen(
             onCurrenciesClick = {
                 isSheetOpen = CurrenciesBottomSheet
             },
-            accountBalance = state.accountBalance,
+            accountBalance = listOf(state.accountBalance),
             selectedCurrencyCode = state.selectedCurrency,
             accountBalanceColor = state.accountBalanceColor
         )
@@ -69,46 +68,28 @@ fun FinanceManagerScreen(
             ModalBottomSheet(
                 content = {
                     when (isSheetOpen) {
-                        AddMoneyBottomSheet -> TransactionOperationBottomSheet(
-                            transactionOperations = TransactionOperations.ADD,
-                            moneyOperationOnClick = { money ->
-                                isSheetOpen = null
-                                onAction.invoke(FinanceManagerAction.AddMoney(money))
-                            }
+                        AddMoneyBottomSheet -> ShowTransactionOperationBottomSheet(
+                            onAction = onAction,
+                            changeSheetOpenValue = { isSheetOpen = it },
+                            transactionOperations = TransactionOperations.ADD
                         )
 
-                        CurrenciesBottomSheet -> {
-                            onAction.invoke(FinanceManagerAction.GetSelectedCurrencies)
-                            CurrenciesBottomSheet(
-                                currencies = state.currencies,
-                                isCurrenciesFetchDataError = state.isCurrenciesFetchDataError,
-                                selectedCurrency = state.selectedCurrency,
-                                onSelectCurrency = { currency ->
-                                    isSheetOpen = null
-                                    onAction.invoke(
-                                        FinanceManagerAction.SavedSelectedCurrencies(
-                                            currency
-                                        )
-                                    )
-                                }
-                            )
-                        }
-
-                        SpentMoneyBottomSheet -> TransactionOperationBottomSheet(
-                            transactionOperations = TransactionOperations.MINUS,
-                            moneyOperationOnClick = { money ->
-                                isSheetOpen = null
-                                onAction.invoke(FinanceManagerAction.SpentMoney(money))
-                            }
+                        CurrenciesBottomSheet -> ShowCurrenciesBottomSheet(
+                            onAction = onAction,
+                            changeSheetOpenValue = { isSheetOpen = it },
+                            state = state
                         )
 
-                        TransactionHistoryBottomSheet -> {
-                            onAction.invoke(FinanceManagerAction.GetTransaction)
-                            TransactionsHistoryBottomSheet(
-                                transactionsHistory = state.transaction,
-                                isTransactionFetchError = state.isTransactionFetchDataError
-                            )
-                        }
+                        SpentMoneyBottomSheet -> ShowTransactionOperationBottomSheet(
+                            onAction = onAction,
+                            changeSheetOpenValue = { isSheetOpen = it },
+                            transactionOperations = TransactionOperations.MINUS
+                        )
+
+                        TransactionHistoryBottomSheet -> ShowTransactionsHistoryBottomSheet(
+                            onAction = onAction,
+                            state = state
+                        )
 
                         null -> Unit
                     }
@@ -123,4 +104,57 @@ fun FinanceManagerScreen(
             )
         }
     }
+}
+
+@Composable
+private fun ShowTransactionOperationBottomSheet(
+    onAction: (FinanceManagerAction) -> Unit,
+    changeSheetOpenValue: (ActionBottomSheet?) -> Unit,
+    transactionOperations: TransactionOperations
+) {
+    TransactionOperationBottomSheet(
+        transactionOperations = transactionOperations,
+        moneyOperationOnClick = { money ->
+            changeSheetOpenValue(null)
+            if (transactionOperations == TransactionOperations.ADD) {
+                onAction.invoke(FinanceManagerAction.AddMoney(money))
+            } else {
+                onAction.invoke(FinanceManagerAction.SpentMoney(money))
+            }
+        }
+    )
+}
+
+@Composable
+private fun ShowCurrenciesBottomSheet(
+    onAction: (FinanceManagerAction) -> Unit,
+    changeSheetOpenValue: (ActionBottomSheet?) -> Unit,
+    state: FinanceManagerState
+) {
+    onAction.invoke(FinanceManagerAction.GetSelectedCurrencies)
+    CurrenciesBottomSheet(
+        currencies = state.currencies,
+        isCurrenciesFetchDataError = state.isCurrenciesFetchDataError,
+        selectedCurrency = state.selectedCurrency,
+        onSelectCurrency = { currency ->
+            changeSheetOpenValue(null)
+            onAction.invoke(
+                FinanceManagerAction.SavedSelectedCurrencies(
+                    currency
+                )
+            )
+        }
+    )
+}
+
+@Composable
+private fun ShowTransactionsHistoryBottomSheet(
+    onAction: (FinanceManagerAction) -> Unit,
+    state: FinanceManagerState
+) {
+    onAction.invoke(FinanceManagerAction.GetTransaction)
+    TransactionsHistoryBottomSheet(
+        transactionsHistory = state.transaction,
+        isTransactionFetchError = state.isTransactionFetchDataError
+    )
 }

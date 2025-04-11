@@ -1,4 +1,4 @@
-package pl.dawidfendler.finance_manager
+package pl.dawidfendler
 
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -11,6 +11,9 @@ import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetEvent
 import pl.dawidfendler.coroutines.ObserveAsEvents
 import pl.dawidfendler.domain.util.Constants.ERROR_TITLE
 import pl.dawidfendler.domain.util.Constants.SOMETHING_WENT_WRONG
+import pl.dawidfendler.finance_manager.FinanceManagerEvent
+import pl.dawidfendler.finance_manager.FinanceManagerScreen
+import pl.dawidfendler.finance_manager.FinanceManagerViewModel
 import pl.dawidfendler.util.navigation.Navigation
 
 fun NavGraphBuilder.financeManagerRout(

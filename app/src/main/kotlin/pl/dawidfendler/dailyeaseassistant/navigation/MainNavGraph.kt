@@ -18,7 +18,7 @@ import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetEvent
 import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetModel
 import pl.dawidfendler.coroutines.ObserveAsEvents
 import pl.dawidfendler.dailyeaseassistant.components.MainTopAppBar
-import pl.dawidfendler.finance_manager.financeManagerRout
+import pl.dawidfendler.financeManagerRout
 import pl.dawidfendler.main.homeRoute
 import pl.dawidfendler.util.navigation.Navigation
 

@@ -1,4 +1,4 @@
-package pl.dawidfendler.finance_manager.components.bottom_sheet
+package pl.dawidfendler.account_balance.bottom_sheet
 
 sealed class ActionBottomSheet {
     data object AddMoneyBottomSheet : ActionBottomSheet()
