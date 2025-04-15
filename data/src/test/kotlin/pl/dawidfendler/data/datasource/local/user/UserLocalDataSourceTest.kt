@@ -123,4 +123,33 @@ class UserLocalDataSourceTest {
             coVerify { userDao.deleteUser() }
         }
     }
+
+    @Test
+    fun `When getUserCurrencies is called, then it should return null`() {
+        runTest {
+            // Given
+            coEvery { userDao.getUserCurrencies() } returns null
+
+            // When
+            val result = userLocalDataSource.getUserCurrencies()
+
+            // Then
+            assertThat(result).isNull()
+        }
+    }
+
+    @Test
+    fun `When updateCurrencies is called, then should call updateCurrencies on the dao`() {
+        runTest {
+            // Given
+            val currencies = "PLN-USD"
+            coEvery { userDao.updateCurrencies(currencies) } just runs
+
+            // When
+            userLocalDataSource.updateCurrencies(currencies)
+
+            // Then
+            coVerify { userDao.updateCurrencies(currencies) }
+        }
+    }
 }

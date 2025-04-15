@@ -21,6 +21,12 @@ interface UserDao {
     @Query("UPDATE user SET accountBalance = :accountBalance")
     suspend fun updateAccountBalance(accountBalance: Double)
 
+    @Query("SELECT currencies FROM user")
+    suspend fun getUserCurrencies(): String?
+
+    @Query("UPDATE user SET currencies = :currencies")
+    suspend fun updateCurrencies(currencies: String)
+
     @Query("DELETE FROM user")
     suspend fun deleteUser()
 }

@@ -12,7 +12,7 @@ import pl.dawidfendler.util.flow.DomainResult
 import java.math.BigDecimal
 import javax.inject.Inject
 
-class UpdateAccountBalanceUseCase @Inject constructor(
+class UpdateAccountBalanceUseCase(
     private val userRepository: UserRepository,
     private val dispatcher: DispatcherProvider
 ) {

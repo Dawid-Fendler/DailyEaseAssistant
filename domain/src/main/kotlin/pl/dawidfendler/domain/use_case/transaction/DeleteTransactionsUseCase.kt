@@ -5,9 +5,8 @@ import kotlinx.coroutines.flow.flowOn
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.repository.TransactionRepository
 import pl.dawidfendler.util.flow.DomainResult
-import javax.inject.Inject
 
-class DeleteTransactionsUseCase @Inject constructor(
+class DeleteTransactionsUseCase(
     private val transactionRepository: TransactionRepository,
     private val dispatcher: DispatcherProvider
 ) {

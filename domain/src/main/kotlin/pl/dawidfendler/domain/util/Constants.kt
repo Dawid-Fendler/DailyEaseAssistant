@@ -13,4 +13,5 @@ object Constants {
     const val SOMETHING_WENT_WRONG = "Something went wrong"
     const val PLUS = "+"
     const val MINUS = "-"
+    const val CURRENCY_DECIMAL_PLACES = 2
 }

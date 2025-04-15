@@ -9,12 +9,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import pl.dawidfendler.data.database.UserDatabase
 import pl.dawidfendler.data.util.Constants.USER_DATABASE_NAME
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
     @Provides
+    @Singleton
     fun provideCurrenciesDatabase(@ApplicationContext context: Context): UserDatabase {
         return Room.databaseBuilder(
             context,

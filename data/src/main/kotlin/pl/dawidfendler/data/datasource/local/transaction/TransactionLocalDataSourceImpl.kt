@@ -2,9 +2,8 @@ package pl.dawidfendler.data.datasource.local.transaction
 
 import pl.dawidfendler.data.database.finance_manger.transaction.TransactionDao
 import pl.dawidfendler.data.model.transaction.TransactionEntity
-import javax.inject.Inject
 
-class TransactionLocalDataSourceImpl @Inject constructor(
+class TransactionLocalDataSourceImpl(
     private val transactionDao: TransactionDao
 ) : TransactionLocalDataSource {
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="account_balance_title">Your Balance</string>
+    <string name="account_name_title">Personal · %s</string>
     <string name="add_money">Add money</string>
     <string name="spent_money">Spent money</string>
     <string name="currencies_bottom_dialog_title">Select your main currency</string>
+    <string name="account_balance_currencies_bottom_dialog_title">Select your currencies %s/5</string>
     <string name="add">Add</string>
     <string name="remove">Remove</string>
     <string name="history">History</string>

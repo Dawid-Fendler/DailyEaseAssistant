@@ -42,17 +42,18 @@ class UserRepositoryTest {
     }
 
     @Test
-    fun `When insert is called and user is not null, then it should not call insert on the datasource`() = runTest {
-        // Given
-        val user = userTest
-        coEvery { userLocalDataSource.getUser() } returns userEntityTest
+    fun `When insert is called and user is not null, then it should not call insert on the datasource`() =
+        runTest {
+            // Given
+            val user = userTest
+            coEvery { userLocalDataSource.getUser() } returns userEntityTest
 
-        // When
-        userRepository.insertUser(userTest)
+            // When
+            userRepository.insertUser(userTest)
 
-        // Then
-        coVerify(exactly = 0) { userLocalDataSource.insert(user.toEntity()) }
-    }
+            // Then
+            coVerify(exactly = 0) { userLocalDataSource.insert(user.toEntity()) }
+        }
 
     @Test
     fun `When getUser is called, then it should return user entity`() {
@@ -138,6 +139,51 @@ class UserRepositoryTest {
 
             // Then
             coVerify { userLocalDataSource.deleteUser() }
+        }
+    }
+
+    @Test
+    fun `When getUserCurrencies is called, then it should return user currencies`() {
+        runTest {
+            // Given
+            val currencies = listOf("PLN", "USD", "GBP")
+            val data = "PLN-USD-GBP"
+            coEvery { userLocalDataSource.getUserCurrencies() } returns data
+
+            // When
+            val result = userRepository.getUserCurrencies()
+
+            // Then
+            assertThat(result).isEqualTo(currencies)
+        }
+    }
+
+    @Test
+    fun `When getUserCurrencies is called, then it should return empty`() {
+        runTest {
+            // Given
+            coEvery { userLocalDataSource.getUserCurrencies() } returns null
+
+            // When
+            val result = userRepository.getUserCurrencies()
+
+            // Then
+            assertThat(result).isEqualTo(emptyList<String>())
+        }
+    }
+
+    @Test
+    fun `When updateUserCurrencies is called, then should call updateCurrencies on the datasource`() {
+        runTest {
+            // Given
+            val userCurrencies = "PLN-USD-GBP"
+            coEvery { userLocalDataSource.updateCurrencies(userCurrencies) } just runs
+
+            // When
+            userRepository.updateUserCurrencies(listOf("PLN", "USD", "GBP"))
+
+            // Then
+            coVerify { userLocalDataSource.updateCurrencies(userCurrencies) }
         }
     }
 }

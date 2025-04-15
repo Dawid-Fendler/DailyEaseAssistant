@@ -2,9 +2,8 @@ package pl.dawidfendler.data.datasource.local.currencies
 
 import pl.dawidfendler.data.database.finance_manger.currencies.CurrenciesDao
 import pl.dawidfendler.data.model.currency.local.currencies.ExchangeRateTableEntity
-import javax.inject.Inject
 
-class CurrenciesLocalDataSourceImpl @Inject constructor(
+class CurrenciesLocalDataSourceImpl(
     private val currenciesDao: CurrenciesDao
 ) : CurrenciesLocalDataSource {
     override suspend fun insertAll(currencies: List<ExchangeRateTableEntity>) {

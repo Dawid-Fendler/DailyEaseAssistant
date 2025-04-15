@@ -16,30 +16,37 @@ import pl.dawidfendler.data.datasource.local.user.UserLocalDataSourceImpl
 import pl.dawidfendler.data.datasource.remote.currencies.CurrenciesRemoteDataSource
 import pl.dawidfendler.data.datasource.remote.currencies.CurrenciesRemoteDataSourceImpl
 import pl.dawidfendler.data.service.currency.CurrenciesApi
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {
 
     @Provides
+    @Singleton
     fun provideFirebaseAuth() = FirebaseAuth.getInstance()
 
     @Provides
+    @Singleton
     fun provideFirebaseFireStore() = FirebaseFirestore.getInstance()
 
     @Provides
+    @Singleton
     fun provideCurrenciesRemoteDataSource(api: CurrenciesApi): CurrenciesRemoteDataSource =
         CurrenciesRemoteDataSourceImpl(api)
 
     @Provides
+    @Singleton
     fun provideCurrenciesLocalDataSource(db: UserDatabase): CurrenciesLocalDataSource =
         CurrenciesLocalDataSourceImpl(db.currenciesDao())
 
     @Provides
+    @Singleton
     fun provideUserLocalDataSource(db: UserDatabase): UserLocalDataSource =
         UserLocalDataSourceImpl(db.userDao())
 
     @Provides
+    @Singleton
     fun provideTransactionLocalDataSource(db: UserDatabase): TransactionLocalDataSource =
         TransactionLocalDataSourceImpl(db.transactionDao())
 }

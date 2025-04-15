@@ -13,7 +13,6 @@ import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.MainDispatcherRule
 import pl.dawidfendler.domain.repository.AuthenticationRepository
 import pl.dawidfendler.domain.util.AuthenticationError
-import pl.dawidfendler.domain.util.LoginFirebaseException
 import pl.dawidfendler.domain.util.RegistrationFirebaseException
 import pl.dawidfendler.util.flow.DataResult
 import pl.dawidfendler.util.flow.DomainResult

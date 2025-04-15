@@ -1,5 +1,6 @@
 package pl.dawidfendler.ui.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val MD_THEME_LIGHT_PRIMARY = Color(0xFF2A61EE)
@@ -63,5 +64,12 @@ val MD_THEME_DARK_SHADOW = Color(0xFF000000)
 val MD_THEME_DARK_SURFACE_TINT = Color(0xFF8ACEFF)
 val MD_THEME_DARK_OUTLINE_VARIANT = Color(0xFF41474D)
 val MD_THEME_DARK_SCRIM = Color(0xFF000000)
+val DARK_BLUE = Color(0xFF000933)
+val SEED = Color(0xFF0079AE)
 
-val seed = Color(0xFF0079AE)
+val BLUE_BRUSH = Brush.verticalGradient(
+    colors = listOf(
+        SEED,
+        DARK_BLUE
+    )
+)

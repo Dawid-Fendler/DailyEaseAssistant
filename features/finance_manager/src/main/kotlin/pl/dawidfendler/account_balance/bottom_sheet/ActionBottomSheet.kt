@@ -5,4 +5,5 @@ sealed class ActionBottomSheet {
     data object SpentMoneyBottomSheet : ActionBottomSheet()
     data object CurrenciesBottomSheet : ActionBottomSheet()
     data object TransactionHistoryBottomSheet : ActionBottomSheet()
+    data object AccountBalanceCurrenciesBottomSheet: ActionBottomSheet()
 }

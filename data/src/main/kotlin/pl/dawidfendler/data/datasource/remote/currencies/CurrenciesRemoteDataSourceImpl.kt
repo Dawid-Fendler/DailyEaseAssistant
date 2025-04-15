@@ -3,9 +3,8 @@ package pl.dawidfendler.data.datasource.remote.currencies
 import pl.dawidfendler.data.model.currency.remote.ExchangeRateTableResponse
 import pl.dawidfendler.data.service.currency.CurrenciesApi
 import retrofit2.Response
-import javax.inject.Inject
 
-class CurrenciesRemoteDataSourceImpl @Inject constructor(
+class CurrenciesRemoteDataSourceImpl(
     private val currenciesApi: CurrenciesApi
 ) : CurrenciesRemoteDataSource {
 

@@ -8,5 +8,7 @@ interface UserRepository {
     suspend fun getUser(): User?
     suspend fun getAccountBalance(): BigDecimal
     suspend fun updateAccountBalance(accountBalance: BigDecimal)
+    suspend fun getUserCurrencies(): List<String>
+    suspend fun updateUserCurrencies(userCurrencies: List<String>)
     suspend fun deleteUser()
 }

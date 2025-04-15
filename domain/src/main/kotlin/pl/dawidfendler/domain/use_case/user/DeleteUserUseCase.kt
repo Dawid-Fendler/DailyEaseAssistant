@@ -7,7 +7,7 @@ import pl.dawidfendler.domain.repository.UserRepository
 import pl.dawidfendler.util.flow.DomainResult
 import javax.inject.Inject
 
-class DeleteUserUseCase @Inject constructor(
+class DeleteUserUseCase(
     private val userRepository: UserRepository,
     private val dispatcher: DispatcherProvider
 ) {

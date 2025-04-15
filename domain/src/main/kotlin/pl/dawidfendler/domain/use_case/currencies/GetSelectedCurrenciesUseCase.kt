@@ -7,9 +7,8 @@ import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.datastore.DataStoreConstants.SELECTED_CURRENCY
 import pl.dawidfendler.domain.util.Constants.POLISH_ZLOTY_CODE
-import javax.inject.Inject
 
-class GetSelectedCurrenciesUseCase @Inject constructor(
+class GetSelectedCurrenciesUseCase(
     private val dataStore: DataStore,
     private val dispatcherProvider: DispatcherProvider
 ) {

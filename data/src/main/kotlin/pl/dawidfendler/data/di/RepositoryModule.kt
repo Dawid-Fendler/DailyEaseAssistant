@@ -12,20 +12,25 @@ import pl.dawidfendler.domain.repository.AuthenticationRepository
 import pl.dawidfendler.domain.repository.CurrenciesRepository
 import pl.dawidfendler.domain.repository.TransactionRepository
 import pl.dawidfendler.domain.repository.UserRepository
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 interface RepositoryModule {
 
     @Binds
+    @Singleton
     fun bindAuthenticationRepository(impl: AuthenticationRepositoryImpl): AuthenticationRepository
 
     @Binds
+    @Singleton
     fun bindCurrenciesRepository(impl: CurrenciesRepositoryImpl): CurrenciesRepository
 
     @Binds
+    @Singleton
     fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 
     @Binds
+    @Singleton
     fun bindTransactionRepository(impl: TransactionRepositoryImpl): TransactionRepository
 }

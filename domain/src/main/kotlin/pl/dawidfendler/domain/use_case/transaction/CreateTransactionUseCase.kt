@@ -6,9 +6,8 @@ import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.model.transaction.Transaction
 import pl.dawidfendler.domain.repository.TransactionRepository
 import pl.dawidfendler.util.flow.DomainResult
-import javax.inject.Inject
 
-class CreateTransactionUseCase @Inject constructor(
+class CreateTransactionUseCase(
     private val transactionRepository: TransactionRepository,
     private val dispatcher: DispatcherProvider
 ) {

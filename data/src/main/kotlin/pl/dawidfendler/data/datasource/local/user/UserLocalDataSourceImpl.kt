@@ -2,9 +2,8 @@ package pl.dawidfendler.data.datasource.local.user
 
 import pl.dawidfendler.data.database.user.UserDao
 import pl.dawidfendler.data.model.user.UserEntity
-import javax.inject.Inject
 
-class UserLocalDataSourceImpl @Inject constructor(
+class UserLocalDataSourceImpl(
     private val userDao: UserDao
 ) : UserLocalDataSource {
     override suspend fun insert(user: UserEntity) {
@@ -19,8 +18,16 @@ class UserLocalDataSourceImpl @Inject constructor(
         return userDao.getAccountBalance()
     }
 
+    override suspend fun getUserCurrencies(): String? {
+        return userDao.getUserCurrencies()
+    }
+
     override suspend fun updateAccountBalance(accountBalance: Double) {
         userDao.updateAccountBalance(accountBalance)
+    }
+
+    override suspend fun updateCurrencies(userCurrencies: String) {
+        userDao.updateCurrencies(userCurrencies)
     }
 
     override suspend fun deleteUser() {

@@ -8,9 +8,8 @@ import pl.dawidfendler.domain.repository.CurrenciesRepository
 import pl.dawidfendler.domain.util.mapToCustomException
 import pl.dawidfendler.util.flow.DataResult
 import pl.dawidfendler.util.flow.DomainResult
-import javax.inject.Inject
 
-class GetCurrenciesUseCase @Inject constructor(
+class GetCurrenciesUseCase(
     private val currenciesRepository: CurrenciesRepository,
     private val dispatchers: DispatcherProvider
 ) {

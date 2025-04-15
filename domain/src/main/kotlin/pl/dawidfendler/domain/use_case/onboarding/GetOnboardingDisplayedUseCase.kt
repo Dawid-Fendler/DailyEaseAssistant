@@ -6,9 +6,8 @@ import kotlinx.coroutines.flow.flowOn
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.datastore.DataStoreConstants.ONBOARDING_DISPLAYED
-import javax.inject.Inject
 
-class GetOnboardingDisplayedUseCase @Inject constructor(
+class GetOnboardingDisplayedUseCase(
     private val dataStore: DataStore,
     private val dispatcherProvider: DispatcherProvider
 ) {

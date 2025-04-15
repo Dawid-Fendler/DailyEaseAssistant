@@ -2,6 +2,7 @@
 
 package pl.dawidfendler.finance_manager
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +19,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import pl.dawidfendler.account_balance.AccountBalance
+import pl.dawidfendler.account_balance.bottom_sheet.AccountBalanceCurrenciesBottomSheet
 import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet
+import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet.AccountBalanceCurrenciesBottomSheet
 import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet.AddMoneyBottomSheet
 import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet.CurrenciesBottomSheet
 import pl.dawidfendler.account_balance.bottom_sheet.ActionBottomSheet.SpentMoneyBottomSheet
@@ -29,79 +32,100 @@ import pl.dawidfendler.account_balance.bottom_sheet.TransactionOperations
 import pl.dawidfendler.account_balance.bottom_sheet.TransactionsHistoryBottomSheet
 import pl.dawidfendler.ui.theme.dp_24
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FinanceManagerScreen(
     modifier: Modifier = Modifier,
     state: FinanceManagerState,
     onAction: (FinanceManagerAction) -> Unit
 ) {
+    onAction(FinanceManagerAction.GetInitialData)
     var isSheetOpen by rememberSaveable { mutableStateOf<ActionBottomSheet?>(null) }
     val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = isSheetOpen == CurrenciesBottomSheet
+        skipPartiallyExpanded = isSheetOpen == CurrenciesBottomSheet ||
+                isSheetOpen == AccountBalanceCurrenciesBottomSheet
     )
 
-    Column(
-        modifier = modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        AccountBalance(
-            onAddClick = {
-                isSheetOpen = AddMoneyBottomSheet
-            },
-            onMinusClick = {
-                isSheetOpen = SpentMoneyBottomSheet
-            },
-            onHistoryClick = {
-                isSheetOpen = TransactionHistoryBottomSheet
-            },
-            onCurrenciesClick = {
-                isSheetOpen = CurrenciesBottomSheet
-            },
-            accountBalance = listOf(state.accountBalance),
-            selectedCurrencyCode = state.selectedCurrency,
-            accountBalanceColor = state.accountBalanceColor
-        )
-
-        if (isSheetOpen != null) {
-            ModalBottomSheet(
-                content = {
-                    when (isSheetOpen) {
-                        AddMoneyBottomSheet -> ShowTransactionOperationBottomSheet(
-                            onAction = onAction,
-                            changeSheetOpenValue = { isSheetOpen = it },
-                            transactionOperations = TransactionOperations.ADD
-                        )
-
-                        CurrenciesBottomSheet -> ShowCurrenciesBottomSheet(
-                            onAction = onAction,
-                            changeSheetOpenValue = { isSheetOpen = it },
-                            state = state
-                        )
-
-                        SpentMoneyBottomSheet -> ShowTransactionOperationBottomSheet(
-                            onAction = onAction,
-                            changeSheetOpenValue = { isSheetOpen = it },
-                            transactionOperations = TransactionOperations.MINUS
-                        )
-
-                        TransactionHistoryBottomSheet -> ShowTransactionsHistoryBottomSheet(
-                            onAction = onAction,
-                            state = state
-                        )
-
-                        null -> Unit
-                    }
+    AnimatedVisibility(!state.isLoading) {
+        Column(
+            modifier = modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AccountBalance(
+                onAddClick = {
+                    isSheetOpen = AddMoneyBottomSheet
                 },
-                sheetState = sheetState,
-                shape = RoundedCornerShape(dp_24),
-                containerColor = MaterialTheme.colorScheme.inverseOnSurface,
-                onDismissRequest = {
-                    isSheetOpen = null
+                onMinusClick = {
+                    isSheetOpen = SpentMoneyBottomSheet
                 },
-                dragHandle = null
+                onHistoryClick = {
+                    isSheetOpen = TransactionHistoryBottomSheet
+                },
+                onCurrenciesClick = {
+                    isSheetOpen = CurrenciesBottomSheet
+                },
+                accountBalanceItems = state.userCurrencies,
+                showAccountBalanceCurrencies = {
+                    isSheetOpen = AccountBalanceCurrenciesBottomSheet
+                }
             )
+
+            if (isSheetOpen != null) {
+                ModalBottomSheet(
+                    content = {
+                        when (isSheetOpen) {
+                            AddMoneyBottomSheet -> ShowTransactionOperationBottomSheet(
+                                onAction = onAction,
+                                changeSheetOpenValue = { isSheetOpen = it },
+                                transactionOperations = TransactionOperations.ADD
+                            )
+
+                            CurrenciesBottomSheet -> ShowCurrenciesBottomSheet(
+                                onAction = onAction,
+                                changeSheetOpenValue = { isSheetOpen = it },
+                                state = state
+                            )
+
+                            SpentMoneyBottomSheet -> ShowTransactionOperationBottomSheet(
+                                onAction = onAction,
+                                changeSheetOpenValue = { isSheetOpen = it },
+                                transactionOperations = TransactionOperations.MINUS
+                            )
+
+                            TransactionHistoryBottomSheet -> ShowTransactionsHistoryBottomSheet(
+                                onAction = onAction,
+                                state = state
+                            )
+
+                            AccountBalanceCurrenciesBottomSheet ->
+                                AccountBalanceCurrenciesBottomSheet(
+                                    currencies = state.currencies,
+                                    isCurrenciesFetchDataError = state.isCurrenciesFetchDataError,
+                                    selectedCurrency = state.userCurrencies,
+                                    onConfirmClick = { userCurrencies ->
+                                        isSheetOpen = null
+                                        onAction.invoke(
+                                            FinanceManagerAction.UpdateUserSelectedCurrencies(
+                                                userCurrencies
+                                            )
+                                        )
+                                    }
+                                )
+
+                            null -> Unit
+                        }
+                    },
+                    sheetState = sheetState,
+                    shape = RoundedCornerShape(dp_24),
+                    containerColor = MaterialTheme.colorScheme.inverseOnSurface,
+                    onDismissRequest = {
+                        isSheetOpen = null
+                    },
+                    dragHandle = null
+                )
+            }
         }
     }
 }

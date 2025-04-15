@@ -7,9 +7,8 @@ import pl.dawidfendler.domain.repository.AuthenticationRepository
 import pl.dawidfendler.domain.util.mapToCustomException
 import pl.dawidfendler.util.flow.DataResult
 import pl.dawidfendler.util.flow.DomainResult
-import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(
+class LoginUseCase(
     private val authenticationRepository: AuthenticationRepository,
     private val dispatcherProvider: DispatcherProvider
 ) {

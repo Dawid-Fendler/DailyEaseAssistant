@@ -5,9 +5,8 @@ import kotlinx.coroutines.flow.flowOn
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.repository.CurrenciesRepository
 import pl.dawidfendler.util.flow.DomainResult
-import javax.inject.Inject
 
-class GetCurrenciesByCodeUseCase @Inject constructor(
+class GetCurrenciesByCodeUseCase(
     private val currenciesRepository: CurrenciesRepository,
     private val dispatchers: DispatcherProvider
 ) {
