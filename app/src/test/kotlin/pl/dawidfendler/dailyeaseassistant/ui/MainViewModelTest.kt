@@ -14,7 +14,7 @@ import pl.dawidfendler.dailyeaseassistant.ui.MainState
 import pl.dawidfendler.dailyeaseassistant.ui.MainViewModel
 import pl.dawidfendler.domain.use_case.home.GetDisplayHomeUseCase
 import pl.dawidfendler.domain.use_case.onboarding.GetOnboardingDisplayedUseCase
-import pl.dawidfendler.util.navigation.Navigation
+import pl.dawidfendler.util.navigation.Destination
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -44,7 +44,7 @@ class MainViewModelTest {
 
         // THEN
         assertThat(mainState.isStarting).isFalse()
-        assertThat(mainState.navigation).isEqualTo(Navigation.OnboardingNavigation)
+        assertThat(mainState.navigation).isEqualTo(Destination.Onboarding)
     }
 
     @Test
@@ -60,7 +60,7 @@ class MainViewModelTest {
         advanceUntilIdle()
         assertThat(mainViewModel.state).isEqualTo(
             MainState(
-                navigation = Navigation.OnboardingNavigation,
+                navigation = Destination.Onboarding,
                 isStarting = true
             )
         )
@@ -102,7 +102,7 @@ class MainViewModelTest {
         advanceUntilIdle()
         assertThat(mainViewModel.state).isEqualTo(
             MainState(
-                navigation = Navigation.HomeNavigation,
+                navigation = Destination.Home,
                 isStarting = true
             )
         )

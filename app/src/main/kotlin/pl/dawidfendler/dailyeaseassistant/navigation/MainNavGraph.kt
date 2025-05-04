@@ -18,9 +18,9 @@ import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetEvent
 import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetModel
 import pl.dawidfendler.coroutines.ObserveAsEvents
 import pl.dawidfendler.dailyeaseassistant.components.MainTopAppBar
-import pl.dawidfendler.financeManagerRout
+import pl.dawidfendler.navigation.financeManagerGraph
 import pl.dawidfendler.main.homeRoute
-import pl.dawidfendler.util.navigation.Navigation
+import pl.dawidfendler.util.navigation.Destination
 
 @Composable
 fun MainNavGraph(navController: NavHostController) {
@@ -80,19 +80,19 @@ fun MainNavGraph(navController: NavHostController) {
         }
         NavHost(
             navController = navController,
-            startDestination = Navigation.HomeNavigation
+            startDestination = Destination.Home
         ) {
             homeRoute(
                 modifier = Modifier
                     .padding(innerPadding),
                 navigateToFinanceManager = {
-                    navController.navigate(Navigation.FinanceManager)
+                    navController.navigate(Destination.FinanceManager)
                 }
             )
-
-            financeManagerRout(
+            financeManagerGraph(
                 modifier = Modifier
-                    .padding(innerPadding)
+                    .padding(innerPadding),
+                navController = navController
             )
         }
     }

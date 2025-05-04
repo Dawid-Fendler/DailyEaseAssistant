@@ -1,4 +1,4 @@
-package pl.dawidfendler
+package pl.dawidfendler.navigation
 
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -14,12 +14,11 @@ import pl.dawidfendler.domain.util.Constants.SOMETHING_WENT_WRONG
 import pl.dawidfendler.finance_manager.FinanceManagerEvent
 import pl.dawidfendler.finance_manager.FinanceManagerScreen
 import pl.dawidfendler.finance_manager.FinanceManagerViewModel
-import pl.dawidfendler.util.navigation.Navigation
 
-fun NavGraphBuilder.financeManagerRout(
-    modifier: Modifier
+fun NavGraphBuilder.financeManagerRoute(
+    modifier: Modifier = Modifier
 ) {
-    composable<Navigation.FinanceManager> {
+    composable<FinanceMangerNavigationType.FinanceMangerMain> {
         val viewModel: FinanceManagerViewModel = hiltViewModel()
         val scope = rememberCoroutineScope()
         ObserveAsEvents(flow = viewModel.eventChannel) { event ->

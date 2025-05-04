@@ -8,14 +8,14 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import pl.dawidfendler.authentication.R
 import pl.dawidfendler.coroutines.ObserveAsEvents
-import pl.dawidfendler.util.navigation.Navigation
+import pl.dawidfendler.util.navigation.Destination
 
 fun NavGraphBuilder.registrationRoute(
     navigateToLogin: () -> Unit,
     navigateBack: () -> Unit,
     navigateToMain: () -> Unit
 ) {
-    composable<Navigation.RegistrationNavigation> {
+    composable<Destination.Registration> {
         val viewModel: RegistrationViewModel = hiltViewModel()
         val context = LocalContext.current
         val keyboardController = LocalSoftwareKeyboardController.current

@@ -7,13 +7,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import pl.dawidfendler.coroutines.ObserveAsEvents
-import pl.dawidfendler.util.navigation.Navigation
+import pl.dawidfendler.util.navigation.Destination
 
 fun NavGraphBuilder.loginRoute(
     navigateToRegistration: () -> Unit,
     navigateToMainScreen: () -> Unit
 ) {
-    composable<Navigation.LoginNavigation> {
+    composable<Destination.Login> {
         val viewModel: LoginViewModel = hiltViewModel()
         val context = LocalContext.current
         val keyboardController = LocalSoftwareKeyboardController.current
