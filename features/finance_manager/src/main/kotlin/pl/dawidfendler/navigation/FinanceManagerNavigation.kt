@@ -14,13 +14,23 @@ import pl.dawidfendler.domain.util.Constants.SOMETHING_WENT_WRONG
 import pl.dawidfendler.finance_manager.FinanceManagerEvent
 import pl.dawidfendler.finance_manager.FinanceManagerScreen
 import pl.dawidfendler.finance_manager.FinanceManagerViewModel
+import pl.dawidfendler.util.ShowSystemBars
+import pl.dawidfendler.util.controller.MainTopBarVisibilityController
+import pl.dawidfendler.util.controller.MainTopBarVisibilityEvent
 
 fun NavGraphBuilder.financeManagerRoute(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigate: () -> Unit,
 ) {
     composable<FinanceMangerNavigationType.FinanceMangerMain> {
         val viewModel: FinanceManagerViewModel = hiltViewModel()
         val scope = rememberCoroutineScope()
+
+        scope.launch {
+            MainTopBarVisibilityController.sendMainTopBarEvent(MainTopBarVisibilityEvent.ShowMainTopBar)
+        }
+        ShowSystemBars()
+
         ObserveAsEvents(flow = viewModel.eventChannel) { event ->
             when (event) {
                 is FinanceManagerEvent.ShowErrorBottomDialog -> {
@@ -39,7 +49,8 @@ fun NavGraphBuilder.financeManagerRoute(
         FinanceManagerScreen(
             modifier = modifier,
             state = viewModel.state,
-            onAction = viewModel::onAction
+            onAction = viewModel::onAction,
+            navigate
         )
     }
 }

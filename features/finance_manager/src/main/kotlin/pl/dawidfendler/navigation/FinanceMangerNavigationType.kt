@@ -2,7 +2,7 @@ package pl.dawidfendler.navigation
 
 import kotlinx.serialization.Serializable
 
-internal sealed class FinanceMangerNavigationType {
+sealed class FinanceMangerNavigationType {
 
     @Serializable
     data object FinanceMangerMain : FinanceMangerNavigationType()

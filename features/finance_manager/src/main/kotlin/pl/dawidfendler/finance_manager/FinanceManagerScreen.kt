@@ -37,7 +37,8 @@ import pl.dawidfendler.ui.theme.dp_24
 fun FinanceManagerScreen(
     modifier: Modifier = Modifier,
     state: FinanceManagerState,
-    onAction: (FinanceManagerAction) -> Unit
+    onAction: (FinanceManagerAction) -> Unit,
+    navigate: () -> Unit
 ) {
     onAction(FinanceManagerAction.GetInitialData)
     var isSheetOpen by rememberSaveable { mutableStateOf<ActionBottomSheet?>(null) }
@@ -68,7 +69,8 @@ fun FinanceManagerScreen(
                 },
                 accountBalanceItems = state.userCurrencies,
                 showAccountBalanceCurrencies = {
-                    isSheetOpen = AccountBalanceCurrenciesBottomSheet
+                    navigate.invoke()
+//                    isSheetOpen = AccountBalanceCurrenciesBottomSheet
                 }
             )
 

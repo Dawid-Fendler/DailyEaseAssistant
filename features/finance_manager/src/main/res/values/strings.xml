@@ -10,4 +10,11 @@
     <string name="remove">Remove</string>
     <string name="history">History</string>
     <string name="currency">Currency</string>
+    <string name="currency_you_give_title">You Give</string>
+    <string name="currency_you_change_title">You Change</string>
+    <string name="currency_converter_title">Currency Converter</string>
+    <string name="currency_current_rate_title">Current rate:</string>
+    <string name="date_of_the_current_exchange_rates_title">Date of the current exchange rates:</string>
+    <string name="currency_data_source_title">Data source:</string>
+    <string name="data_source_value">NBP</string>
 </resources>
