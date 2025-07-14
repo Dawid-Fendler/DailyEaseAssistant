@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import pl.dawidfendler.domain.use_case.home.GetDisplayHomeUseCase
 import pl.dawidfendler.domain.use_case.onboarding.GetOnboardingDisplayedUseCase
-import pl.dawidfendler.util.navigation.Navigation
+import pl.dawidfendler.util.navigation.Destination
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,11 +31,11 @@ class MainViewModel @Inject constructor(
             Pair(onboardingWasDisplayed, displayHome)
         }.onEach { result ->
             state = if (result.second == true) {
-                state.copy(navigation = Navigation.HomeNavigation, isStarting = true)
+                state.copy(navigation = Destination.Home, isStarting = true)
             } else if (result.first == true) {
-                state.copy(navigation = Navigation.HomeNavigation, isStarting = true)
+                state.copy(navigation = Destination.Home, isStarting = true)
             } else {
-                state.copy(navigation = Navigation.OnboardingNavigation, isStarting = true)
+                state.copy(navigation = Destination.Onboarding, isStarting = true)
             }
         }.launchIn(viewModelScope)
     }

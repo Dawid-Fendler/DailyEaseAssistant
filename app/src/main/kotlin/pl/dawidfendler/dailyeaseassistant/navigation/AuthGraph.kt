@@ -6,15 +6,15 @@ import androidx.navigation.compose.NavHost
 import pl.dawidfendler.authentication.login.loginRoute
 import pl.dawidfendler.authentication.registration.registrationRoute
 import pl.dawidfendler.onboarding.navigation.onboardingRoute
-import pl.dawidfendler.util.navigation.Navigation
+import pl.dawidfendler.util.navigation.Destination
 
 @Composable
 internal fun AuthNavHost(
-    startDestination: Navigation,
+    startDestination: Destination,
     navController: NavHostController
 ) {
-    if (startDestination == Navigation.LoginNavigation ||
-        startDestination == Navigation.OnboardingNavigation
+    if (startDestination == Destination.Login ||
+        startDestination == Destination.Onboarding
     ) {
         NavHost(
             startDestination = startDestination,
@@ -22,12 +22,12 @@ internal fun AuthNavHost(
         ) {
             onboardingRoute {
                 navController.popBackStack()
-                navController.navigate(Navigation.LoginNavigation)
+                navController.navigate(Destination.Login)
             }
 
             loginRoute(
                 navigateToRegistration = {
-                    navController.navigate(Navigation.RegistrationNavigation)
+                    navController.navigate(Destination.Registration)
                 },
                 navigateToMainScreen = {
                     navController.popBackStack()
@@ -40,11 +40,11 @@ internal fun AuthNavHost(
                 },
                 navigateToLogin = {
                     navController.popBackStack()
-                    navController.navigate(Navigation.LoginNavigation)
+                    navController.navigate(Destination.Login)
                 },
                 navigateToMain = {
                     navController.popBackStack()
-                    navController.navigate(Navigation.HomeNavigation)
+                    navController.navigate(Destination.Home)
                 }
             )
         }

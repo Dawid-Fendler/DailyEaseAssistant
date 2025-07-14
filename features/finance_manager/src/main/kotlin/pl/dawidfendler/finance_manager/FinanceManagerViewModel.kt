@@ -40,6 +40,7 @@ import pl.dawidfendler.finance_manager.FinanceManagerAction.SpentMoney
 import pl.dawidfendler.finance_manager.FinanceManagerAction.UpdateUserSelectedCurrencies
 import pl.dawidfendler.finance_manager.mapper.formatAccountBalance
 import pl.dawidfendler.finance_manager.mapper.prepareUserCurrencies
+import pl.dawidfendler.finance_manager.util.getPolishCurrency
 import pl.dawidfendler.finance_manager.util.prepareTransactionContent
 import pl.dawidfendler.util.exception.MaxAccountBalanceException
 import pl.dawidfendler.util.exception.MinAccountBalanceException
@@ -112,11 +113,6 @@ class FinanceManagerViewModel @Inject constructor(
         }
     }
 
-    private fun getPolishCurrency() = ExchangeRateTable(
-        currencyName = POLISH_ZLOTY,
-        currencyCode = POLISH_ZLOTY_CODE,
-        currencyMidValue = POLISH_ZLOTY_VALUE
-    )
 
     private suspend fun defaultAccountBalanceItem(result: BigDecimal) =
         UserCurrencies(

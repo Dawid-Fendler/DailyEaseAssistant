@@ -1,6 +1,5 @@
 package pl.dawidfendler.components.text_field
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +35,5 @@ fun CustomText(
             letterSpacing = letterSpacing,
         ),
         modifier = modifier
-            .fillMaxWidth()
-
     )
 }

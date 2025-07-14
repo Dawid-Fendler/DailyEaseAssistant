@@ -6,10 +6,12 @@ import pl.dawidfendler.domain.repository.AuthenticationRepository
 import pl.dawidfendler.domain.util.AuthenticationError
 import pl.dawidfendler.util.ext.awaitCustom
 import pl.dawidfendler.util.flow.DataResult
+import pl.dawidfendler.util.logger.Logger
 import javax.inject.Inject
 
 class AuthenticationRepositoryImpl @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val logger: Logger
 ) : AuthenticationRepository {
 
     override suspend fun login(
@@ -20,7 +22,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             firebaseAuth.signInWithEmailAndPassword(email, password).awaitCustom()
             return DataResult.Success(Unit)
         } catch (e: Exception) {
-            //  TODO ADD OWN LOGGER
+            logger.e(TAG, "Error during login: ${e.message}")
             return DataResult.Error(AuthenticationError.LoginFirebaseException)
         }
     }
@@ -31,7 +33,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             firebaseAuth.signInWithCredential(credential).awaitCustom()
             return DataResult.Success(Unit)
         } catch (e: Exception) {
-            //  TODO ADD OWN LOGGER
+            logger.e(TAG, "Error during Google login: ${e.message}")
             return DataResult.Error(AuthenticationError.GoogleLoginFirebaseException)
         }
     }
@@ -44,7 +46,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             firebaseAuth.createUserWithEmailAndPassword(email, password).awaitCustom()
             return DataResult.Success(Unit)
         } catch (e: Exception) {
-            //  TODO ADD OWN LOGGER
+            logger.e(TAG, "Error during registration: ${e.message}")
             return DataResult.Error(AuthenticationError.RegistrationFirebaseException)
         }
     }
@@ -54,8 +56,12 @@ class AuthenticationRepositoryImpl @Inject constructor(
             firebaseAuth.signOut()
             return DataResult.Success(Unit)
         } catch (e: Exception) {
-            //  TODO ADD OWN LOGGER
+            logger.e(TAG, "Error during logout: ${e.message}")
             return DataResult.Error(AuthenticationError.LogoutFirebaseException)
         }
+    }
+
+    companion object {
+        private const val TAG = "AuthenticationRepositoryImpl"
     }
 }

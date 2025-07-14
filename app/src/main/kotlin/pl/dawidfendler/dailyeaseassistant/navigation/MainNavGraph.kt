@@ -7,64 +7,51 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import pl.dawidfendler.components.bottom_dialog.CustomBottomSheet
-import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetController
-import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetEvent
 import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetModel
-import pl.dawidfendler.coroutines.ObserveAsEvents
 import pl.dawidfendler.dailyeaseassistant.components.MainTopAppBar
-import pl.dawidfendler.financeManagerRout
+import pl.dawidfendler.dailyeaseassistant.util.ObserveBottomSheetEvent
+import pl.dawidfendler.dailyeaseassistant.util.ObserveMainTopBarVisibility
 import pl.dawidfendler.main.homeRoute
-import pl.dawidfendler.util.navigation.Navigation
+import pl.dawidfendler.navigation.financeManagerGraph
+import pl.dawidfendler.util.navigation.Destination
 
 @Composable
 fun MainNavGraph(navController: NavHostController) {
     var showBottomDialog by remember { mutableStateOf(CustomBottomSheetModel()) }
-
-    ObserveAsEvents(CustomBottomSheetController.event) { events ->
-        showBottomDialog = when (events) {
-            is CustomBottomSheetEvent.ErrorBottomSheet -> {
-                CustomBottomSheetModel(
-                    showBottomSheet = true,
-                    isSuccess = false,
-                    title = events.title,
-                    description = events.description,
-                    icon = pl.dawidfendler.ui.R.drawable.ic_error,
-                    iconTint = Color.Red
-                )
-            }
-
-            is CustomBottomSheetEvent.SuccessBottomSheet -> {
-                CustomBottomSheetModel(
-                    showBottomSheet = true,
-                    isSuccess = true,
-                    title = events.title,
-                    description = events.description,
-                    icon = pl.dawidfendler.ui.R.drawable.ic_success,
-                    iconTint = Color.Green
-                )
-            }
+    ObserveBottomSheetEvent(
+        updateCustomBottomModel = { model ->
+            showBottomDialog = model
         }
-    }
+    )
+
+    var mainTopBarVisibility by rememberSaveable { mutableStateOf(true) }
+    ObserveMainTopBarVisibility(
+        updateMainTopBarVisibility = { visibility ->
+            mainTopBarVisibility = visibility
+        }
+    )
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            MainTopAppBar(
-                // TODO add logic
-                name = "David",
-                onUserIconClick = {
+            if(mainTopBarVisibility) {
+                MainTopAppBar(
                     // TODO add logic
-                },
-                onMenuItemClick = {
-                    // TODO add logic
-                }
-            )
+                    name = "David",
+                    onUserIconClick = {
+                        // TODO add logic
+                    },
+                    onMenuItemClick = {
+                        // TODO add logic
+                    }
+                )
+            }
         }
     ) { innerPadding ->
         if (showBottomDialog.showBottomSheet) {
@@ -80,20 +67,22 @@ fun MainNavGraph(navController: NavHostController) {
         }
         NavHost(
             navController = navController,
-            startDestination = Navigation.HomeNavigation
+            startDestination = Destination.Home
         ) {
             homeRoute(
                 modifier = Modifier
                     .padding(innerPadding),
                 navigateToFinanceManager = {
-                    navController.navigate(Navigation.FinanceManager)
+                    navController.navigate(Destination.FinanceManager)
                 }
             )
-
-            financeManagerRout(
+            financeManagerGraph(
                 modifier = Modifier
-                    .padding(innerPadding)
+                    .padding(innerPadding),
+                navController = navController
             )
         }
     }
 }
+
+

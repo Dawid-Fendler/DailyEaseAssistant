@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
     alias(libs.plugins.composeP)
+    alias(libs.plugins.kotlin.serialization)
     kotlin("kapt")
 }
 
@@ -45,6 +46,7 @@ dependencies {
     implementation(project(":core:datastore"))
     implementation(project(":core:date"))
     implementation(project(":domain"))
+    testImplementation(project(":core:date"))
 
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -57,6 +59,13 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.ui.preview)
     implementation(libs.data.store)
+    implementation(libs.kotlinx.serialization.json)
 
     kapt(libs.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.truth.test)
+    testImplementation(libs.mockk.test)
+    testImplementation(libs.turbine.test)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

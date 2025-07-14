@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -74,6 +75,7 @@ internal fun AccountBalanceItem(
         CustomText(
             text = stringResource(R.string.account_name_title, userCurrencies.currencyName),
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(
                     top = dp_16,
                     start = dp_16,
@@ -98,6 +100,7 @@ internal fun AccountBalanceItem(
                 Color.White
             },
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(
                     start = dp_16,
                     end = dp_16,

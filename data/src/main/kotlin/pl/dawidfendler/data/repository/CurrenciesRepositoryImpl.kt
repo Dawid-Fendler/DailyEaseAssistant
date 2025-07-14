@@ -12,13 +12,15 @@ import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.domain.repository.CurrenciesRepository
 import pl.dawidfendler.util.flow.DataResult
 import pl.dawidfendler.util.flow.map
+import pl.dawidfendler.util.logger.Logger
 import pl.dawidfendler.util.network.NetworkError
 import javax.inject.Inject
 
 class CurrenciesRepositoryImpl @Inject constructor(
     private val currenciesRemoteDataSource: CurrenciesRemoteDataSource,
     private val currenciesLocalDataSource: CurrenciesLocalDataSource,
-    private val dateTimeUtils: DateTimeUtils
+    private val dateTimeUtils: DateTimeUtils,
+    private val logger: Logger
 ) : CurrenciesRepository {
 
     override suspend fun getCurrenciesTableA(): DataResult<List<ExchangeRateTable>?, NetworkError> {
@@ -34,7 +36,8 @@ class CurrenciesRepositoryImpl @Inject constructor(
             DataResult.Success(currenciesFromDb.map { it.toDomain() })
         } else {
             val getTableA = safeCall(
-                responseName = "CurrenciesApi GetTableA"
+                responseName = "CurrenciesApi GetTableA",
+                logger = logger
             ) {
                 currenciesRemoteDataSource.getTableA()
             }.map { response ->
@@ -72,7 +75,8 @@ class CurrenciesRepositoryImpl @Inject constructor(
         }
 
         val getTableB = safeCall(
-            responseName = "CurrenciesApi GetTableB"
+            responseName = "CurrenciesApi GetTableB",
+            logger = logger
         ) {
             currenciesRemoteDataSource.getTableB()
         }.map { response ->
