@@ -1,7 +1,10 @@
 package pl.dawidfendler.currency_converter
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kotlinx.coroutines.launch
@@ -21,6 +24,8 @@ fun NavGraphBuilder.currencyConverterRoute(onBackClick: () -> Unit) {
 
         val viewModel: CurrencyConverterViewModel = hiltViewModel()
         val scope = rememberCoroutineScope()
+        val query by viewModel.query.collectAsState()
+        val filteredCurrencies by viewModel.filteredCurrencies.collectAsStateWithLifecycle()
 
         HideSystemBars()
         scope.launch {
@@ -45,7 +50,9 @@ fun NavGraphBuilder.currencyConverterRoute(onBackClick: () -> Unit) {
         CurrencyConverterScreen(
             onBackClick = onBackClick,
             state = viewModel.state,
-            onAction = viewModel::onAction
+            onAction = viewModel::onAction,
+            query = query,
+            filteredCurrencies = filteredCurrencies
         )
     }
 }

@@ -1,6 +1,7 @@
 package pl.dawidfendler.currency_converter
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,20 +22,28 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.SwapVert
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,11 +55,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import pl.dawidfendler.components.text_field.CustomText
 import pl.dawidfendler.currency_converter.components.CardWithArcShape
+import pl.dawidfendler.currency_converter.components.CurrencyPicker
+import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.finance_manager.R
 import pl.dawidfendler.ui.theme.BLUE_BRUSH
 import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
+import pl.dawidfendler.ui.theme.SEED
 import pl.dawidfendler.ui.theme.dp_0
 import pl.dawidfendler.ui.theme.dp_1
 import pl.dawidfendler.ui.theme.dp_12
@@ -80,7 +94,9 @@ import java.math.BigDecimal
 fun CurrencyConverterScreen(
     onBackClick: () -> Unit,
     state: CurrencyConverterState,
-    onAction: (CurrencyConverterAction) -> Unit
+    onAction: (CurrencyConverterAction) -> Unit,
+    query: String,
+    filteredCurrencies: List<ExchangeRateTable>
 ) {
     Column(
         modifier = Modifier
@@ -119,7 +135,9 @@ fun CurrencyConverterScreen(
             radius = dp_30,
             title = stringResource(R.string.currency_you_change_title),
             state = state,
-            onAction = onAction
+            onAction = onAction,
+            query = query,
+            filteredCurrencies = filteredCurrencies
         )
 
         Button(
@@ -148,7 +166,9 @@ fun CurrencyConverterScreen(
             title = stringResource(R.string.currency_you_give_title),
             state = state,
             onAction = onAction,
-            isMainCurrency = false
+            isMainCurrency = false,
+            query = query,
+            filteredCurrencies = filteredCurrencies
         )
 
         ExchangeRateDateSection(date = state.exchangeRateDate)
@@ -173,6 +193,7 @@ fun CurrencyConverterScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardWithSemiCircleCutout(
     cutoutAtTop: Boolean,
@@ -181,14 +202,73 @@ fun CardWithSemiCircleCutout(
     title: String,
     state: CurrencyConverterState,
     onAction: (CurrencyConverterAction) -> Unit,
-    isMainCurrency: Boolean = true
+    isMainCurrency: Boolean = true,
+    query: String = "",
+    filteredCurrencies: List<ExchangeRateTable> = emptyList()
 ) {
+
+    var isSheetOpen by rememberSaveable { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+//        confirmValueChange = { it != SheetValue.Hidden }
+    )
+    val scope = rememberCoroutineScope()
+
+    if (isSheetOpen) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                scope.launch {
+                    isSheetOpen = false
+                    sheetState.hide()
+                }
+            },
+            dragHandle = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = SEED),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    BottomSheetDefaults.DragHandle()
+                }
+            },
+            sheetState = sheetState,
+            content = {
+                CurrencyPicker(
+                    query = query,
+                    filteredCurrencies = filteredCurrencies,
+                    onCurrencySelected = {
+                        scope.launch {
+                            isSheetOpen = false
+                            sheetState.hide()
+                        }
+                        onAction.invoke(
+                            CurrencyConverterAction.ChangeCurrency(
+                                isMainCurrency = isMainCurrency,
+                                code = it
+                            )
+                        )
+                    },
+                    onAction = onAction
+                )
+            },
+            modifier = Modifier.fillMaxHeight(0.95f)
+        )
+    } else {
+        Spacer(modifier = Modifier.height(dp_1))
+    }
 
     Card(
         modifier = modifier
             .fillMaxWidth()
             .height(dp_200)
-            .padding(horizontal = dp_16),
+            .padding(horizontal = dp_16)
+            .clickable {
+                scope.launch {
+                    isSheetOpen = true
+                    sheetState.show()
+                }
+            },
         shape = CardWithArcShape(with(LocalDensity.current) { radius.toPx() }, cutoutAtTop),
         colors = CardDefaults.cardColors(containerColor = Color.LightGray.copy(alpha = 0.2f)),
         elevation = CardDefaults.cardElevation(defaultElevation = dp_6)
@@ -252,9 +332,10 @@ private fun CurrencySection(
 ) {
 
     Row(
-        modifier = Modifier.padding(
-            top = dp_14, start = dp_16
-        ),
+        modifier = Modifier
+            .padding(
+                top = dp_14, start = dp_16
+            )
     ) {
         Column {
             Row(
@@ -319,7 +400,8 @@ private fun CurrencySection(
         Row(
             modifier = Modifier
                 .padding(
-                    top = dp_12, end = dp_16
+                    top = dp_12,
+                    end = dp_16
                 )
                 .weight(1f)
         ) {

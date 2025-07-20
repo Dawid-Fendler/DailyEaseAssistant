@@ -1,7 +1,5 @@
 package pl.dawidfendler.util.ext
 
-import pl.dawidfendler.util.Constants.ZERO
-
 fun emptyString() = ""
 
 fun normalizeValue(value: String, input: String): String {
@@ -13,3 +11,5 @@ fun normalizeValue(value: String, input: String): String {
         input
     }
 }
+
+private const val ZERO = "0"
