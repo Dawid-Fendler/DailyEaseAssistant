@@ -18,8 +18,8 @@ import pl.dawidfendler.dailyeaseassistant.components.MainTopAppBar
 import pl.dawidfendler.dailyeaseassistant.util.ObserveBottomSheetEvent
 import pl.dawidfendler.dailyeaseassistant.util.ObserveMainTopBarVisibility
 import pl.dawidfendler.main.homeRoute
-import pl.dawidfendler.navigation.financeManagerGraph
 import pl.dawidfendler.util.navigation.Destination
+import pl.finance_managerV2.navigation.financeManagerNavGraph
 
 @Composable
 fun MainNavGraph(navController: NavHostController) {
@@ -76,11 +76,7 @@ fun MainNavGraph(navController: NavHostController) {
                     navController.navigate(Destination.FinanceManager)
                 }
             )
-            financeManagerGraph(
-                modifier = Modifier
-                    .padding(innerPadding),
-                navController = navController
-            )
+            financeManagerNavGraph()
         }
     }
 }

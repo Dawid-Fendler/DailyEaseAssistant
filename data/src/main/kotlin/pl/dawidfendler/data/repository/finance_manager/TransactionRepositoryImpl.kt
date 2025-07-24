@@ -1,10 +1,10 @@
-package pl.dawidfendler.data.repository
+package pl.dawidfendler.data.repository.finance_manager
 
 import pl.dawidfendler.data.datasource.local.transaction.TransactionLocalDataSource
 import pl.dawidfendler.data.mapper.toDomain
 import pl.dawidfendler.data.mapper.toEntity
 import pl.dawidfendler.domain.model.transaction.Transaction
-import pl.dawidfendler.domain.repository.TransactionRepository
+import pl.dawidfendler.domain.repository.finance_manager.TransactionRepository
 import javax.inject.Inject
 
 class TransactionRepositoryImpl @Inject constructor(

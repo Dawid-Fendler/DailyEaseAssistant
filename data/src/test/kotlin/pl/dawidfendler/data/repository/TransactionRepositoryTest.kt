@@ -15,6 +15,7 @@ import pl.dawidfendler.data.mapper.toEntity
 import pl.dawidfendler.data.model.transaction.TransactionEntity
 import pl.dawidfendler.data.model.transaction.transactionEntityTest
 import pl.dawidfendler.data.model.transaction.transactionTest
+import pl.dawidfendler.data.repository.finance_manager.TransactionRepositoryImpl
 
 class TransactionRepositoryTest {
 

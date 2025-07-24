@@ -4,6 +4,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 // Margin
+val dp_500 = 500.dp
 val dp_400 = 400.dp
 val dp_300 = 300.dp
 val dp_200 = 200.dp

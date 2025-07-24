@@ -44,7 +44,7 @@ fun DailyEaseAssistantButton(
             } else {
                 Text(
                     text = name,
-                    color = Color.White,
+                    color = if (isEnabled) Color.White else MaterialTheme.colorScheme.outline,
                     style = TextStyle(
                         fontSize = sp_14,
                         fontWeight = FontWeight.Bold

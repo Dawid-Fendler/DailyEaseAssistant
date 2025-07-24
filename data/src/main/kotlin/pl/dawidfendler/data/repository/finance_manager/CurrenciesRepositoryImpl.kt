@@ -1,4 +1,4 @@
-package pl.dawidfendler.data.repository
+package pl.dawidfendler.data.repository.finance_manager
 
 import pl.dawidfendler.data.datasource.local.currencies.CurrenciesLocalDataSource
 import pl.dawidfendler.data.datasource.remote.currencies.CurrenciesRemoteDataSource
@@ -9,7 +9,7 @@ import pl.dawidfendler.data.util.Constants.TABLE_B_NAME
 import pl.dawidfendler.data.util.safeCall
 import pl.dawidfendler.date.DateTimeUtils
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
-import pl.dawidfendler.domain.repository.CurrenciesRepository
+import pl.dawidfendler.domain.repository.finance_manager.CurrenciesRepository
 import pl.dawidfendler.util.flow.DataResult
 import pl.dawidfendler.util.flow.map
 import pl.dawidfendler.util.logger.Logger

@@ -1,4 +1,4 @@
-package pl.dawidfendler.navigation
+package pl.finance_managerV2.navigation
 
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -15,19 +15,18 @@ import pl.dawidfendler.finance_manager.FinanceManagerEvent
 import pl.dawidfendler.finance_manager.FinanceManagerScreen
 import pl.dawidfendler.finance_manager.FinanceManagerViewModel
 import pl.dawidfendler.util.ShowSystemBars
-import pl.dawidfendler.util.controller.MainTopBarVisibilityController
+import pl.dawidfendler.util.controller.MainTopBarVisibilityController.sendMainTopBarEvent
 import pl.dawidfendler.util.controller.MainTopBarVisibilityEvent
 
 fun NavGraphBuilder.financeManagerRoute(
     modifier: Modifier = Modifier,
     navigate: () -> Unit,
 ) {
-    composable<FinanceMangerNavigationType.FinanceMangerMain> {
+    composable<FinanceMangerNavigationType.FinanceManagerDashboard> {
         val viewModel: FinanceManagerViewModel = hiltViewModel()
         val scope = rememberCoroutineScope()
-
         scope.launch {
-            MainTopBarVisibilityController.sendMainTopBarEvent(MainTopBarVisibilityEvent.ShowMainTopBar)
+            sendMainTopBarEvent(MainTopBarVisibilityEvent.HideMainTopBar)
         }
         ShowSystemBars()
 

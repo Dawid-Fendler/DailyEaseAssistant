@@ -17,9 +17,11 @@ import pl.dawidfendler.data.model.currencies.exchangeRateTableData
 import pl.dawidfendler.data.model.currencies.exchangeRateTableEntityTest
 import pl.dawidfendler.data.model.currencies.exchangeRateTableResponseData
 import pl.dawidfendler.data.model.currency.remote.ExchangeRateTableResponse
+import pl.dawidfendler.data.repository.finance_manager.CurrenciesRepositoryImpl
 import pl.dawidfendler.date.DateTimeUtils
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.util.flow.DataResult
+import pl.dawidfendler.util.logger.Logger
 import pl.dawidfendler.util.network.NetworkError
 import retrofit2.Response
 import java.nio.channels.UnresolvedAddressException
@@ -30,16 +32,19 @@ class CurrenciesRepositoryTest {
     private lateinit var currenciesLocalDataSource: CurrenciesLocalDataSource
     private lateinit var dateTimeUtils: DateTimeUtils
     private lateinit var currenciesRepository: CurrenciesRepositoryImpl
+    private lateinit var logger: Logger
 
     @Before
     fun setUp() {
         currenciesLocalDataSource = mockk(relaxed = true)
         currenciesRemoteDataSource = mockk(relaxed = true)
+        logger = mockk(relaxed = true)
         dateTimeUtils = mockk(relaxed = true)
         currenciesRepository = CurrenciesRepositoryImpl(
             currenciesRemoteDataSource = currenciesRemoteDataSource,
             currenciesLocalDataSource = currenciesLocalDataSource,
-            dateTimeUtils = dateTimeUtils
+            dateTimeUtils = dateTimeUtils,
+            logger = logger
         )
     }
 

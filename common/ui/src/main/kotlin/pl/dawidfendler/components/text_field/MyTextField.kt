@@ -23,7 +23,7 @@ fun MyTextField(
     value: String = "",
     onValueChange: (String) -> Unit,
     hintText: String,
-    @DrawableRes leadingIcon: Int,
+    @DrawableRes leadingIcon: Int?,
     isError: Boolean = false,
     errorMessage: String = "",
     keyboardType: KeyboardType = KeyboardType.Text
@@ -43,10 +43,12 @@ fun MyTextField(
         onValueChange = { onValueChange.invoke(it) },
         singleLine = true,
         leadingIcon = {
-            Icon(
-                painter = painterResource(id = leadingIcon),
-                contentDescription = null
-            )
+            if (leadingIcon != null) {
+                Icon(
+                    painter = painterResource(id = leadingIcon),
+                    contentDescription = null
+                )
+            }
         },
         shape = RoundedCornerShape(dp_16),
         colors = OutlinedTextFieldDefaults.colors(

@@ -1,4 +1,4 @@
-package pl.dawidfendler.domain.repository
+package pl.dawidfendler.domain.repository.finance_manager
 
 import pl.dawidfendler.domain.model.transaction.Transaction
 
