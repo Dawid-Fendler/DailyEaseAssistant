@@ -3,7 +3,7 @@ package pl.dawidfendler.domain.use_case.currencies
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import pl.dawidfendler.coroutines.DispatcherProvider
-import pl.dawidfendler.domain.repository.CurrenciesRepository
+import pl.dawidfendler.domain.repository.finance_manager.CurrenciesRepository
 import pl.dawidfendler.util.flow.DomainResult
 
 class GetCurrenciesByCodeUseCase(

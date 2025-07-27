@@ -11,7 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.MainDispatcherRule
-import pl.dawidfendler.domain.repository.CurrenciesRepository
+import pl.dawidfendler.domain.repository.finance_manager.CurrenciesRepository
 import pl.dawidfendler.util.flow.DomainResult
 
 class GetCurrenciesByCodeUseCaseTest {

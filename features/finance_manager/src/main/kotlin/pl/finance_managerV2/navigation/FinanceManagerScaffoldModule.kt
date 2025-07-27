@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import pl.dawidfendler.currency_converter.currencyConverterRoute
+import pl.finance_managerV2.dashboard.dashboardRoute
 
 @Composable
 fun FinanceManagerScaffoldModule() {
@@ -20,9 +21,9 @@ fun FinanceManagerScaffoldModule() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = FinanceMangerNavigationType.FinanceManagerDashboard
+            startDestination = FinanceMangerNavigationType.Dashboard
         ) {
-            financeManagerRoute(
+            dashboardRoute(
                 modifier = Modifier.padding(innerPadding),
                 navigate = {
                     navController.navigate(FinanceMangerNavigationType.CurrencyConverter)

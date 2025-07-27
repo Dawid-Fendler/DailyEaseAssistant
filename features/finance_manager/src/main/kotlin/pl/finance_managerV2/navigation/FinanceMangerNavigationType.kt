@@ -8,6 +8,9 @@ sealed class FinanceMangerNavigationType {
     data object FinanceManagerDashboard : FinanceMangerNavigationType()
 
     @Serializable
+    data object Dashboard : FinanceMangerNavigationType()
+
+    @Serializable
     data object CurrencyConverter : FinanceMangerNavigationType()
 
     @Serializable

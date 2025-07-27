@@ -4,7 +4,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
-import pl.dawidfendler.domain.repository.CurrenciesRepository
+import pl.dawidfendler.domain.repository.finance_manager.CurrenciesRepository
+import pl.dawidfendler.domain.util.getPolishCurrency
 import pl.dawidfendler.domain.util.mapToCustomException
 import pl.dawidfendler.util.flow.DataResult
 import pl.dawidfendler.util.flow.DomainResult
@@ -35,6 +36,7 @@ class GetCurrenciesUseCase(
             }
         }
 
+        currencies.add(0, getPolishCurrency())
         emit(DomainResult.Success(currencies.toList()))
     }.flowOn(dispatchers.io)
 }
