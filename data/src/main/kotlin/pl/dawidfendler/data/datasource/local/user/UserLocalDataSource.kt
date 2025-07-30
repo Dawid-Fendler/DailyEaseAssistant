@@ -1,14 +1,13 @@
 package pl.dawidfendler.data.datasource.local.user
 
 import pl.dawidfendler.data.model.user.UserEntity
+import pl.dawidfendler.data.model.user.UserWithAccounts
 
 interface UserLocalDataSource {
 
-    suspend fun insert(user: UserEntity)
+    suspend fun insertOrUpdateUser(user: UserEntity)
     suspend fun getUser(): UserEntity?
-    suspend fun getAccountBalance(): Double?
-    suspend fun getUserCurrencies(): String?
-    suspend fun updateAccountBalance(accountBalance: Double)
-    suspend fun updateCurrencies(userCurrencies: String)
-    suspend fun deleteUser()
+    suspend fun getUserWithAccounts(): UserWithAccounts?
+    suspend fun updateUser(user: UserEntity)
+    suspend fun deleteUser(userId: Long = 1L)
 }

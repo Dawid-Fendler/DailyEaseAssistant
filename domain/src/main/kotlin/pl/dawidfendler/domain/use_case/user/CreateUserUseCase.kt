@@ -14,7 +14,7 @@ class CreateUserUseCase(
 
     operator fun invoke(user: User) = flow {
         try {
-            userRepository.insertUser(user)
+            userRepository.insertOrUpdateUser(user)
             emit(DomainResult.Success(Unit))
         } catch (e: Exception) {
             emit(DomainResult.Error(e))

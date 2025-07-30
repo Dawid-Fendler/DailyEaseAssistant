@@ -6,17 +6,15 @@ import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.repository.UserRepository
 import pl.dawidfendler.util.flow.DomainResult
 
-class UpdateUserCurrenciesUseCase(
+class GetUserWithAccountsUseCase(
     private val userRepository: UserRepository,
     private val dispatcher: DispatcherProvider
 ) {
 
-    operator fun invoke(userCurrencies: List<String>) = flow {
+    operator fun invoke() = flow {
         try {
-            val currencies = userRepository.getUserCurrencies() + userCurrencies
-
-            userRepository.updateUserCurrencies(currencies.toSet().toList())
-            emit(DomainResult.Success(Unit))
+            val userWithAccounts = userRepository.getUserWithAccounts()
+            emit(DomainResult.Success(userWithAccounts))
         } catch (e: Exception) {
             emit(DomainResult.Error(e))
         }

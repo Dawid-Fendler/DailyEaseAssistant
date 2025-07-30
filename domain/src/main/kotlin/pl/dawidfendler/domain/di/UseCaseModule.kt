@@ -8,9 +8,16 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.datastore.DataStore
 import pl.dawidfendler.domain.repository.AuthenticationRepository
-import pl.dawidfendler.domain.repository.CurrenciesRepository
-import pl.dawidfendler.domain.repository.TransactionRepository
 import pl.dawidfendler.domain.repository.UserRepository
+import pl.dawidfendler.domain.repository.account.AccountRepository
+import pl.dawidfendler.domain.repository.finance_manager.CurrenciesRepository
+import pl.dawidfendler.domain.repository.finance_manager.TransactionRepository
+import pl.dawidfendler.domain.use_case.account.DeleteAccountUseCase
+import pl.dawidfendler.domain.use_case.account.DeleteAllAccountsUseCase
+import pl.dawidfendler.domain.use_case.account.GetAccountByCurrencyUseCase
+import pl.dawidfendler.domain.use_case.account.GetAccountsForUserUseCase
+import pl.dawidfendler.domain.use_case.account.InsertOrUpdateAccountUseCase
+import pl.dawidfendler.domain.use_case.account.InsertOrUpdateAccountsUseCase
 import pl.dawidfendler.domain.use_case.authentication.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication.LoginUseCase
 import pl.dawidfendler.domain.use_case.authentication.LogoutUseCase
@@ -26,10 +33,9 @@ import pl.dawidfendler.domain.use_case.transaction.DeleteTransactionsUseCase
 import pl.dawidfendler.domain.use_case.transaction.GetTransactionUseCase
 import pl.dawidfendler.domain.use_case.user.CreateUserUseCase
 import pl.dawidfendler.domain.use_case.user.DeleteUserUseCase
-import pl.dawidfendler.domain.use_case.user.GetAccountBalanceUseCase
-import pl.dawidfendler.domain.use_case.user.GetUserCurrenciesUseCase
-import pl.dawidfendler.domain.use_case.user.UpdateAccountBalanceUseCase
-import pl.dawidfendler.domain.use_case.user.UpdateUserCurrenciesUseCase
+import pl.dawidfendler.domain.use_case.user.GetUserUseCase
+import pl.dawidfendler.domain.use_case.user.GetUserWithAccountsUseCase
+import pl.dawidfendler.domain.use_case.user.UpdateUserUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -125,25 +131,6 @@ object UseCaseModule {
         dispatchers = dispatcherProvider
     )
 
-    @Provides
-    @ViewModelScoped
-    fun provideGetAccountBalanceUseCase(
-        userRepository: UserRepository,
-        dispatcherProvider: DispatcherProvider
-    ) = GetAccountBalanceUseCase(
-        userRepository = userRepository,
-        dispatcher = dispatcherProvider
-    )
-
-    @Provides
-    @ViewModelScoped
-    fun provideUpdateAccountBalanceUseCase(
-        userRepository: UserRepository,
-        dispatcherProvider: DispatcherProvider
-    ) = UpdateAccountBalanceUseCase(
-        userRepository = userRepository,
-        dispatcher = dispatcherProvider
-    )
 
     @Provides
     @ViewModelScoped
@@ -197,31 +184,101 @@ object UseCaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideGetUserCurrenciesUseCase(
-        userRepository: UserRepository,
-        dispatcherProvider: DispatcherProvider
-    ) = GetUserCurrenciesUseCase(
-        userRepository = userRepository,
-        dispatcher = dispatcherProvider
-    )
-
-    @Provides
-    @ViewModelScoped
-    fun provideUpdateUserCurrenciesUseCase(
-        userRepository: UserRepository,
-        dispatcherProvider: DispatcherProvider
-    ) = UpdateUserCurrenciesUseCase(
-        userRepository = userRepository,
-        dispatcher = dispatcherProvider
-    )
-
-    @Provides
-    @ViewModelScoped
     fun provideGetSelectedCurrenciesUseCase(
         dataStore: DataStore,
         dispatcherProvider: DispatcherProvider
     ) = GetSelectedCurrenciesUseCase(
         dataStore = dataStore,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetUserUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = GetUserUseCase(
+        userRepository = userRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetUserWithAccountsUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = GetUserWithAccountsUseCase(
+        userRepository = userRepository,
+        dispatcher = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideUpdateUserUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = UpdateUserUseCase(
+        userRepository = userRepository,
+        dispatcher = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideDeleteAccountUseCase(
+        accountRepository: AccountRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = DeleteAccountUseCase(
+        accountRepository = accountRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideDeleteAllAccountsUseCase(
+        accountRepository: AccountRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = DeleteAllAccountsUseCase(
+        accountRepository = accountRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetAccountByCurrencyUseCase(
+        accountRepository: AccountRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = GetAccountByCurrencyUseCase(
+        accountRepository = accountRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetAccountsForUserUseCase(
+        accountRepository: AccountRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = GetAccountsForUserUseCase(
+        accountRepository = accountRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideInsertOrUpdateAccountsUseCase(
+        accountRepository: AccountRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = InsertOrUpdateAccountsUseCase(
+        accountRepository = accountRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideInsertOrUpdateAccountUseCase(
+        accountRepository: AccountRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = InsertOrUpdateAccountUseCase(
+        accountRepository = accountRepository,
         dispatcherProvider = dispatcherProvider
     )
 }
