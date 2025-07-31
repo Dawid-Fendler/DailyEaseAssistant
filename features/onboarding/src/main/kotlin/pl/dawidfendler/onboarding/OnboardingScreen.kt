@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import pl.dawidfendler.onboarding.components.OnboardingPage
-import pl.dawidfendler.onboarding.components.WormIndicator
+import pl.dawidfendler.components.indicator.WormIndicator
 import pl.dawidfendler.onboarding.util.pages
 import pl.dawidfendler.ui.theme.dp_12
 import pl.dawidfendler.ui.theme.dp_16

@@ -66,6 +66,7 @@ val MD_THEME_DARK_OUTLINE_VARIANT = Color(0xFF41474D)
 val MD_THEME_DARK_SCRIM = Color(0xFF000000)
 val DARK_BLUE = Color(0xFF000933)
 val SEED = Color(0xFF0079AE)
+val GREEN = Color(0xFF2E7D32)
 
 val BLUE_BRUSH = Brush.verticalGradient(
     colors = listOf(

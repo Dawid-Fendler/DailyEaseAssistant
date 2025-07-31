@@ -14,10 +14,10 @@ import pl.dawidfendler.coroutines.ObserveAsEvents
 import pl.dawidfendler.domain.util.Constants.ERROR_TITLE
 import pl.dawidfendler.domain.util.Constants.SOMETHING_WENT_WRONG
 import pl.dawidfendler.finance_manager.FinanceManagerEvent
-import pl.dawidfendler.navigation.FinanceMangerNavigationType
 import pl.dawidfendler.util.HideSystemBars
 import pl.dawidfendler.util.controller.MainTopBarVisibilityController
 import pl.dawidfendler.util.controller.MainTopBarVisibilityEvent
+import pl.finance_managerV2.navigation.FinanceMangerNavigationType
 
 fun NavGraphBuilder.currencyConverterRoute(onBackClick: () -> Unit) {
     composable<FinanceMangerNavigationType.CurrencyConverter> {

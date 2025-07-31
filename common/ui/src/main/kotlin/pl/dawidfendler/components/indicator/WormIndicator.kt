@@ -1,4 +1,4 @@
-package pl.dawidfendler.onboarding.components
+package pl.dawidfendler.components.indicator
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,19 +8,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import pl.dawidfendler.onboarding.util.wormTransition
+import pl.dawidfendler.ui.theme.SEED
 import pl.dawidfendler.ui.theme.WORM_INDICATOR_SIZE
 import pl.dawidfendler.ui.theme.WORM_INDICATOR_SPACING_SIZE
 
 // Using https://blog.canopas.com/jetpack-compose-how-to-implement-custom-pager-indicators-8b6a01d63964
 @Composable
-internal fun WormIndicator(
+fun WormIndicator(
     count: Int,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
@@ -41,7 +41,7 @@ internal fun WormIndicator(
                     modifier = Modifier
                         .size(WORM_INDICATOR_SIZE)
                         .background(
-                            color = MaterialTheme.colorScheme.primary,
+                            color = Color.LightGray,
                             shape = CircleShape
                         )
                 )

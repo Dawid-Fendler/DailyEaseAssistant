@@ -4,13 +4,11 @@ import pl.dawidfendler.data.model.user.UserEntity
 import pl.dawidfendler.domain.model.user.User
 
 internal fun User.toEntity() = UserEntity(
-    accountBalance = accountBalance.toDouble(),
-    currencies = userCurrenciesToEntity(currencies)
+    userName = userName,
 )
 
 internal fun UserEntity.toDomain() = User(
-    accountBalance = accountBalance.toBigDecimal(),
-    currencies = userCurrenciesToDomain(currencies)
+    userName = userName
 )
 
 internal fun userCurrenciesToDomain(currencies: String): List<String> {

@@ -32,6 +32,7 @@ val dp_0 = 0.dp
 
 // Text Size
 val sp_36 = 36.sp
+val sp_28 = 28.sp
 val sp_24 = 24.sp
 val sp_20 = 20.sp
 val sp_18 = 18.sp

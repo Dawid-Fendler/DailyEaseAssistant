@@ -1,11 +1,13 @@
 package pl.dawidfendler.data.database.account
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import pl.dawidfendler.data.model.account.AccountEntity
 
+@Dao
 interface AccountDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

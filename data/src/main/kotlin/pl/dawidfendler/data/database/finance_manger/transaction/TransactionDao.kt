@@ -12,9 +12,9 @@ interface TransactionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(transaction: TransactionEntity)
 
-    @Query("SELECT * FROM `transaction`")
+    @Query("SELECT * FROM `transactions`")
     suspend fun getTransaction(): List<TransactionEntity>
 
-    @Query("DELETE FROM `transaction`")
+    @Query("DELETE FROM `transactions`")
     suspend fun deleteTransaction()
 }
