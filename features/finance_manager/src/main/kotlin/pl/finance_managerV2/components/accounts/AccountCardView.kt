@@ -1,7 +1,9 @@
 package pl.finance_managerV2.components.accounts
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,10 +11,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,16 +32,21 @@ import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.ui.theme.dp_200
 import pl.dawidfendler.ui.theme.dp_24
 import pl.dawidfendler.ui.theme.dp_4
+import pl.dawidfendler.ui.theme.dp_48
 import pl.dawidfendler.ui.theme.sp_0
 import pl.dawidfendler.ui.theme.sp_12
 import pl.dawidfendler.ui.theme.sp_14
 import pl.dawidfendler.ui.theme.sp_28
+import pl.finance_managerV2.dashboard.DashboardAction
 import pl.finance_managerV2.model.AccountUiModel
 
 @Composable
 fun AccountCardView(
-    account: AccountUiModel,
-    modifier: Modifier = Modifier
+    account: AccountUiModel?,
+    modifier: Modifier = Modifier,
+    showAddAccountCard: Boolean = false,
+    onAction: (DashboardAction) -> Unit = {},
+    isLastCard: Boolean = false
 ) {
     Card(
         modifier = modifier
@@ -49,55 +61,77 @@ fun AccountCardView(
                 .fillMaxSize()
                 .background(Color.White)
         ) {
-            CustomText(
-                text = "${account.name} – ${account.currency}",
-                modifier = Modifier.padding(top = dp_16, start = dp_16),
-                color = Color.Black,
-                fontSize = sp_12,
-                letterSpacing = sp_0
-            )
 
-            Spacer(modifier = Modifier.weight(0.1f))
-
-            CustomText(
-                text = account.balance,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = dp_16),
-                color = Color.Black,
-                fontSize = sp_28,
-                letterSpacing = sp_0,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.weight(0.1f))
-
-            if (account.lastTransactionName != null && account.lastTransactionBalance != null) {
-                Row(
+            if (showAddAccountCard && isLastCard) {
+                Box(
                     modifier = Modifier
-                        .padding(bottom = dp_16, start = dp_16),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                        .fillMaxSize()
+                        .clickable { onAction.invoke(DashboardAction.AddNewAccount) }
+                        .background(Color.LightGray.copy(alpha = 0.5f))
                 ) {
-                    CustomText(
-                        text = account.lastTransactionBalance,
-                        modifier = Modifier,
-                        color = if (account.isExpense) Color.Red else GREEN,
-                        fontSize = sp_14,
-                        letterSpacing = sp_0
-                    )
-                    Spacer(modifier = Modifier.width(dp_4))
-                    CustomText(
-                        text = account.lastTransactionName,
-                        modifier = Modifier,
-                        color = Color.Black,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = sp_12,
-                        letterSpacing = sp_0
+                    IconButton(
+                        onClick = { onAction.invoke(DashboardAction.AddNewAccount) },
+                        modifier = Modifier.align(Alignment.Center),
+                        content = {
+                            Icon(
+                                imageVector = Icons.Outlined.Add,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(dp_48)
+                            )
+                        }
                     )
                 }
-            }
+            } else {
+                CustomText(
+                    text = "${account!!.name} – ${account.currency}",
+                    modifier = Modifier.padding(top = dp_16, start = dp_16),
+                    color = Color.Black,
+                    fontSize = sp_12,
+                    letterSpacing = sp_0
+                )
 
+                Spacer(modifier = Modifier.weight(0.1f))
+
+                CustomText(
+                    text = account.balance,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = dp_16),
+                    color = Color.Black,
+                    fontSize = sp_28,
+                    letterSpacing = sp_0,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.weight(0.1f))
+
+                if (account.lastTransactionName != null && account.lastTransactionBalance != null) {
+                    Row(
+                        modifier = Modifier
+                            .padding(bottom = dp_16, start = dp_16),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CustomText(
+                            text = account.lastTransactionBalance,
+                            modifier = Modifier,
+                            color = if (account.isExpense) Color.Red else GREEN,
+                            fontSize = sp_14,
+                            letterSpacing = sp_0
+                        )
+                        Spacer(modifier = Modifier.width(dp_4))
+                        CustomText(
+                            text = account.lastTransactionName,
+                            modifier = Modifier,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = sp_12,
+                            letterSpacing = sp_0
+                        )
+                    }
+                }
+            }
         }
     }
 }

@@ -12,6 +12,8 @@ import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetEvent
 import pl.dawidfendler.coroutines.ObserveAsEvents
 import pl.dawidfendler.domain.util.Constants.ERROR_TITLE
 import pl.dawidfendler.domain.util.Constants.SOMETHING_WENT_WRONG
+import pl.dawidfendler.util.controller.MainTopBarVisibilityController.sendMainTopBarEvent
+import pl.dawidfendler.util.controller.MainTopBarVisibilityEvent
 import pl.finance_managerV2.navigation.FinanceMangerNavigationType
 
 fun NavGraphBuilder.dashboardRoute(
@@ -22,7 +24,9 @@ fun NavGraphBuilder.dashboardRoute(
         val viewModel: DashboardViewModel = hiltViewModel()
         val scope = rememberCoroutineScope()
         val state = viewModel.state.collectAsStateWithLifecycle()
-
+        scope.launch {
+            sendMainTopBarEvent(MainTopBarVisibilityEvent.HideMainTopBar)
+        }
         ObserveAsEvents(flow = viewModel.eventChannel) { event ->
             when (event) {
                 is DashboardEvent.ShowErrorBottomDialog -> {

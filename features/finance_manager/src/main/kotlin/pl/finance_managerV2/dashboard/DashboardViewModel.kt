@@ -89,6 +89,10 @@ class DashboardViewModel @Inject constructor(
             is DashboardAction.DataRefresh -> {
                 currencyRefreshTrigger.tryEmit(Unit)
             }
+
+            is DashboardAction.AddNewAccount -> {
+
+            }
         }
     }
 }

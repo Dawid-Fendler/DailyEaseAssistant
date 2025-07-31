@@ -23,20 +23,25 @@ import pl.finance_managerV2.model.AccountUiModel
 @Composable
 fun AccountCarousel(
     modifier: Modifier = Modifier,
-    accounts: List<AccountUiModel>
+    accounts: List<AccountUiModel>,
+    showAddAccountCard: Boolean = false
 ) {
 
     val pagerState = rememberPagerState(
         initialPage = 0,
-        pageCount = { accounts.size }
+        pageCount = { if (showAddAccountCard) accounts.size + 1 else accounts.size }
     )
 
     HorizontalPager(
         state = pagerState,
         contentPadding = PaddingValues(horizontal = dp_32),
-        modifier = Modifier.fillMaxWidth().background(Color.White)
+        modifier = modifier.fillMaxWidth().background(Color.White)
     ) { page ->
-        AccountCardView(account = accounts[page])
+        AccountCardView(
+            account = if (showAddAccountCard && page == accounts.size) null else accounts[page],
+            showAddAccountCard = showAddAccountCard,
+            isLastCard = page == accounts.size
+        )
     }
 
     Spacer(modifier = Modifier.height(dp_12))
@@ -47,7 +52,7 @@ fun AccountCarousel(
     ) {
         WormIndicator(
             modifier = Modifier,
-            count = 5,
+            count = if (showAddAccountCard) accounts.size + 1 else accounts.size,
             pagerState = pagerState
         )
     }
