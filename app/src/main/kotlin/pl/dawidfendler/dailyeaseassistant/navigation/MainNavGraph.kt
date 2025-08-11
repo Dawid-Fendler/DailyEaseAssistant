@@ -1,5 +1,11 @@
 package pl.dawidfendler.dailyeaseassistant.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -40,7 +46,21 @@ fun MainNavGraph(navController: NavHostController) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            if(mainTopBarVisibility) {
+            AnimatedVisibility(
+                visible = mainTopBarVisibility,
+                exit = slideOutVertically(
+                    animationSpec = tween(durationMillis = DURATION_MILLIS),
+                    targetOffsetY = { -it }
+                ) + fadeOut(
+                    animationSpec = tween(durationMillis = FADE_OUT_DURATION_MILLIS)
+                ),
+                enter = slideInVertically(
+                    animationSpec = tween(durationMillis = DURATION_MILLIS),
+                    initialOffsetY = { -it }
+                ) + fadeIn(
+                    animationSpec = tween(durationMillis = FADE_OUT_DURATION_MILLIS)
+                )
+            ) {
                 MainTopAppBar(
                     // TODO add logic
                     name = "David",
@@ -81,4 +101,5 @@ fun MainNavGraph(navController: NavHostController) {
     }
 }
 
-
+private const val DURATION_MILLIS = 300
+private const val FADE_OUT_DURATION_MILLIS = 250

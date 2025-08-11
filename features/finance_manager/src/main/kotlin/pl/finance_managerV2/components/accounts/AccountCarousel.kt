@@ -34,7 +34,7 @@ fun AccountCarousel(
 
     HorizontalPager(
         state = pagerState,
-        contentPadding = PaddingValues(horizontal = dp_32),
+        contentPadding = PaddingValues(horizontal = dp_16),
         modifier = modifier.fillMaxWidth().background(Color.White)
     ) { page ->
         AccountCardView(

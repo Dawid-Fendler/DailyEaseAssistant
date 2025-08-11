@@ -14,19 +14,20 @@ import pl.dawidfendler.domain.util.Constants.ERROR_TITLE
 import pl.dawidfendler.domain.util.Constants.SOMETHING_WENT_WRONG
 import pl.dawidfendler.util.controller.MainTopBarVisibilityController.sendMainTopBarEvent
 import pl.dawidfendler.util.controller.MainTopBarVisibilityEvent
-import pl.finance_managerV2.navigation.FinanceMangerNavigationType
+import pl.dawidfendler.bottom_bar.FinanceManagerBottomNavigationType
 
 fun NavGraphBuilder.dashboardRoute(
     modifier: Modifier = Modifier,
     navigate: () -> Unit,
 ) {
-    composable<FinanceMangerNavigationType.Dashboard> {
+    composable<FinanceManagerBottomNavigationType.Dashboard> {
         val viewModel: DashboardViewModel = hiltViewModel()
         val scope = rememberCoroutineScope()
         val state = viewModel.state.collectAsStateWithLifecycle()
         scope.launch {
             sendMainTopBarEvent(MainTopBarVisibilityEvent.HideMainTopBar)
         }
+
         ObserveAsEvents(flow = viewModel.eventChannel) { event ->
             when (event) {
                 is DashboardEvent.ShowErrorBottomDialog -> {

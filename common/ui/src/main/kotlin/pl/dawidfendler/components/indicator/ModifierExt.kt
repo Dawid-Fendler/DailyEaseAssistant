@@ -7,8 +7,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.unit.dp
-import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_ON_PRIMARY
-import pl.dawidfendler.ui.theme.SEED
+import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 
 internal fun Modifier.wormTransition(
     pagerState: PagerState
@@ -31,5 +30,5 @@ internal fun Modifier.wormTransition(
         )
 
         val path = Path().apply { addRoundRect(worm) }
-        drawPath(path = path, color = SEED)
+        drawPath(path = path, color = MD_THEME_LIGHT_PRIMARY)
     }

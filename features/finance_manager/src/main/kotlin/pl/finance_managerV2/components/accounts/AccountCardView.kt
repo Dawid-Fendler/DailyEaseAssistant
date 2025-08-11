@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import pl.dawidfendler.components.text_field.CustomText
 import pl.dawidfendler.ui.theme.GREEN
+import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.ui.theme.dp_200
 import pl.dawidfendler.ui.theme.dp_24
@@ -36,7 +37,9 @@ import pl.dawidfendler.ui.theme.dp_48
 import pl.dawidfendler.ui.theme.sp_0
 import pl.dawidfendler.ui.theme.sp_12
 import pl.dawidfendler.ui.theme.sp_14
+import pl.dawidfendler.ui.theme.sp_16
 import pl.dawidfendler.ui.theme.sp_28
+import pl.dawidfendler.ui.theme.sp_36
 import pl.finance_managerV2.dashboard.DashboardAction
 import pl.finance_managerV2.model.AccountUiModel
 
@@ -76,7 +79,7 @@ fun AccountCardView(
                             Icon(
                                 imageVector = Icons.Outlined.Add,
                                 contentDescription = null,
-                                tint = Color.Black,
+                                tint = MD_THEME_LIGHT_PRIMARY,
                                 modifier = Modifier.size(dp_48)
                             )
                         }
@@ -87,7 +90,7 @@ fun AccountCardView(
                     text = "${account!!.name} – ${account.currency}",
                     modifier = Modifier.padding(top = dp_16, start = dp_16),
                     color = Color.Black,
-                    fontSize = sp_12,
+                    fontSize = sp_14,
                     letterSpacing = sp_0
                 )
 
@@ -99,7 +102,7 @@ fun AccountCardView(
                         .fillMaxWidth()
                         .padding(horizontal = dp_16),
                     color = Color.Black,
-                    fontSize = sp_28,
+                    fontSize = sp_36,
                     letterSpacing = sp_0,
                     textAlign = TextAlign.Center
                 )
@@ -117,7 +120,7 @@ fun AccountCardView(
                             text = account.lastTransactionBalance,
                             modifier = Modifier,
                             color = if (account.isExpense) Color.Red else GREEN,
-                            fontSize = sp_14,
+                            fontSize = sp_16,
                             letterSpacing = sp_0
                         )
                         Spacer(modifier = Modifier.width(dp_4))
@@ -126,7 +129,7 @@ fun AccountCardView(
                             modifier = Modifier,
                             color = Color.Black,
                             fontWeight = FontWeight.Normal,
-                            fontSize = sp_12,
+                            fontSize = sp_14,
                             letterSpacing = sp_0
                         )
                     }
