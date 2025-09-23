@@ -1,5 +1,6 @@
 package pl.finance_managerV2.dashboard
 
+import androidx.compose.ui.util.fastFirst
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,22 +10,31 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import pl.dawidfendler.domain.model.account.Account
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
+import pl.dawidfendler.domain.use_case.account.GetAccountsForUserUseCase
+import pl.dawidfendler.domain.use_case.account.InsertOrUpdateAccountUseCase
 import pl.dawidfendler.domain.use_case.currencies.GetCurrenciesUseCase
 import pl.dawidfendler.finance_manager.util.getPolishCurrency
 import pl.dawidfendler.util.flow.DomainResult
 import pl.dawidfendler.util.logger.Logger
+import pl.finance_managerV2.mapper.toUiModel
 import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
+    private val getAccountForUserUseCase: GetAccountsForUserUseCase,
+    private val logger: Logger,
     private val getCurrenciesUseCase: GetCurrenciesUseCase,
-    private val logger: Logger
+    private val insertOrUpdateAccountUseCase: InsertOrUpdateAccountUseCase
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<DashboardState> = MutableStateFlow(DashboardState())
@@ -47,39 +57,88 @@ class DashboardViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         isLoading = true,
-                        isCurrenciesFetchDataError = false
+                        isFetchDataError = false
                     )
                 }
-                getCurrenciesUseCase.invoke()
-                    .map { domainResult ->
-                        when (domainResult) {
-                            is DomainResult.Success -> {
-                                logger.d("DashboardViewModel", "Fetched currencies successfully:${domainResult.data}")
-                                setStateForFetchCurrencies(currencies = domainResult.data)
-                            }
+                combine(
+                    getAccountForUserUseCase.invoke(),
+                    getCurrenciesUseCase.invoke()
+                ) { accountsResult: DomainResult<List<Account>, Exception>, currenciesResult: DomainResult<List<ExchangeRateTable>, Exception> ->
+                    Pair(accountsResult, currenciesResult)
+                }.map { results ->
+                    val accounts = when (results.first) {
+                        is DomainResult.Error -> {
+                            logger.e(
+                                "DashboardViewModel",
+                                "Error fetching User accounts: ${(results.first as DomainResult.Error).error}"
+                            )
+                            _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
+                            setStateForFetchCurrencies(isFetchError = true)
+                            emptyList()
+                        }
 
-                            is DomainResult.Error -> {
-                                logger.e(
-                                    "DashboardViewModel",
-                                    "Error fetching currencies: ${domainResult.error}"
-                                )
-                                _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
-                                setStateForFetchCurrencies(isFetchError = true)
-                            }
+                        is DomainResult.Success -> {
+                            logger.d("DashboardViewModel", "Fetched User accounts successfully")
+                            (results.first as DomainResult.Success).data
                         }
                     }
+
+                    val currencies = when (results.second) {
+                        is DomainResult.Error -> {
+                            logger.e(
+                                "DashboardViewModel",
+                                "Error fetching Currencies: ${(results.second as DomainResult.Error).error}"
+                            )
+                            _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
+                            setStateForFetchCurrencies(isFetchError = true)
+                            emptyList()
+                        }
+
+                        is DomainResult.Success -> {
+                            logger.d("DashboardViewModel", "Fetched Currencies successfully")
+                            (results.second as DomainResult.Success).data
+                        }
+                    }
+
+                    setStateForFetchCurrencies(accounts, currencies)
+                }
+            }.catch { error ->
+                logger.e(
+                    "DashboardViewModel",
+                    "Error fetching Initial Data: $error"
+                )
+                _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("Initial Data Fetch Error"))
+                setStateForFetchCurrencies(isFetchError = true)
             }.launchIn(viewModelScope)
     }
 
     private fun setStateForFetchCurrencies(
+        accounts: List<Account> = emptyList(),
         currencies: List<ExchangeRateTable> = listOf(getPolishCurrency()),
         isFetchError: Boolean = false
     ) {
         _state.update {
             it.copy(
-                currencies = currencies,
-                isCurrenciesFetchDataError = isFetchError,
-                isLoading = false
+                accounts = if (accounts.isEmpty()) emptyList() else accounts.map { account ->
+                    account.toUiModel(
+                        currencies
+                    )
+                },
+                isFetchDataError = isFetchError,
+                isLoading = false,
+                finalTotalBalance = if (accounts.isEmpty() || currencies.isEmpty() || (accounts.first { it.isMainAccount }.balance == 0.0)) {
+                    "0,00 zł"
+                } else {
+                    accounts.sumOf { it.balance }.toString() + " "
+                            currencies.fastFirst {
+                        it.currencyCode == accounts.first {
+                            it.isMainAccount
+                        }.currencyCode
+                    }.currencyCode
+                },
+                showAddAccountCard = accounts.size < 5,
+                accountsCurrencyCode = if (accounts.isEmpty()) emptyList() else accounts.map { it.currencyCode },
+                currencies = currencies
             )
         }
     }
@@ -90,9 +149,39 @@ class DashboardViewModel @Inject constructor(
                 currencyRefreshTrigger.tryEmit(Unit)
             }
 
-            is DashboardAction.AddNewAccount -> {
+            is DashboardAction.ChangeAddAccountBottomSheetVisibility -> {
+                _state.update {
+                    it.copy(
+                        addAccountBottomSheetVisibility = action.isVisible
+                    )
+                }
+            }
 
+            is DashboardAction.AddNewAccount -> {
+                addNewAccount(action.accountName, action.currencyCode)
             }
         }
+    }
+
+    private fun addNewAccount(accountName: String, currencyCode: String) {
+        _state.update {
+            it.copy(
+                addAccountBottomSheetVisibility = false
+            )
+        }
+        insertOrUpdateAccountUseCase.invoke(
+            currencyCode = currencyCode,
+            balance = 0.00,
+            accountName = accountName,
+            isMainAccount = true
+        ).onEach {
+            currencyRefreshTrigger.tryEmit(Unit)
+        }.catch { error ->
+            logger.e(
+                "DashboardViewModel",
+                "Error add new account: $error"
+            )
+            _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("Add account error"))
+        }.launchIn(viewModelScope)
     }
 }

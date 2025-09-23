@@ -7,6 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kotlinx.coroutines.launch
+import pl.dawidfendler.bottom_bar.FinanceManagerBottomNavigationType
 import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetController
 import pl.dawidfendler.components.bottom_dialog.CustomBottomSheetEvent
 import pl.dawidfendler.coroutines.ObserveAsEvents
@@ -14,7 +15,6 @@ import pl.dawidfendler.domain.util.Constants.ERROR_TITLE
 import pl.dawidfendler.domain.util.Constants.SOMETHING_WENT_WRONG
 import pl.dawidfendler.util.controller.MainTopBarVisibilityController.sendMainTopBarEvent
 import pl.dawidfendler.util.controller.MainTopBarVisibilityEvent
-import pl.dawidfendler.bottom_bar.FinanceManagerBottomNavigationType
 
 fun NavGraphBuilder.dashboardRoute(
     modifier: Modifier = Modifier,

@@ -28,5 +28,7 @@ data class AccountEntity(
     val ownerUserId: Long,
     @JvmField
     val currencyCode: String,
-    val balance: Double
+    val balance: Double,
+    val isMainAccount: Boolean = false,
+    val accountName: String
 )

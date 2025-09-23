@@ -5,8 +5,11 @@ import pl.finance_managerV2.model.AccountUiModel
 
 data class DashboardState(
     val isLoading: Boolean = true,
-    val currencies: List<ExchangeRateTable> = emptyList(),
-    val isCurrenciesFetchDataError: Boolean = false,
+    val isFetchDataError: Boolean = false,
     val accounts: List<AccountUiModel> = emptyList(),
-    val showAddAccountCard: Boolean = false
+    val showAddAccountCard: Boolean = false,
+    val finalTotalBalance: String = "0.0",
+    val currencies: List<ExchangeRateTable> = emptyList(),
+    val accountsCurrencyCode: List<String> = emptyList(),
+    val addAccountBottomSheetVisibility: Boolean = false
 )

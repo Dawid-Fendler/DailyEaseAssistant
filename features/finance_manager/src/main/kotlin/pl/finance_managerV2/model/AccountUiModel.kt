@@ -7,5 +7,6 @@ data class AccountUiModel(
     val lastTransactionBalance: String? = null,
     val lastTransactionName: String? = null,
     val isExpense: Boolean = false,
-    val isMainAccount: Boolean = false
+    val isMainAccount: Boolean = false,
+    val mainName: String
 )

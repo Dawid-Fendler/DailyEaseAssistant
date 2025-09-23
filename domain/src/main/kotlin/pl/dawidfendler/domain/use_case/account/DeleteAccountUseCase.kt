@@ -12,9 +12,9 @@ class DeleteAccountUseCase(
     private val dispatcherProvider: DispatcherProvider
 ) {
 
-    operator fun invoke(currencyCode: String, balance: Double) = flow {
+    operator fun invoke(currencyCode: String, balance: Double, accountName: String) = flow {
         try {
-            accountRepository.deleteAccount(Account(currencyCode, balance))
+            accountRepository.deleteAccount(Account(currencyCode, balance, accountName = accountName))
             emit(DomainResult.Success(Unit))
         } catch (e: Exception) {
             emit(DomainResult.Error(e))

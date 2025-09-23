@@ -1,4 +1,4 @@
-package pl.finance_managerV2.components
+package pl.finance_managerV2.components.total_balance
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

@@ -48,7 +48,7 @@ fun AccountCardView(
     account: AccountUiModel?,
     modifier: Modifier = Modifier,
     showAddAccountCard: Boolean = false,
-    onAction: (DashboardAction) -> Unit = {},
+    onAction: () -> Unit = {},
     isLastCard: Boolean = false
 ) {
     Card(
@@ -69,11 +69,11 @@ fun AccountCardView(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .clickable { onAction.invoke(DashboardAction.AddNewAccount) }
+                        .clickable { onAction.invoke() }
                         .background(Color.LightGray.copy(alpha = 0.5f))
                 ) {
                     IconButton(
-                        onClick = { onAction.invoke(DashboardAction.AddNewAccount) },
+                        onClick = { onAction.invoke() },
                         modifier = Modifier.align(Alignment.Center),
                         content = {
                             Icon(
@@ -87,7 +87,7 @@ fun AccountCardView(
                 }
             } else {
                 CustomText(
-                    text = "${account!!.name} – ${account.currency}",
+                    text = "${account!!.mainName}: ${account.name} – ${account.currency}",
                     modifier = Modifier.padding(top = dp_16, start = dp_16),
                     color = Color.Black,
                     fontSize = sp_14,

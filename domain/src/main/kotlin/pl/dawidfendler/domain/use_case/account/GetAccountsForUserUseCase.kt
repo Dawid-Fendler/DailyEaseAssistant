@@ -13,8 +13,7 @@ class GetAccountsForUserUseCase(
 
     operator fun invoke() = flow {
         try {
-            accountRepository.getAccountsForUser()
-            emit(DomainResult.Success(Unit))
+            emit(DomainResult.Success(accountRepository.getAccountsForUser()))
         } catch (e: Exception) {
             emit(DomainResult.Error(e))
         }

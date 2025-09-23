@@ -12,9 +12,9 @@ class InsertOrUpdateAccountUseCase(
     private val dispatcherProvider: DispatcherProvider
 ) {
 
-    operator fun invoke(currencyCode: String, balance: Double) = flow {
+    operator fun invoke(currencyCode: String, balance: Double, accountName: String, isMainAccount: Boolean = false) = flow {
         try {
-            accountRepository.insertOrUpdateAccount(Account(currencyCode, balance))
+            accountRepository.insertOrUpdateAccount(Account(currencyCode, balance, accountName = accountName, isMainAccount = isMainAccount))
             emit(DomainResult.Success(Unit))
         } catch (e: Exception) {
             emit(DomainResult.Error(e))

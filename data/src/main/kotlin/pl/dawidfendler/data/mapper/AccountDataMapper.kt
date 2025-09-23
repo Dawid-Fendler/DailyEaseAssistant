@@ -14,7 +14,9 @@ fun UserWithAccounts.toDomain(): pl.dawidfendler.domain.model.account.UserWithAc
 fun AccountEntity.toDomain(): Account {
     return Account(
         currencyCode = currencyCode,
-        balance = balance
+        balance = balance,
+        isMainAccount = isMainAccount,
+        accountName = accountName
     )
 }
 
@@ -22,6 +24,8 @@ fun Account.toEntity(): AccountEntity {
     return AccountEntity(
         ownerUserId = 1,
         currencyCode = currencyCode,
-        balance = balance
+        balance = balance,
+        isMainAccount = isMainAccount,
+        accountName = accountName
     )
 }

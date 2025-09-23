@@ -24,7 +24,8 @@ import pl.finance_managerV2.model.AccountUiModel
 fun AccountCarousel(
     modifier: Modifier = Modifier,
     accounts: List<AccountUiModel>,
-    showAddAccountCard: Boolean = false
+    showAddAccountCard: Boolean = false,
+    onAddNewAccount: () -> Unit
 ) {
 
     val pagerState = rememberPagerState(
@@ -40,7 +41,8 @@ fun AccountCarousel(
         AccountCardView(
             account = if (showAddAccountCard && page == accounts.size) null else accounts[page],
             showAddAccountCard = showAddAccountCard,
-            isLastCard = page == accounts.size
+            isLastCard = page == accounts.size,
+            onAction = onAddNewAccount
         )
     }
 

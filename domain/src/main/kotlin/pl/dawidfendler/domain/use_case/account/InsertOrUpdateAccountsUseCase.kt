@@ -12,13 +12,14 @@ class InsertOrUpdateAccountsUseCase(
     private val dispatcherProvider: DispatcherProvider
 ) {
 
-    operator fun invoke(currencyCodes: List<String>, balances: List<Double>) = flow {
+    operator fun invoke(currencyCodes: List<String>, balances: List<Double>, accountsName: List<String>) = flow {
         try {
             accountRepository.insertOrUpdateAccounts(
                 accounts = currencyCodes.mapIndexed { index, currencyCode ->
                     Account(
                         currencyCode = currencyCode,
-                        balance = balances.getOrNull(index) ?: 0.0
+                        balance = balances.getOrNull(index) ?: 0.0,
+                        accountName = accountsName.getOrNull(index) ?: ""
                     )
                 }
             )

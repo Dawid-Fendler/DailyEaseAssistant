@@ -1,4 +1,4 @@
-package pl.finance_managerV2.components
+package pl.finance_managerV2.components.bottom_bar
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar

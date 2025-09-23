@@ -1,12 +1,16 @@
-package pl.dawidfendler.currency_converter.components
+package pl.finance_managerV2.components.currency_picker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -30,37 +35,42 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import pl.dawidfendler.currency_converter.CurrencyConverterAction
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import pl.dawidfendler.components.text_field.CustomText
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.finance_manager.R
 import pl.dawidfendler.ui.theme.BLUE_BRUSH
-import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_SURFACE_TINT
-import pl.dawidfendler.ui.theme.SEED
+import pl.dawidfendler.ui.theme.dp_12
 import pl.dawidfendler.ui.theme.dp_24
-import pl.dawidfendler.ui.theme.dp_4
+import pl.dawidfendler.ui.theme.dp_56
 import pl.dawidfendler.ui.theme.dp_8
 import pl.dawidfendler.ui.theme.dp_80
+import pl.dawidfendler.ui.theme.sp_0
 import pl.dawidfendler.ui.theme.sp_18
 
 @Composable
 fun CurrencyPicker(
     modifier: Modifier = Modifier,
     onCurrencySelected: (String) -> Unit,
-    query: String,
-    filteredCurrencies: List<ExchangeRateTable>,
-    onAction: (CurrencyConverterAction) -> Unit
+    currencies: List<ExchangeRateTable>,
 ) {
+
+    val viewModel: CurrencyPickerViewModel = hiltViewModel()
+    viewModel.setCurrencies(currencies)
+    val query by viewModel.query.collectAsState()
+    val filteredCurrencies by viewModel.filteredCurrencies.collectAsStateWithLifecycle()
+
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(brush = BLUE_BRUSH)
     ) {
         CurrencyPickerHeader(
             query = query,
-            onAction = onAction,
             currencies = filteredCurrencies,
-            onCurrencySelected = onCurrencySelected
+            onCurrencySelected = onCurrencySelected,
+            viewModel::onQueryChange
         )
     }
 }
@@ -69,28 +79,26 @@ fun CurrencyPicker(
 @Composable
 fun CurrencyPickerHeader(
     query: String,
-    currencies: List<ExchangeRateTable>,
+    currencies: List<CurrencyUiModel>,
     onCurrencySelected: (String) -> Unit,
-    onAction: (CurrencyConverterAction) -> Unit
+    changeValue: (String) -> Unit
 ) {
     var isExpanded by rememberSaveable { mutableStateOf(true) }
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = dp_4)
-            .clip(shape = RoundedCornerShape(dp_24))
     ) {
 
         SearchBar(
             modifier = Modifier
-                .background(brush = BLUE_BRUSH)
+                .background(color = Color.White)
                 .weight(1f),
             expanded = isExpanded,
             inputField = {
                 TextField(
                     value = query,
-                    onValueChange = { onAction(CurrencyConverterAction.QueryChange(it)) },
+                    onValueChange = { changeValue.invoke(it) },
                     singleLine = true,
                     placeholder = { Text(text = stringResource(R.string.search_bar_placeholder)) },
                     trailingIcon = {
@@ -98,10 +106,11 @@ fun CurrencyPickerHeader(
                     },
                     modifier = Modifier
                         .fillMaxSize()
+                        .padding(horizontal = dp_12)
                         .clip(shape = RoundedCornerShape(dp_24)),
                     colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = Color.White,
-                        focusedContainerColor = Color.White,
+                        unfocusedContainerColor = Color(0xFFF2F3F5),
+                        focusedContainerColor = Color(0xFFF2F3F5),
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                     )
@@ -111,16 +120,51 @@ fun CurrencyPickerHeader(
                 LazyColumn(
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(dp_24))
-                        .background(brush = BLUE_BRUSH)
+                        .background(color = Color.White)
                 ) {
                     items(currencies) { currency ->
                         ListItem(
                             headlineContent = {
-                                Text(
-                                    text = "${currency.currencyName} (${currency.currencyCode})",
-                                    fontSize = sp_18,
-                                    fontWeight = FontWeight.Bold
-                                )
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(
+                                            vertical = dp_8
+                                        ),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(dp_56)
+                                            .clip(RoundedCornerShape(dp_8))
+                                            .background(Color(0xFFF2F3F5)),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        CustomText(
+                                            text = currency.currencySign,
+                                            fontSize = sp_18,
+                                            color = Color.Black,
+                                            letterSpacing = sp_0
+                                        )
+                                    }
+
+                                    Spacer(modifier = Modifier.width(dp_24))
+
+                                    Column {
+                                        CustomText(
+                                            text = currency.currencyCode,
+                                            fontSize = sp_18,
+                                            color = Color.Black,
+                                            letterSpacing = sp_0
+                                        )
+                                        CustomText(
+                                            text = currency.currencyName,
+                                            fontSize = sp_18,
+                                            color = Color.Gray,
+                                            letterSpacing = sp_0
+                                        )
+                                    }
+                                }
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -133,7 +177,7 @@ fun CurrencyPickerHeader(
             },
             onExpandedChange = { isExpanded = it },
             colors = SearchBarDefaults.colors(
-                containerColor = SEED
+                containerColor = Color.White
             )
         )
     }
