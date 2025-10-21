@@ -9,6 +9,8 @@ import dagger.hilt.components.SingletonComponent
 import pl.dawidfendler.data.database.UserDatabase
 import pl.dawidfendler.data.datasource.local.account.AccountLocalDataSource
 import pl.dawidfendler.data.datasource.local.account.AccountLocalDataSourceImpl
+import pl.dawidfendler.data.datasource.local.categories.CategoriesLocalDataSource
+import pl.dawidfendler.data.datasource.local.categories.CategoriesLocalDataSourceImpl
 import pl.dawidfendler.data.datasource.local.currencies.CurrenciesLocalDataSource
 import pl.dawidfendler.data.datasource.local.currencies.CurrenciesLocalDataSourceImpl
 import pl.dawidfendler.data.datasource.local.transaction.TransactionLocalDataSource
@@ -56,4 +58,9 @@ object DataSourceModule {
     @Singleton
     fun provideAccountLocalDataSource(db: UserDatabase): AccountLocalDataSource =
         AccountLocalDataSourceImpl(db.accountsDao())
+
+    @Provides
+    @Singleton
+    fun provideCategoriesLocalDataSource(db: UserDatabase): CategoriesLocalDataSource =
+        CategoriesLocalDataSourceImpl(db.categoriesDao())
 }

@@ -9,11 +9,13 @@ import pl.dawidfendler.data.repository.UserRepositoryImpl
 import pl.dawidfendler.data.repository.account.AccountRepositoryImpl
 import pl.dawidfendler.data.repository.finance_manager.CurrenciesRepositoryImpl
 import pl.dawidfendler.data.repository.finance_manager.TransactionRepositoryImpl
+import pl.dawidfendler.data.repository.finance_manager.CategoriesRepositoryImpl
 import pl.dawidfendler.domain.repository.AuthenticationRepository
 import pl.dawidfendler.domain.repository.UserRepository
 import pl.dawidfendler.domain.repository.account.AccountRepository
 import pl.dawidfendler.domain.repository.finance_manager.CurrenciesRepository
 import pl.dawidfendler.domain.repository.finance_manager.TransactionRepository
+import pl.dawidfendler.domain.repository.finance_manager.CategoriesRepository
 import javax.inject.Singleton
 
 @Module
@@ -39,4 +41,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindAccountRepository(impl: AccountRepositoryImpl): AccountRepository
+
+    @Binds
+    @Singleton
+    fun bindCategoriesRepository(impl: CategoriesRepositoryImpl): CategoriesRepository
 }

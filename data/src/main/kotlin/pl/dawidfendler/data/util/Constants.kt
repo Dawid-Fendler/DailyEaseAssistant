@@ -7,6 +7,7 @@ object Constants {
     internal const val USERS_TABLE_NAME = "users"
     internal const val ACCOUNTS_TABLE_NAME = "accounts"
     internal const val TRANSACTION_TABLE_NAME = "transactions"
+    internal const val CATEGORY_TABLE_NAME = "category"
     internal const val TABLE_A_NAME = "TableA"
     internal const val TABLE_B_NAME = "TableB"
 }

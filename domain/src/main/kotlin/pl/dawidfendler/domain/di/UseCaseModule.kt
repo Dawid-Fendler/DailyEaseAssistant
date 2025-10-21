@@ -18,10 +18,16 @@ import pl.dawidfendler.domain.use_case.account.GetAccountByCurrencyUseCase
 import pl.dawidfendler.domain.use_case.account.GetAccountsForUserUseCase
 import pl.dawidfendler.domain.use_case.account.InsertOrUpdateAccountUseCase
 import pl.dawidfendler.domain.use_case.account.InsertOrUpdateAccountsUseCase
+import pl.dawidfendler.domain.repository.finance_manager.CategoriesRepository
 import pl.dawidfendler.domain.use_case.authentication.GoogleLoginUseCase
 import pl.dawidfendler.domain.use_case.authentication.LoginUseCase
 import pl.dawidfendler.domain.use_case.authentication.LogoutUseCase
 import pl.dawidfendler.domain.use_case.authentication.RegistrationUseCase
+import pl.dawidfendler.domain.use_case.categories.DeleteAllUserCategoriesUseCase
+import pl.dawidfendler.domain.use_case.categories.DeleteUserCategoryByNameUseCase
+import pl.dawidfendler.domain.use_case.categories.GetExpenseCategoriesUseCase
+import pl.dawidfendler.domain.use_case.categories.GetIncomeCategoriesUseCase
+import pl.dawidfendler.domain.use_case.categories.InsertUserCategoryUseCase
 import pl.dawidfendler.domain.use_case.currencies.DeleteCurrenciesUseCase
 import pl.dawidfendler.domain.use_case.currencies.GetCurrenciesByCodeUseCase
 import pl.dawidfendler.domain.use_case.currencies.GetCurrenciesUseCase
@@ -279,6 +285,56 @@ object UseCaseModule {
         dispatcherProvider: DispatcherProvider
     ) = InsertOrUpdateAccountUseCase(
         accountRepository = accountRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetIncomeCategoriesUseCase(
+        categoriesRepository: CategoriesRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = GetIncomeCategoriesUseCase(
+        getCategoriesRepository = categoriesRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetExpenseCategoriesUseCase(
+        categoriesRepository: CategoriesRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = GetExpenseCategoriesUseCase(
+        getCategoriesRepository = categoriesRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideDeleteAllUserCategoriesUseCase(
+        categoriesRepository: CategoriesRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = DeleteAllUserCategoriesUseCase(
+        getCategoriesRepository = categoriesRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideDeleteUserCategoryByNameUseCase(
+        categoriesRepository: CategoriesRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = DeleteUserCategoryByNameUseCase(
+        getCategoriesRepository = categoriesRepository,
+        dispatcherProvider = dispatcherProvider
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideInsertUserCategoryUseCase(
+        categoriesRepository: CategoriesRepository,
+        dispatcherProvider: DispatcherProvider
+    ) = InsertUserCategoryUseCase(
+        getCategoriesRepository = categoriesRepository,
         dispatcherProvider = dispatcherProvider
     )
 }
