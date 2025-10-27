@@ -1,4 +1,4 @@
-package pl.finance_managerV2.components
+package pl.finance_managerV2.components.quic_action
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

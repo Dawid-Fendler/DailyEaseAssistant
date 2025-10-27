@@ -12,7 +12,7 @@ import org.junit.Test
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.MainDispatcherRule
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
-import pl.dawidfendler.domain.repository.CurrenciesRepository
+import pl.dawidfendler.domain.repository.finance_manager.CurrenciesRepository
 import pl.dawidfendler.domain.util.NoInternetException
 import pl.dawidfendler.domain.util.RequestTimeException
 import pl.dawidfendler.domain.util.ServerException

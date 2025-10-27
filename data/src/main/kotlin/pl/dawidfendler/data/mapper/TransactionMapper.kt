@@ -4,9 +4,17 @@ import pl.dawidfendler.data.model.transaction.TransactionEntity
 import pl.dawidfendler.domain.model.transaction.Transaction
 
 internal fun TransactionEntity.toDomain() = Transaction(
-    content = content
+    date = date,
+    amount = amount,
+    description = description,
+    accountName = accountName,
+    categoryName = categoryName
 )
 
 internal fun Transaction.toEntity() = TransactionEntity(
-    content = content
+    date = date,
+    amount = amount,
+    description = description,
+    accountName = accountName,
+    categoryName = categoryName
 )

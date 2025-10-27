@@ -3,9 +3,18 @@ package pl.dawidfendler.data.model.transaction
 import pl.dawidfendler.domain.model.transaction.Transaction
 
 val transactionEntityTest = TransactionEntity(
-    content = "10.12.2025 - + 500.0 zł"
+    id = 1,
+    amount = 500.0,
+    date = 1762924800000, // 10.12.2025
+    description = null,
+    accountName = "Test Account",
+    categoryName = "Test Category"
 )
 
 val transactionTest = Transaction(
-    content = "10.12.2025 - + 500.0 zł"
+    amount = 500.0,
+    date = 1762924800000, // 10.12.2025
+    description = null,
+    accountName = "Test Account",
+    categoryName = "Test Category"
 )

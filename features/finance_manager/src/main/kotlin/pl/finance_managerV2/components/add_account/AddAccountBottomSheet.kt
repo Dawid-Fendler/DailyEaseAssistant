@@ -126,7 +126,8 @@ fun AddAccountBottomSheet(
             onClick = { onAddAccountClick(accountName, selectedCurrency.orEmpty()) },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(dp_56)
+                .height(dp_56),
+            enabled = accountName.isNotEmpty() && selectedCurrency != null
         ) {
             CustomText(
                 text = stringResource(R.string.add_account),

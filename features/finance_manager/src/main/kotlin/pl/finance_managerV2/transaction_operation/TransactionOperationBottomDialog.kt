@@ -18,7 +18,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
@@ -78,7 +77,7 @@ fun TransactionOperationBottomDialog(
     isExpense: Boolean,
     accounts: List<AccountUiModel>,
     onCancelClick: () -> Unit,
-    onSaveTransactionClick: () -> Unit,
+    onSaveTransactionClick: (String, Long, String, String, String) -> Unit,
     categories: List<CategoryUiModel>
 ) {
 
@@ -89,7 +88,6 @@ fun TransactionOperationBottomDialog(
     var amount by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf(categories.first()) }
-
 
     Column(
         modifier = modifier
@@ -335,7 +333,18 @@ fun TransactionOperationBottomDialog(
                 )
             }
             Button(
-                onClick = onSaveTransactionClick,
+                onClick = {
+                    onSaveTransactionClick(
+                        selectedAccount.value!!.mainName,
+                        selectedDate
+                            .atStartOfDay(ZoneId.systemDefault())
+                            .toInstant()
+                            .toEpochMilli(),
+                        amount,
+                        description,
+                        selectedCategory.name
+                    )
+                },
                 modifier = Modifier.weight(1f)
             ) {
                 CustomText(

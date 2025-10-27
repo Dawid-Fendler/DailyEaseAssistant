@@ -25,7 +25,7 @@ import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 import pl.dawidfendler.ui.theme.dp_1
 import pl.dawidfendler.util.setStatusBarColor
 import pl.finance_managerV2.ai_assistant.aiAssistantRoute
-import pl.finance_managerV2.components.FinanceManagerBottomBar
+import pl.finance_managerV2.components.bottom_bar.FinanceManagerBottomBar
 import pl.finance_managerV2.dashboard.dashboardRoute
 import pl.finance_managerV2.settings.settingsRoute
 import pl.finance_managerV2.statistic.statisticRoute
