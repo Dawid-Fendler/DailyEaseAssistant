@@ -30,20 +30,20 @@ fun NavGraphBuilder.financeManagerRoute(
         }
         ShowSystemBars()
 
-        ObserveAsEvents(flow = viewModel.eventChannel) { event ->
-            when (event) {
-                is FinanceManagerEvent.ShowErrorBottomDialog -> {
-                    scope.launch {
-                        CustomBottomSheetController.sendEvent(
-                            CustomBottomSheetEvent.ErrorBottomSheet(
-                                title = ERROR_TITLE,
-                                description = event.errorMessage ?: SOMETHING_WENT_WRONG
-                            )
-                        )
-                    }
-                }
-            }
-        }
+//        ObserveAsEvents(flow = viewModel.eventChannel) { event ->
+//            when (event) {
+//                is FinanceManagerEvent.ShowErrorBottomDialog -> {
+//                    scope.launch {
+//                        CustomBottomSheetController.sendEvent(
+//                            CustomBottomSheetEvent.ErrorBottomSheet(
+//                                title = ERROR_TITLE,
+//                                description = event.errorMessage ?: SOMETHING_WENT_WRONG
+//                            )
+//                        )
+//                    }
+//                }
+//            }
+//        }
 
         FinanceManagerScreen(
             modifier = modifier,

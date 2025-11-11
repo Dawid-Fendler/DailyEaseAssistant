@@ -1,54 +1,53 @@
 package pl.dawidfendler.dailyeaseassistant.navigation
 
-import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
+import androidx.navigation.navigation
 import pl.dawidfendler.authentication.login.loginRoute
 import pl.dawidfendler.authentication.registration.registrationRoute
 import pl.dawidfendler.onboarding.navigation.onboardingRoute
 import pl.dawidfendler.util.navigation.Destination
 
-@Composable
-internal fun AuthNavHost(
-    startDestination: Destination,
-    navController: NavHostController
+internal fun NavGraphBuilder.authNavGraph(
+    navController: NavHostController,
+    startDestination: Destination
 ) {
-    if (startDestination == Destination.Login ||
-        startDestination == Destination.Onboarding
+    navigation<Destination.AuthGraph>(
+        startDestination = startDestination
     ) {
-        NavHost(
-            startDestination = startDestination,
-            navController = navController
-        ) {
-            onboardingRoute {
+        onboardingRoute {
+            navController.popBackStack()
+            navController.navigate(Destination.Login) {
+                popUpTo(Destination.AuthGraph) {
+                    inclusive = true
+                }
+            }
+        }
+
+        loginRoute(
+            navigateToRegistration = {
+                navController.navigate(Destination.Registration)
+            },
+            navigateToMainScreen = {
+                navController.navigate(Destination.Home) {
+                    popUpTo(Destination.AuthGraph) { inclusive = true }
+                }
+            }
+        )
+
+        registrationRoute(
+            navigateBack = {
+                navController.navigateUp()
+            },
+            navigateToLogin = {
                 navController.popBackStack()
                 navController.navigate(Destination.Login)
+            },
+            navigateToMain = {
+                navController.navigate(Destination.Home) {
+                    popUpTo(Destination.AuthGraph) { inclusive = true }
+                }
             }
-
-            loginRoute(
-                navigateToRegistration = {
-                    navController.navigate(Destination.Registration)
-                },
-                navigateToMainScreen = {
-                    navController.popBackStack()
-                }
-            )
-
-            registrationRoute(
-                navigateBack = {
-                    navController.navigateUp()
-                },
-                navigateToLogin = {
-                    navController.popBackStack()
-                    navController.navigate(Destination.Login)
-                },
-                navigateToMain = {
-                    navController.popBackStack()
-                    navController.navigate(Destination.Home)
-                }
-            )
-        }
-    } else {
-        MainNavGraph(navController = navController)
+        )
     }
 }

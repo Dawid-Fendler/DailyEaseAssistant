@@ -8,11 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import pl.dawidfendler.bottom_bar.BottomNavItem
+import pl.dawidfendler.bottom_bar.FinanceManagerBottomNavigationType
 import pl.dawidfendler.components.text_field.CustomText
 import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 import pl.dawidfendler.ui.theme.dp_80
 import pl.dawidfendler.ui.theme.sp_0
 import pl.dawidfendler.ui.theme.sp_8
+import pl.finance_managerV2.navigation.FinanceMangerNavigationType
 
 @Composable
 fun FinanceManagerBottomBar(

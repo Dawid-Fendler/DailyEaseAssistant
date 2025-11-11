@@ -2,6 +2,7 @@ package pl.dawidfendler.util.navigation
 
 import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class Destination {
     @Serializable
     data object Onboarding : Destination()
@@ -13,8 +14,11 @@ sealed class Destination {
     data object Registration : Destination()
 
     @Serializable
-    data object Home : Destination()
+    data object AuthGraph : Destination()
 
     @Serializable
-    data object FinanceManager : Destination()
+    data object MainGraph : Destination()
+
+    @Serializable
+    data object Home : Destination()
 }

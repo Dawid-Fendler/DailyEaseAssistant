@@ -31,11 +31,11 @@ class MainViewModel @Inject constructor(
             Pair(onboardingWasDisplayed, displayHome)
         }.onEach { result ->
             state = if (result.second == true) {
-                state.copy(navigation = Destination.Home, isStarting = true)
+                state.copy(navigation = Destination.MainGraph, isStarting = true)
             } else if (result.first == true) {
-                state.copy(navigation = Destination.Home, isStarting = true)
+                state.copy(navigation = Destination.MainGraph, isStarting = true)
             } else {
-                state.copy(navigation = Destination.Onboarding, isStarting = true)
+                state.copy(navigation = Destination.AuthGraph, isStarting = true, isOnboardingToDisplay = true)
             }
         }.launchIn(viewModelScope)
     }

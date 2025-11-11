@@ -2,15 +2,16 @@ package pl.finance_managerV2.navigation
 
 import kotlinx.serialization.Serializable
 
-sealed class FinanceMangerNavigationType {
+@Serializable
+sealed interface FinanceMangerNavigationType {
 
     @Serializable
-    data object FinanceManagerDashboard : FinanceMangerNavigationType()
+    data object FinanceManagerDashboard : FinanceMangerNavigationType
 
     @Serializable
-    data object CurrencyConverter : FinanceMangerNavigationType()
+    data object CurrencyConverter : FinanceMangerNavigationType
 
     @Serializable
-    data object FinanceManagerMain : FinanceMangerNavigationType()
+    data object FinanceManagerMain : FinanceMangerNavigationType
 
 }
