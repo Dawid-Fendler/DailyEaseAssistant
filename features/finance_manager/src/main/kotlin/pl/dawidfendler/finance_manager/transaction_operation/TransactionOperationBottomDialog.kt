@@ -49,6 +49,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import pl.dawidfendler.components.text_field.CustomText
 import pl.dawidfendler.finance_manager.R
+import pl.dawidfendler.finance_manager.model.AccountUiModel
+import pl.dawidfendler.finance_manager.transaction_operation.categories.components.CategoryDropdown
+import pl.dawidfendler.finance_manager.transaction_operation.categories.model.CategoryUiModel
 import pl.dawidfendler.ui.theme.MD_THEME_DARK_PRIMARY
 import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY_CONTAINER
@@ -62,9 +65,6 @@ import pl.dawidfendler.ui.theme.dp_80
 import pl.dawidfendler.ui.theme.sp_0
 import pl.dawidfendler.ui.theme.sp_14
 import pl.dawidfendler.ui.theme.sp_20
-import pl.finance_manager.model.AccountUiModel
-import pl.finance_manager.transaction_operation.categories.components.CategoryDropdown
-import pl.finance_manager.transaction_operation.categories.model.CategoryUiModel
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId

@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import pl.dawidfendler.components.text_field.CustomText
+import pl.dawidfendler.finance_manager.model.AccountUiModel
 import pl.dawidfendler.ui.theme.GREEN
 import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 import pl.dawidfendler.ui.theme.dp_16
@@ -38,7 +39,6 @@ import pl.dawidfendler.ui.theme.sp_0
 import pl.dawidfendler.ui.theme.sp_14
 import pl.dawidfendler.ui.theme.sp_16
 import pl.dawidfendler.ui.theme.sp_36
-import pl.finance_manager.model.AccountUiModel
 
 @Composable
 fun AccountCardView(

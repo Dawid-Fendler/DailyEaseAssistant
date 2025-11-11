@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import pl.dawidfendler.domain.model.categories.CategoryIcon
 import pl.dawidfendler.domain.model.categories.FinanceCategory
-import pl.finance_manager.transaction_operation.categories.model.CategoryUiModel
+import pl.dawidfendler.finance_manager.transaction_operation.categories.model.CategoryUiModel
 
 fun FinanceCategory.toCategoryUiModel() = CategoryUiModel(
     name = this.name,

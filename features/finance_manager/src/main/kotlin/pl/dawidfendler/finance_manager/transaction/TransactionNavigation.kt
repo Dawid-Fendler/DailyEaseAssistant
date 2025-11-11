@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import pl.finance_manager.components.bottom_bar.FinanceManagerBottomNavigationType
 import pl.dawidfendler.components.scaffold.DailyEaseAssistantScaffold
+import pl.dawidfendler.finance_manager.components.bottom_bar.FinanceManagerBottomNavigationType
 
 fun NavGraphBuilder.transactionRoute(
     modifier: Modifier = Modifier,

@@ -1,4 +1,4 @@
-package pl.dawidfendler.currency_converter
+package pl.dawidfendler.finance_manager.currency_converter
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,23 +6,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import pl.dawidfendler.date.DateTime
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.domain.use_case.currencies.GetCurrenciesUseCase
-import pl.dawidfendler.finance_manager.FinanceManagerEvent
+import pl.dawidfendler.finance_manager.util.CurrencyFlagEmoji.getFlagEmojiForCurrency
 import pl.dawidfendler.finance_manager.util.getPolishCurrency
-import pl.dawidfendler.util.CurrencyFlagEmoji.getFlagEmojiForCurrency
 import pl.dawidfendler.util.flow.DomainResult
 import pl.dawidfendler.util.logger.Logger
 import java.math.BigDecimal
@@ -38,29 +28,6 @@ class CurrencyConverterViewModel @Inject constructor(
 
     var state by mutableStateOf(CurrencyConverterState())
         private set
-
-    private val _eventChannel = Channel<FinanceManagerEvent>()
-    val eventChannel get() = _eventChannel.receiveAsFlow()
-
-    private val _query = MutableStateFlow("")
-    val query: StateFlow<String> = _query.asStateFlow()
-
-    private val _currencies = MutableStateFlow<List<ExchangeRateTable>>(emptyList())
-    val filteredCurrencies: StateFlow<List<ExchangeRateTable>> =
-        combine(_currencies, _query) { list, query ->
-            if (query.isBlank()) {
-                list
-            }
-            else {
-                list.filter {
-                    it.currencyName.contains(query, true) || it.currencyCode.contains(query, true)
-                }
-            }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
-
-    private fun onQueryChange(newQuery: String) {
-        _query.value = newQuery
-    }
 
     init {
         getCurrenciesUseCase.invoke().onEach {
@@ -79,7 +46,6 @@ class CurrencyConverterViewModel @Inject constructor(
                     setStateForFetchCurrencies(
                         currencies = listOf(getPolishCurrency()),
                     )
-                    _eventChannel.send(FinanceManagerEvent.ShowErrorBottomDialog("Problem with download currencies"))
                 }
             }
         }.launchIn(viewModelScope)
@@ -102,7 +68,6 @@ class CurrencyConverterViewModel @Inject constructor(
             secondCurrencyFlag = getFlagEmojiForCurrency(currencies[1].currencyCode),
             exchangeRateDate = dateTime.convertDateToDayMonthYearHourMinuteFormat(dateTime.getCurrentDate())
         )
-        _currencies.value = currencies
     }
 
     fun onAction(action: CurrencyConverterAction) {
@@ -118,8 +83,6 @@ class CurrencyConverterViewModel @Inject constructor(
             )
 
             CurrencyConverterAction.SwitchCurrency -> switchCurrency()
-
-            is CurrencyConverterAction.QueryChange -> onQueryChange(action.query)
         }
     }
 

@@ -7,9 +7,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import pl.finance_manager.components.bottom_bar.FinanceManagerBottomNavigationType
 import pl.dawidfendler.components.scaffold.DailyEaseAssistantScaffold
 import pl.dawidfendler.coroutines.ObserveAsEvents
+import pl.dawidfendler.finance_manager.components.bottom_bar.FinanceManagerBottomNavigationType
 import pl.dawidfendler.util.navigation.Destination
 
 fun NavGraphBuilder.dashboardRoute(

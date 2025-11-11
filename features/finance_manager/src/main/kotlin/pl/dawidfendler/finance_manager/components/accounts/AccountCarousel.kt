@@ -13,9 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import pl.dawidfendler.components.indicator.WormIndicator
+import pl.dawidfendler.finance_manager.model.AccountUiModel
 import pl.dawidfendler.ui.theme.dp_12
 import pl.dawidfendler.ui.theme.dp_16
-import pl.finance_manager.model.AccountUiModel
 
 @Composable
 fun AccountCarousel(

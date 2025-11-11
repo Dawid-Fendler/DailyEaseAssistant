@@ -13,16 +13,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import pl.finance_manager.components.bottom_bar.FinanceManagerBottomNavigationType
-import pl.finance_manager.components.bottom_bar.buildBottomNavItems
-import pl.finance_manager.currency_converter.currencyConverterRoute
+import pl.dawidfendler.finance_manager.ai_assistant.aiAssistantRoute
+import pl.dawidfendler.finance_manager.components.bottom_bar.FinanceManagerBottomBar
+import pl.dawidfendler.finance_manager.components.bottom_bar.FinanceManagerBottomNavigationType
+import pl.dawidfendler.finance_manager.components.bottom_bar.buildBottomNavItems
+import pl.dawidfendler.finance_manager.currency_converter.currencyConverterRoute
+import pl.dawidfendler.finance_manager.dashboard.dashboardRoute
+import pl.dawidfendler.finance_manager.settings.settingsRoute
+import pl.dawidfendler.finance_manager.statistic.statisticRoute
+import pl.dawidfendler.finance_manager.transaction.transactionRoute
 import pl.dawidfendler.ui.theme.dp_1
-import pl.finance_manager.ai_assistant.aiAssistantRoute
-import pl.finance_manager.components.bottom_bar.FinanceManagerBottomBar
-import pl.finance_manager.dashboard.dashboardRoute
-import pl.finance_manager.settings.settingsRoute
-import pl.finance_manager.statistic.statisticRoute
-import pl.finance_manager.transaction.transactionRoute
 
 @Composable
 fun FinanceManagerFeature() {

@@ -1,8 +1,8 @@
 package pl.dawidfendler.finance_manager.dashboard
 
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
-import pl.finance_manager.model.AccountUiModel
-import pl.finance_manager.transaction_operation.categories.model.CategoryUiModel
+import pl.dawidfendler.finance_manager.model.AccountUiModel
+import pl.dawidfendler.finance_manager.transaction_operation.categories.model.CategoryUiModel
 
 data class DashboardState(
     val isLoading: Boolean = true,

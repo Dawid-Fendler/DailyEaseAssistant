@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import pl.dawidfendler.components.text_field.CustomText
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.finance_manager.R
+import pl.dawidfendler.finance_manager.components.currency_picker.CurrencyPicker
 import pl.dawidfendler.ui.theme.MD_THEME_LIGHT_PRIMARY
 import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.ui.theme.dp_32
@@ -44,7 +45,6 @@ import pl.dawidfendler.ui.theme.sp_0
 import pl.dawidfendler.ui.theme.sp_16
 import pl.dawidfendler.ui.theme.sp_18
 import pl.dawidfendler.ui.theme.sp_28
-import pl.finance_manager.components.currency_picker.CurrencyPicker
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

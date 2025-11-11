@@ -16,16 +16,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
+import pl.dawidfendler.finance_manager.components.accounts.AccountCarousel
+import pl.dawidfendler.finance_manager.components.add_account.AddAccountBottomSheet
+import pl.dawidfendler.finance_manager.components.quic_action.QuickActionSections
+import pl.dawidfendler.finance_manager.components.total_balance.TotalBalance
+import pl.dawidfendler.finance_manager.model.AccountUiModel
+import pl.dawidfendler.finance_manager.transaction_operation.TransactionOperationBottomDialog
+import pl.dawidfendler.finance_manager.transaction_operation.categories.model.CategoryUiModel
 import pl.dawidfendler.ui.theme.dp_16
 import pl.dawidfendler.ui.theme.dp_28
 import pl.dawidfendler.ui.theme.dp_8
-import pl.finance_manager.components.accounts.AccountCarousel
-import pl.finance_manager.components.add_account.AddAccountBottomSheet
-import pl.finance_manager.components.quic_action.QuickActionSections
-import pl.finance_manager.components.total_balance.TotalBalance
-import pl.finance_manager.model.AccountUiModel
-import pl.finance_manager.transaction_operation.TransactionOperationBottomDialog
-import pl.finance_manager.transaction_operation.categories.model.CategoryUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

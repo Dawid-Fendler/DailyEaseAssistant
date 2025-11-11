@@ -3,7 +3,7 @@ package pl.dawidfendler.finance_manager.mapper
 import androidx.compose.ui.util.fastFirst
 import pl.dawidfendler.domain.model.account.Account
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
-import pl.finance_manager.model.AccountUiModel
+import pl.dawidfendler.finance_manager.model.AccountUiModel
 
 fun Account.toUiModel(currencies: List<ExchangeRateTable>): AccountUiModel {
     val currency = currencies.fastFirst { it.currencyCode == this.currencyCode }

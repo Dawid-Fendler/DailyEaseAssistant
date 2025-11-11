@@ -23,13 +23,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import pl.dawidfendler.finance_manager.transaction_operation.categories.model.CategoryUiModel
 import pl.dawidfendler.ui.theme.SEED
 import pl.dawidfendler.ui.theme.dp_1
 import pl.dawidfendler.ui.theme.dp_12
 import pl.dawidfendler.ui.theme.dp_20
 import pl.dawidfendler.ui.theme.dp_24
 import pl.dawidfendler.ui.theme.dp_8
-import pl.finance_manager.transaction_operation.categories.model.CategoryUiModel
 
 @Composable
 fun CategoryDropdown(

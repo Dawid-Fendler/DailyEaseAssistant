@@ -30,11 +30,11 @@ import pl.dawidfendler.domain.use_case.categories.GetExpenseCategoriesUseCase
 import pl.dawidfendler.domain.use_case.categories.GetIncomeCategoriesUseCase
 import pl.dawidfendler.domain.use_case.currencies.GetCurrenciesUseCase
 import pl.dawidfendler.domain.use_case.transaction.CreateTransactionUseCase
-import pl.finance_manager.util.getPolishCurrency
+import pl.dawidfendler.finance_manager.mapper.toUiModel
+import pl.dawidfendler.finance_manager.transaction_operation.categories.mapper.toCategoryUiModel
+import pl.dawidfendler.finance_manager.util.getPolishCurrency
 import pl.dawidfendler.util.flow.DomainResult
 import pl.dawidfendler.util.logger.Logger
-import pl.finance_manager.mapper.toUiModel
-import pl.finance_manager.transaction_operation.categories.mapper.toCategoryUiModel
 import javax.inject.Inject
 
 @HiltViewModel
