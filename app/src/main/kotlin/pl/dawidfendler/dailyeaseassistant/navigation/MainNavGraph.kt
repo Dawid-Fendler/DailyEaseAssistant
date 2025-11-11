@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.navigation
 import pl.dawidfendler.main.homeRoute
 import pl.dawidfendler.util.navigation.Destination
-import pl.finance_managerV2.navigation.FinanceMangerNavigationType
-import pl.finance_managerV2.navigation.financeManagerNavGraph
+import pl.dawidfendler.finance_manager.navigation.FinanceMangerNavigationType
+import pl.dawidfendler.finance_manager.navigation.financeManagerNavGraph
 
 fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     navigation<Destination.MainGraph>(
