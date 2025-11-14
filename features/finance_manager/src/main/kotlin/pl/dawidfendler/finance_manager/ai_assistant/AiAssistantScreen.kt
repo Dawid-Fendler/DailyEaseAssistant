@@ -6,7 +6,5 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun AiAssistantScreen(modifier: Modifier = Modifier) {
-    Column {
-
-    }
+    Column {}
 }

@@ -14,7 +14,6 @@ fun NavGraphBuilder.transactionRoute(
     bottomBar: @Composable () -> Unit
 ) {
     composable<FinanceManagerBottomNavigationType.Transactions> {
-
         DailyEaseAssistantScaffold(
             bottomBar = bottomBar
         ) {

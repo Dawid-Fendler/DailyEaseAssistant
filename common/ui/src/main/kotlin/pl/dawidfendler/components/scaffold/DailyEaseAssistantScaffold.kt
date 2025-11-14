@@ -18,7 +18,6 @@ fun DailyEaseAssistantScaffold(
     onDismissBottomSheet: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
-
     Box(modifier = modifier.fillMaxSize()) {
         Scaffold(
             topBar = topBar,

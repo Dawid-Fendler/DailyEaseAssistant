@@ -12,7 +12,6 @@ internal fun ObserveMainTopBarVisibility(updateMainTopBarVisibility: (Boolean) -
             is MainTopBarVisibilityEvent.ShowMainTopBar ->
                 updateMainTopBarVisibility(true)
 
-
             is MainTopBarVisibilityEvent.HideMainTopBar ->
                 updateMainTopBarVisibility(false)
         }

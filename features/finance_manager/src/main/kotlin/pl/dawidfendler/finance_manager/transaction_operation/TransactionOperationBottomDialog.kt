@@ -79,7 +79,6 @@ fun TransactionOperationBottomDialog(
     onSaveTransactionClick: (String, Long, String, String, String) -> Unit,
     categories: List<CategoryUiModel>
 ) {
-
     val selectedAccount = remember { mutableStateOf<AccountUiModel?>(null) }
     var showDatePicker by remember { mutableStateOf(false) }
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
@@ -117,7 +116,6 @@ fun TransactionOperationBottomDialog(
                 color = Color.Black,
                 textAlign = TextAlign.Center
             )
-
         }
 
         HorizontalDivider(
@@ -260,8 +258,6 @@ fun TransactionOperationBottomDialog(
         )
 
         Spacer(Modifier.height(dp_20))
-
-
 
         if (showDatePicker) {
             DatePicker(

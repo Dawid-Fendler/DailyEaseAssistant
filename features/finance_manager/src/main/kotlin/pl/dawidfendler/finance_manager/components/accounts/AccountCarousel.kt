@@ -24,7 +24,6 @@ fun AccountCarousel(
     showAddAccountCard: Boolean = false,
     onAddNewAccount: () -> Unit
 ) {
-
     val pagerState = rememberPagerState(
         initialPage = 0,
         pageCount = { if (showAddAccountCard) accounts.size + 1 else accounts.size }
@@ -33,7 +32,9 @@ fun AccountCarousel(
     HorizontalPager(
         state = pagerState,
         contentPadding = PaddingValues(horizontal = dp_16),
-        modifier = modifier.fillMaxWidth().background(Color.White)
+        modifier = modifier
+            .fillMaxWidth()
+            .background(Color.White)
     ) { page ->
         AccountCardView(
             account = if (showAddAccountCard && page == accounts.size) null else accounts[page],

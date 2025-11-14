@@ -10,11 +10,10 @@ import androidx.navigation.compose.composable
 import pl.dawidfendler.components.scaffold.DailyEaseAssistantScaffold
 import pl.dawidfendler.coroutines.ObserveAsEvents
 import pl.dawidfendler.finance_manager.components.bottom_bar.FinanceManagerBottomNavigationType
-import pl.dawidfendler.util.navigation.Destination
 
 fun NavGraphBuilder.dashboardRoute(
     modifier: Modifier = Modifier,
-    navigate: (Destination) -> Unit,
+    navigate: () -> Unit,
     bottomBar: @Composable () -> Unit
 ) {
     composable<FinanceManagerBottomNavigationType.Dashboard> {
@@ -34,7 +33,8 @@ fun NavGraphBuilder.dashboardRoute(
             DashboardScreen(
                 modifier = modifier.padding(it),
                 state = state.value,
-                onAction = viewModel::onAction
+                onAction = viewModel::onAction,
+                navigate = navigate
             )
         }
     }

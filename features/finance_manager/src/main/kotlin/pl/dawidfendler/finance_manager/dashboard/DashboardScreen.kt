@@ -33,6 +33,7 @@ fun DashboardScreen(
     modifier: Modifier = Modifier,
     state: DashboardState,
     onAction: (DashboardAction) -> Unit,
+    navigate: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -90,7 +91,9 @@ fun DashboardScreen(
                         )
                     )
                 },
-                onConverter = {},
+                onConverter = {
+                    navigate.invoke()
+                },
                 onCharts = {}
             )
         }

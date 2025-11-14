@@ -1,4 +1,4 @@
-package pl.finance_managerV2.components.currency_picker
+package pl.dawidfendler.finance_manager.components.currency_picker
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,14 +8,18 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
-import pl.dawidfendler.util.CurrencyFlagEmoji.getFlagEmojiForCurrency
+import pl.dawidfendler.finance_manager.util.CurrencyFlagEmoji.getFlagEmojiForCurrency
 import javax.inject.Inject
 
 @HiltViewModel
-class CurrencyPickerViewModel @Inject constructor() : ViewModel() {
+class CurrencyPickerViewModel @Inject constructor(
+    dispatcher: DispatcherProvider
+) : ViewModel() {
 
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query.asStateFlow()
@@ -27,10 +31,10 @@ class CurrencyPickerViewModel @Inject constructor() : ViewModel() {
                 list
             } else {
                 list.filter {
-                    it.currencyName.contains(query, true) || it.currencyCode.contains(query, true)
+                    it.currencyName.startsWith(query, true) || it.currencyCode.contains(query, true)
                 }
             }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        }.flowOn(dispatcher.default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     fun onQueryChange(newQuery: String) {
         _query.value = newQuery

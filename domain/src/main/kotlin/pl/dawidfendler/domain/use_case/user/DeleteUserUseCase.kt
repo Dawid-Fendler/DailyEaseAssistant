@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.flowOn
 import pl.dawidfendler.coroutines.DispatcherProvider
 import pl.dawidfendler.domain.repository.UserRepository
 import pl.dawidfendler.util.flow.DomainResult
-import javax.inject.Inject
 
 class DeleteUserUseCase(
     private val userRepository: UserRepository,

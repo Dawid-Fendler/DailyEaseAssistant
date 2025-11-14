@@ -87,12 +87,10 @@ fun AddAccountBottomSheet(
                     color = Color.LightGray,
                     modifier = Modifier.padding(vertical = dp_4)
                 )
-
             },
             shape = RoundedCornerShape(dp_40),
             modifier = Modifier.fillMaxWidth()
         )
-
         OutlinedButton(
             onClick = { showSelectCurrencyBottomSheet = true },
             modifier = Modifier
@@ -118,10 +116,8 @@ fun AddAccountBottomSheet(
                     contentDescription = null,
                     tint = if (selectedCurrency == null) MD_THEME_LIGHT_PRIMARY else Color.Black
                 )
-
             }
         }
-
         Button(
             onClick = { onAddAccountClick(accountName, selectedCurrency.orEmpty()) },
             modifier = Modifier

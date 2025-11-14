@@ -63,113 +63,102 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun observeCurrencyRefreshTrigger() {
-        currencyRefreshTrigger
-            .flatMapLatest {
-                _state.update {
-                    it.copy(
-                        isLoading = true,
-                        isFetchDataError = false
-                    )
-                }
-                combine(
-                    getAccountForUserUseCase.invoke(),
-                    getCurrenciesUseCase.invoke(),
-                    getExpenseCategoriesUseCase.invoke(),
-                    getIncomeCategoriesUseCase.invoke()
-                ) { accountsResult: DomainResult<List<Account>, Exception>,
-                    currenciesResult: DomainResult<List<ExchangeRateTable>, Exception>,
-                    expenseCategories: DomainResult<List<FinanceCategory>, Exception>,
-                    incomeCategories: DomainResult<List<FinanceCategory>, Exception> ->
-                    DashboardCombinedResult(
-                        accountsResult,
-                        currenciesResult,
-                        expenseCategories,
-                        incomeCategories
-                    )
-                }.map { results ->
-                    val accounts = when (results.accountsResult) {
-                        is DomainResult.Error -> {
-                            logger.e(
-                                "DashboardViewModel",
-                                "Error fetching User accounts: ${results.accountsResult.error}"
-                            )
-                            _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
-                            setStateForFetchCurrencies(isFetchError = true)
-                            emptyList()
-                        }
-
-                        is DomainResult.Success -> {
-                            logger.d("DashboardViewModel", "Fetched User accounts successfully")
-                            results.accountsResult.data
-                        }
-                    }
-
-                    val currencies = when (results.currenciesResult) {
-                        is DomainResult.Error -> {
-                            logger.e(
-                                "DashboardViewModel",
-                                "Error fetching Currencies: ${results.currenciesResult.error}"
-                            )
-                            _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
-                            setStateForFetchCurrencies(isFetchError = true)
-                            emptyList()
-                        }
-
-                        is DomainResult.Success -> {
-                            logger.d("DashboardViewModel", "Fetched Currencies successfully")
-                            results.currenciesResult.data
-                        }
-
-                    }
-                    val expenseCategories = when (results.expenseCategories) {
-                        is DomainResult.Error -> {
-                            logger.e(
-                                "DashboardViewModel",
-                                "Error fetching Expense Categories: ${results.expenseCategories.error}"
-                            )
-                            _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
-                            emptyList()
-                        }
-
-                        is DomainResult.Success -> {
-                            logger.d(
-                                "DashboardViewModel",
-                                "Fetched Expense Categories successfully"
-                            )
-                            results.expenseCategories.data
-                        }
-                    }
-
-                    val incomeCategories = when (results.incomeCategories) {
-                        is DomainResult.Error -> {
-                            logger.e(
-                                "DashboardViewModel",
-                                "Error fetching Income Categories: ${results.incomeCategories.error}"
-                            )
-                            _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
-                            emptyList()
-                        }
-
-                        is DomainResult.Success -> {
-                            logger.d("DashboardViewModel", "Fetched Income Categories successfully")
-                            results.incomeCategories.data
-                        }
-                    }
-                    setStateForFetchCurrencies(
-                        accounts,
-                        currencies,
-                        expenseCategories = expenseCategories,
-                        incomeCategories = incomeCategories
-                    )
-                }
-            }.catch { error ->
-                logger.e(
-                    "DashboardViewModel",
-                    "Error fetching Initial Data: $error"
+        currencyRefreshTrigger.flatMapLatest {
+            _state.update {
+                it.copy(
+                    isLoading = true, isFetchDataError = false
                 )
-                _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("Initial Data Fetch Error"))
-                setStateForFetchCurrencies(isFetchError = true)
-            }.launchIn(viewModelScope)
+            }
+            combine(
+                getAccountForUserUseCase.invoke(),
+                getCurrenciesUseCase.invoke(),
+                getExpenseCategoriesUseCase.invoke(),
+                getIncomeCategoriesUseCase.invoke()
+            ) { accounts, currencies, expense, income ->
+                DashboardCombinedResult(
+                    accounts, currencies, expense, income
+                )
+            }.map { results ->
+                val accounts = when (results.accountsResult) {
+                    is DomainResult.Error -> {
+                        logger.e(
+                            "DashboardViewModel",
+                            "Error fetching User accounts: ${results.accountsResult.error}"
+                        )
+                        _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
+                        setStateForFetchCurrencies(isFetchError = true)
+                        emptyList()
+                    }
+
+                    is DomainResult.Success -> {
+                        logger.d("DashboardViewModel", "Fetched User accounts successfully")
+                        results.accountsResult.data
+                    }
+                }
+
+                val currencies = when (results.currenciesResult) {
+                    is DomainResult.Error -> {
+                        logger.e(
+                            "DashboardViewModel",
+                            "Error fetching Currencies: ${results.currenciesResult.error}"
+                        )
+                        _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
+                        setStateForFetchCurrencies(isFetchError = true)
+                        emptyList()
+                    }
+
+                    is DomainResult.Success -> {
+                        logger.d("DashboardViewModel", "Fetched Currencies successfully")
+                        results.currenciesResult.data
+                    }
+                }
+                val expenseCategories = when (results.expenseCategories) {
+                    is DomainResult.Error -> {
+                        logger.e(
+                            "DashboardViewModel",
+                            "Error fetching Expense Categories: ${results.expenseCategories.error}"
+                        )
+                        _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
+                        emptyList()
+                    }
+
+                    is DomainResult.Success -> {
+                        logger.d(
+                            "DashboardViewModel", "Fetched Expense Categories successfully"
+                        )
+                        results.expenseCategories.data
+                    }
+                }
+
+                val incomeCategories = when (results.incomeCategories) {
+                    is DomainResult.Error -> {
+                        logger.e(
+                            "DashboardViewModel",
+                            "Error fetching Income Categories: ${results.incomeCategories.error}"
+                        )
+                        _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("An unexpected error occurred"))
+                        emptyList()
+                    }
+
+                    is DomainResult.Success -> {
+                        logger.d("DashboardViewModel", "Fetched Income Categories successfully")
+                        results.incomeCategories.data
+                    }
+                }
+                setStateForFetchCurrencies(
+                    accounts,
+                    currencies,
+                    expenseCategories = expenseCategories,
+                    incomeCategories = incomeCategories
+                )
+            }
+        }.catch { error ->
+            logger.e(
+                "DashboardViewModel", "Error fetching Initial Data: $error"
+            )
+            _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("Initial Data Fetch Error"))
+            setStateForFetchCurrencies(isFetchError = true)
+        }.launchIn(viewModelScope)
     }
 
     private fun setStateForFetchCurrencies(
@@ -181,29 +170,39 @@ class DashboardViewModel @Inject constructor(
     ) {
         _state.update {
             it.copy(
-                accounts = if (accounts.isEmpty()) emptyList() else accounts.map { account ->
-                    account.toUiModel(
-                        currencies
-                    )
+                accounts = if (accounts.isEmpty()) {
+                    emptyList()
+                } else {
+                    accounts.map { account ->
+                        account.toUiModel(
+                            currencies
+                        )
+                    }
                 },
                 isFetchDataError = isFetchError,
                 isLoading = false,
-                finalTotalBalance = if (accounts.isEmpty() || currencies.isEmpty() || (accounts.first { account -> account.isMainAccount }.balance == 0.0)) {
+                finalTotalBalance = if (accounts.isEmpty() || currencies.isEmpty() || (accounts.first { account ->
+                        account.isMainAccount
+                    }.balance == 0.0)) {
                     "0,00 zł"
                 } else {
-                    accounts.sumOf { account -> account.balance }.toString() + " " +
-                    currencies.fastFirst { currency ->
+                    accounts.sumOf { account ->
+                        account.balance
+                    }.toString() + " " + currencies.fastFirst { currency ->
                         currency.currencyCode == accounts.first { account ->
                             account.isMainAccount
                         }.currencyCode
                     }.currencyCode
                 },
                 showAddAccountCard = accounts.size < 5,
-                accountsCurrencyCode = if (accounts.isEmpty()) emptyList() else accounts.map { account -> account.currencyCode },
+                accountsCurrencyCode = if (accounts.isEmpty()) {
+                    emptyList()
+                } else {
+                    accounts.map { account -> account.currencyCode }
+                },
                 currencies = currencies,
                 expenseCategories = expenseCategories.map { category -> category.toCategoryUiModel() },
-                incomeCategories = incomeCategories.map { category -> category.toCategoryUiModel() }
-            )
+                incomeCategories = incomeCategories.map { category -> category.toCategoryUiModel() })
         }
     }
 
@@ -237,8 +236,7 @@ class DashboardViewModel @Inject constructor(
             is DashboardAction.OnSaveTransactionClick -> {
                 _state.update {
                     it.copy(
-                        showTransactionOptionDialog = false,
-                        isLoading = true
+                        showTransactionOptionDialog = false, isLoading = true
                     )
                 }
                 addNewTransaction(
@@ -268,8 +266,7 @@ class DashboardViewModel @Inject constructor(
             currencyRefreshTrigger.tryEmit(Unit)
         }.catch { error ->
             logger.e(
-                "DashboardViewModel",
-                "Error add new account: $error"
+                "DashboardViewModel", "Error add new account: $error"
             )
             _eventChannel.trySend(DashboardEvent.ShowErrorBottomDialog("Add account error"))
         }.launchIn(viewModelScope)
@@ -304,64 +301,59 @@ class DashboardViewModel @Inject constructor(
             categoryName = categoryName
         )
 
-        createTransactionUseCase(transaction)
-            .flatMapLatest { transactionResult ->
-                when (transactionResult) {
-                    is DomainResult.Error -> {
-                        logger.e(
-                            "DashboardViewModel",
-                            "Failed to create transaction: ${transactionResult.error}"
-                        )
-                        flowOf(DomainResult.Error(transactionResult.error))
+        createTransactionUseCase(transaction).flatMapLatest { transactionResult ->
+            when (transactionResult) {
+                is DomainResult.Error -> {
+                    logger.e(
+                        "DashboardViewModel",
+                        "Failed to create transaction: ${transactionResult.error}"
+                    )
+                    flowOf(DomainResult.Error(transactionResult.error))
+                }
+
+                is DomainResult.Success -> {
+                    logger.d(
+                        "DashboardViewModel",
+                        "Transaction created successfully, now updating account balance."
+                    )
+                    val newBalance = if (isExpense) {
+                        accountUiModel.balance.toDouble() - amount.toDouble()
+                    } else {
+                        accountUiModel.balance.toDouble() + amount.toDouble()
                     }
 
-                    is DomainResult.Success -> {
-                        logger.d(
-                            "DashboardViewModel",
-                            "Transaction created successfully, now updating account balance."
-                        )
-                        val newBalance = if (isExpense) {
-                            accountUiModel.balance.toDouble() - amount.toDouble()
-                        } else {
-                            accountUiModel.balance.toDouble() + amount.toDouble()
-                        }
-
-                        insertOrUpdateAccountUseCase(
-                            currencyCode = accountUiModel.currency,
-                            balance = newBalance,
-                            accountName = accountUiModel.mainName,
-                            isMainAccount = accountUiModel.isMainAccount
-                        )
-                    }
+                    insertOrUpdateAccountUseCase(
+                        currencyCode = accountUiModel.currency,
+                        balance = newBalance,
+                        accountName = accountUiModel.mainName,
+                        isMainAccount = accountUiModel.isMainAccount
+                    )
                 }
             }
-            .onEach { finalResult ->
-                _state.update { it.copy(isLoading = false) }
+        }.onEach { finalResult ->
+            _state.update { it.copy(isLoading = false) }
 
-                when (finalResult) {
-                    is DomainResult.Success -> {
-                        logger.d(
-                            "DashboardViewModel",
-                            "Account updated successfully after transaction."
-                        )
-                        currencyRefreshTrigger.tryEmit(Unit)
-                    }
+            when (finalResult) {
+                is DomainResult.Success -> {
+                    logger.d(
+                        "DashboardViewModel", "Account updated successfully after transaction."
+                    )
+                    currencyRefreshTrigger.tryEmit(Unit)
+                }
 
-                    is DomainResult.Error -> {
-                        logger.e(
-                            "DashboardViewModel",
-                            "Failed to update account after transaction: ${finalResult.error}"
-                        )
-                        _eventChannel.send(DashboardEvent.ShowErrorBottomDialog("Add Transaction Error"))
-                    }
+                is DomainResult.Error -> {
+                    logger.e(
+                        "DashboardViewModel",
+                        "Failed to update account after transaction: ${finalResult.error}"
+                    )
+                    _eventChannel.send(DashboardEvent.ShowErrorBottomDialog("Add Transaction Error"))
                 }
             }
-            .catch { err ->
-                _state.update { it.copy(isLoading = false) }
-                logger.e("DashboardViewModel", "Critical error during addNewTransaction flow: $err")
-                _eventChannel.send(DashboardEvent.ShowErrorBottomDialog("Add Transaction Error"))
-            }
-            .launchIn(viewModelScope)
+        }.catch { err ->
+            _state.update { it.copy(isLoading = false) }
+            logger.e("DashboardViewModel", "Critical error during addNewTransaction flow: $err")
+            _eventChannel.send(DashboardEvent.ShowErrorBottomDialog("Add Transaction Error"))
+        }.launchIn(viewModelScope)
     }
 }
 

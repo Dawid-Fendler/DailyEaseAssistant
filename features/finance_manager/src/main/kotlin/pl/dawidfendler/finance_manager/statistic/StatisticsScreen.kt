@@ -6,7 +6,5 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun StatisticsScreen(modifier: Modifier = Modifier) {
-    Column {
-
-    }
+    Column {}
 }

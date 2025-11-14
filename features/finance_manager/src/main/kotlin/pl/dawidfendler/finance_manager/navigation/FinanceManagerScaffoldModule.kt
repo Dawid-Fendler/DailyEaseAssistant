@@ -28,7 +28,7 @@ import pl.dawidfendler.ui.theme.dp_1
 fun FinanceManagerFeature() {
     val navController = rememberNavController()
     val bottomBar: @Composable () -> Unit = {
-        prepareBottomBar(navController = navController)
+        PrepareBottomBar(navController = navController)
     }
 
     NavHost(
@@ -38,40 +38,48 @@ fun FinanceManagerFeature() {
         dashboardRoute(
             navigate = {
                 navController.navigate(FinanceMangerNavigationType.CurrencyConverter)
-            }, bottomBar = bottomBar
+            },
+            bottomBar = bottomBar
         )
 
         transactionRoute(
             navigate = {
                 navController.navigate(FinanceMangerNavigationType.CurrencyConverter)
-            }, bottomBar = bottomBar
+            },
+            bottomBar = bottomBar
         )
 
         statisticRoute(
             navigate = {
                 navController.navigate(FinanceMangerNavigationType.CurrencyConverter)
-            }, bottomBar = bottomBar
+            },
+            bottomBar = bottomBar
         )
 
         aiAssistantRoute(
             navigate = {
                 navController.navigate(FinanceMangerNavigationType.CurrencyConverter)
-            }, bottomBar = bottomBar
+            },
+            bottomBar = bottomBar
         )
 
         settingsRoute(
             navigate = {
                 navController.navigate(FinanceMangerNavigationType.CurrencyConverter)
-            }, bottomBar = bottomBar
+            },
+            bottomBar = bottomBar
         )
 
         currencyConverterRoute(
-            onBackClick = { navController.popBackStack() })
+            onBackClick = {
+                navController.popBackStack()
+            }
+        )
     }
 }
 
 @Composable
-private fun prepareBottomBar(navController: NavHostController) {
+private fun PrepareBottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val currentSelectedItem = buildBottomNavItems().find { item ->

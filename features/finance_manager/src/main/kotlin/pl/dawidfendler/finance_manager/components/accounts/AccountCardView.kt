@@ -61,7 +61,6 @@ fun AccountCardView(
                 .fillMaxSize()
                 .background(Color.White)
         ) {
-
             if (showAddAccountCard && isLastCard) {
                 Box(
                     modifier = Modifier

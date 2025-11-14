@@ -4,8 +4,7 @@ import android.os.Build
 import android.view.Window
 import android.view.WindowInsets
 
-
-fun setStatusBarColor(window: Window ,color: Int) {
+fun setStatusBarColor(window: Window, color: Int) {
     window.decorView.setOnApplyWindowInsetsListener { view, insets ->
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             val statusBarHeight = insets.getInsets(WindowInsets.Type.statusBars()).top

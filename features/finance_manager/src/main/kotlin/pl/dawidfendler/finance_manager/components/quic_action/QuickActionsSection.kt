@@ -41,9 +41,11 @@ fun QuickActionSections(
     onConverter: () -> Unit,
     onCharts: () -> Unit,
 ) {
-    Column(modifier = modifier
-        .fillMaxWidth()
-        .padding(horizontal = dp_16)) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = dp_16)
+    ) {
         CustomText(
             text = stringResource(R.string.quick_actions),
             color = Color.Black,

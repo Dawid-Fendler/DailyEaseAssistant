@@ -27,13 +27,11 @@ fun TotalBalance(
     totalBalance: String,
     accountsCurrencyCode: List<String>
 ) {
-
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = dp_32, vertical = dp_16)
     ) {
-
         CustomText(
             text = stringResource(R.string.total_balance),
             color = Color.Black,

@@ -13,5 +13,4 @@ sealed interface FinanceMangerNavigationType {
 
     @Serializable
     data object FinanceManagerMain : FinanceMangerNavigationType
-
 }

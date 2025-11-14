@@ -18,5 +18,4 @@ sealed interface MainTopBarVisibilityEvent {
         MainTopBarVisibilityEvent
 
     data object HideMainTopBar : MainTopBarVisibilityEvent
-
 }

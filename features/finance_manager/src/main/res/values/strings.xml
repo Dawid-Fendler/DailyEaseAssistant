@@ -37,4 +37,6 @@
     <string name="save_transaction">Save Transaction</string>
     <string name="ok">OK</string>
     <string name="category">Category</string>
+    <string name="converted_amount">Converted Amount</string>
+    <string name="special_mark_tylda">≈ %s %s</string>
 </resources>

@@ -1,4 +1,4 @@
-package pl.finance_managerV2.components.currency_picker
+package pl.dawidfendler.finance_manager.components.currency_picker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,7 +40,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import pl.dawidfendler.components.text_field.CustomText
 import pl.dawidfendler.domain.model.currencies.ExchangeRateTable
 import pl.dawidfendler.finance_manager.R
-import pl.dawidfendler.ui.theme.BLUE_BRUSH
 import pl.dawidfendler.ui.theme.dp_12
 import pl.dawidfendler.ui.theme.dp_24
 import pl.dawidfendler.ui.theme.dp_56
@@ -55,7 +54,6 @@ fun CurrencyPicker(
     onCurrencySelected: (String) -> Unit,
     currencies: List<ExchangeRateTable>,
 ) {
-
     val viewModel: CurrencyPickerViewModel = hiltViewModel()
     viewModel.setCurrencies(currencies)
     val query by viewModel.query.collectAsState()
@@ -64,7 +62,7 @@ fun CurrencyPicker(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(brush = BLUE_BRUSH)
+            .background(color = Color.White)
     ) {
         CurrencyPickerHeader(
             query = query,
@@ -89,7 +87,6 @@ fun CurrencyPickerHeader(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-
         SearchBar(
             modifier = Modifier
                 .background(color = Color.White)
@@ -177,7 +174,8 @@ fun CurrencyPickerHeader(
             },
             onExpandedChange = { isExpanded = it },
             colors = SearchBarDefaults.colors(
-                containerColor = Color.White
+                containerColor = Color.White,
+                dividerColor = Color.Transparent
             )
         )
     }

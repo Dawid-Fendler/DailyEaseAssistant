@@ -1,4 +1,4 @@
-package pl.dawidfendler.util
+package pl.dawidfendler.finance_manager.util
 
 object CurrencyFlagEmoji {
     private val currencyToCountry = mapOf(
@@ -161,11 +161,11 @@ object CurrencyFlagEmoji {
         "YER" to "YE", // Yemen
         "ZAR" to "ZA", // South Africa
         "ZMW" to "ZM", // Zambia
-        "ZWL" to "ZW"  // Zimbabwe
+        "ZWL" to "ZW" // Zimbabwe
     )
 
     fun getFlagEmojiForCurrency(currencyCode: String): String {
-        val countryCode = currencyToCountry[currencyCode.uppercase()] ?: return ""
+        val countryCode = currencyToCountry[currencyCode.uppercase()] ?: return "-"
         return countryCode
             .uppercase()
             .map { char ->

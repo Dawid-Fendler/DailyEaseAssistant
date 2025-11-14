@@ -137,7 +137,6 @@ object UseCaseModule {
         dispatchers = dispatcherProvider
     )
 
-
     @Provides
     @ViewModelScoped
     fun provideCreateUserUseCase(

@@ -1,4 +1,4 @@
-package pl.finance_managerV2.components.currency_picker
+package pl.dawidfendler.finance_manager.components.currency_picker
 
 data class CurrencyUiModel(
     val currencyName: String,
